@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="ฐานข้อมูลกองประสานงานโครงการพระราชดำริและโครงการพิเศษ ปีงบประมาณ 2570">
+<meta name="theme-color" content="#14183f">
+<link rel="icon" type="image/png" href="https://alro.go.th/assets/themes/default/images/logo/logo-into.png">
+<title>ฐานข้อมูลกองประสานงานโครงการพระราชดำริฯ ปี 2570</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fa;--surface:#ffffff;--surface-2:#eef2f8;--ink:#0d253d;--ink-2:#34475f;--muted:#64748d;--line:#e1e6ee;
+  --primary:#4a35e8;--primary-ink:#ffffff;--primary-soft:#e9e6ff;--gold:#a6802c;
+  --ok:#1f8a5b;--ok-soft:#e3f4ec;--warn:#b7770f;--warn-soft:#fbf0dc;--bad:#c92f57;--bad-soft:#fbe5ec;--empty:#e8ecf3;
+  --navy:#14183f;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8a96ab;--pend-soft:#eef1f6;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1120;--surface:#121a2c;--surface-2:#18223a;--ink:#e7edf6;--ink-2:#c3cee0;--muted:#8e9bb3;--line:#24304a;
+  --primary:#8a7dff;--primary-ink:#0b1120;--primary-soft:#262457;--gold:#d6b46a;
+  --ok:#4cc38a;--ok-soft:#12301f;--warn:#e3a540;--warn-soft:#33260d;--bad:#f0718f;--bad-soft:#3a1521;--empty:#1b2540;
+  --navy:#1d2257;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8e9bb3;--pend-soft:#1b2540;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0b1120;--surface:#121a2c;--surface-2:#18223a;--ink:#e7edf6;--ink-2:#c3cee0;--muted:#8e9bb3;--line:#24304a;
+  --primary:#8a7dff;--primary-ink:#0b1120;--primary-soft:#262457;--gold:#d6b46a;
+  --ok:#4cc38a;--ok-soft:#12301f;--warn:#e3a540;--warn-soft:#33260d;--bad:#f0718f;--bad-soft:#3a1521;--empty:#1b2540;
+  --navy:#1d2257;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8e9bb3;--pend-soft:#1b2540;color-scheme:dark;}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter","Noto Sans Thai",Tahoma,sans-serif;font-size:15px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1440px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;line-height:1.3;margin-right:auto;text-decoration:none;min-width:0}
+.brand .mark{flex:none;width:38px;height:38px;border-radius:10px;background:linear-gradient(140deg,var(--navy),#2b2f7a);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.brand .mark svg{width:22px;height:22px}
+.brand .mark[hidden],.gmark[hidden]{display:none}
+.seal-logo{flex:none;width:44px;height:44px;border-radius:50%;object-fit:contain;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.gseal{width:72px;height:72px;border-radius:50%;object-fit:contain;background:#fff;margin-bottom:6px;box-shadow:0 0 0 1px var(--line)}
+.brand .txt{display:flex;flex-direction:column;min-width:0}
+.brand b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand span{font-size:12px;color:var(--muted)}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;padding:7px 14px;border-radius:9999px;color:var(--ink-2);font-size:14px}
+nav a:hover{background:var(--surface-2)}
+nav a[aria-current="page"]{background:var(--navy);color:var(--navy-ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.seal{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:9999px;font-size:13px;background:var(--ok-soft);color:var(--ok);text-decoration:none}
+.seal.fail{background:var(--bad-soft);color:var(--bad)}
+.seal i{width:8px;height:8px;border-radius:50%;background:currentColor}
+main{max-width:1440px;margin:0 auto;padding:32px 24px 64px}
+.view{display:none}.view.on{display:block}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:20px}
+.banner{position:relative;overflow:hidden;border-radius:20px;padding:30px 32px;margin-bottom:20px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#3b37a8 0%,rgba(59,55,168,0) 55%),linear-gradient(135deg,#10143a 0%,#1b2060 100%)}
+.banner::after{content:"";position:absolute;right:-60px;bottom:-80px;width:280px;height:280px;border-radius:50%;border:40px solid rgba(214,180,106,.10)}
+.banner .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#d6b46a;margin:0 0 6px;font-weight:600}
+.banner h1{font-weight:700;letter-spacing:-0.01em;font-size:clamp(28px,3.8vw,42px);line-height:1.25;margin:0}
+.banner.hero p{margin:8px 0 0;color:#c9cdf5}
+.banner.hero .eyebrow{margin:0 0 6px;color:#d6b46a}
+.banner.hero h1{font-size:clamp(28px,3.8vw,42px);line-height:1.25}
+.banner.hero .asof{color:#aab0e6;position:relative;z-index:1}
+.banner .rule{background:#d6b46a}
+.hero h1{font-weight:700;letter-spacing:-0.01em;font-size:clamp(26px,3.6vw,40px);line-height:1.3;margin:0}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.rule{height:2px;width:72px;background:var(--gold);margin:14px 0 0}
+.asof{font-size:13px;color:var(--muted);text-align:right}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.stack>*+*{margin-top:20px}
+.matrix-wrap{overflow-x:auto;padding-bottom:4px}
+.matrix{display:grid;grid-template-columns:190px repeat(72,minmax(0,1fr));gap:3px}
+.matrix .rl{font-size:12px;color:var(--ink-2);display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.matrix .rl:hover{color:var(--primary)}
+.cell{aspect-ratio:1;border-radius:3px;background:var(--empty);border:0;padding:0}
+.cell.on{cursor:pointer;background:var(--primary)}
+.cell.on:hover{outline:2px solid var(--ink);outline-offset:1px}
+.regions{display:grid;grid-template-columns:190px repeat(72,minmax(0,1fr));gap:3px;margin-top:6px;font-size:12px;color:var(--muted)}
+.regions span{border-top:1px solid var(--line);padding-top:4px;white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:14px;align-items:center}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px;background:var(--primary)}
+.tip{min-height:24px;font-size:14px;color:var(--ink-2);margin-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.kpis{grid-template-columns:1fr}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.kpi p{margin:0}
+.kpi .l{font-size:13px;color:var(--muted)}
+.kpi .v{font-size:clamp(20px,2.3vw,26px);font-weight:600;margin-top:2px;white-space:nowrap}
+.kpi .s{font-size:13px;color:var(--muted)}
+.kpi.navy{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.kpi.navy .l,.kpi.navy .s{color:var(--navy-muted)}
+.kpi.pend .v{color:var(--pend)}
+h2{font-weight:600;font-size:19px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.two{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px}
+.hbar{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) 110px;gap:14px;align-items:center;padding:9px 0;border-top:1px solid var(--line);text-decoration:none}
+.hbar:hover .nm{color:var(--primary)}
+.hbar .nm{font-size:14px}
+.hbar .m{font-size:12px;color:var(--muted)}
+.track{position:relative;height:10px;border-radius:9999px;background:var(--surface-2);overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:9999px;background:var(--primary)}
+.track i.r1{background:var(--navy-muted);opacity:.9}
+.amt{text-align:right;font-size:14px}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:9999px;white-space:nowrap}
+.t-pend{background:var(--pend-soft);color:var(--pend)}
+.t-ok{background:var(--ok-soft);color:var(--ok)}.t-bad{background:var(--bad-soft);color:var(--bad)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+th{text-align:left;font-weight:500;color:var(--muted);font-size:13px;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--line)}
+td.r,th.r{text-align:right}
+tfoot td{font-weight:600}
+tr.link{cursor:pointer}
+tr.link:hover{background:var(--surface-2)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.placeholder{border:1px dashed var(--line);border-radius:12px;padding:18px;color:var(--muted);font-size:14px;background:var(--surface-2)}
+.mapbox{min-height:260px;display:flex;align-items:center;justify-content:center;text-align:center}
+.crumb{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumb a{text-decoration:none;color:var(--primary)}
+.check{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
+.dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600}
+.dot.ok{background:var(--ok-soft);color:var(--ok)}.dot.bad{background:var(--bad-soft);color:var(--bad)}
+.check p{margin:0}.check .m{font-size:13px;color:var(--muted)}
+.note{font-size:12px;color:var(--muted);text-align:center;margin-top:28px}
+#loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;transition:opacity .25s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--primary);animation:spin .8s linear infinite}
+#loader p{margin:0;color:var(--muted);font-size:14px;text-align:center;max-width:320px}
+#loader button{font:inherit;font-size:14px;padding:8px 18px;border-radius:9999px;border:0;background:var(--navy);color:#fff;cursor:pointer}
+@keyframes spin{to{transform:rotate(360deg)}}
+#gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:radial-gradient(90% 70% at 85% 0%,#3b37a8 0%,rgba(59,55,168,0) 60%),linear-gradient(135deg,#0c1033 0%,#1b2060 100%)}
+#gate[hidden]{display:none}
+.gcard{width:100%;max-width:380px;background:var(--surface);color:var(--ink);border-radius:20px;padding:32px 28px;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:10px}
+.gmark{width:46px;height:46px;border-radius:12px;background:linear-gradient(140deg,#14183f,#2b2f7a);display:grid;place-items:center;margin-bottom:6px}
+.gcard h1{font-size:20px;line-height:1.4;margin:0}
+.gsub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.gcard label{font-size:13px;color:var(--ink-2)}
+.gcard input[type=password]{font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.gcard input[type=password]:focus{outline:2px solid var(--primary);outline-offset:1px}
+.grem{display:flex;align-items:center;gap:8px}
+.gcard button{font:inherit;font-weight:600;margin-top:6px;padding:11px;border:0;border-radius:12px;background:var(--navy);color:#fff;cursor:pointer}
+.gcard button:disabled{opacity:.7;cursor:wait}
+.gmsg{min-height:20px;margin:0;font-size:13px;color:var(--bad)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:22px;align-items:start}
+.mapbox2{position:relative;height:560px;border-radius:14px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line);z-index:0}
+.mapbox2.sm{height:440px}
+.mapmsg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
+.leaflet-container{font-family:inherit;background:var(--surface-2)}
+.leaflet-tooltip.pt{font-family:inherit;font-size:13px;border-radius:8px;border:0;box-shadow:0 6px 20px -6px rgba(13,37,61,.35);padding:6px 10px}
+.mlegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
+.mlegend b{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.pinfo h3{font-size:17px;margin:0 0 2px}
+.pinfo .m{font-size:13px;color:var(--muted)}
+.pinfo .big{font-size:26px;font-weight:600;margin:10px 0 2px}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px;text-decoration:none;cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;color:inherit;font-family:inherit}
+.prow:hover{color:var(--primary)}
+.prow .rk{color:var(--muted);margin-right:6px}
+.attr{font-size:11px;color:var(--muted);margin:10px 0 0}
+.backlink{font-size:13px;color:var(--primary);background:none;border:0;padding:0;cursor:pointer;font-family:inherit;margin-bottom:8px}
+@media (max-width:860px){.mapgrid{grid-template-columns:1fr}.mapbox2{height:420px}.mapbox2.sm{height:360px}}
+.logout{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:9999px}
+.logout:hover{background:var(--surface-2);color:var(--ink)}
+.mlist{display:none}
+.mitem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);text-decoration:none}
+.mitem .nm{font-weight:500}.mitem .m{font-size:12px;color:var(--muted)}.mitem .amt{text-align:right}
+.regbar{grid-column:1/-1;display:flex;gap:3px;height:6px}
+.regbar span{border-radius:9999px;background:var(--primary)}
+@media (max-width:860px){.matrix-wrap,.legend,#tip{display:none}.mlist{display:block}}
+@media (max-width:980px){.seal span{display:none}.seal{padding:8px}}
+@media (max-width:640px){.brand span{display:none}.banner{padding:24px 20px;border-radius:16px}.seal span{display:none}}
+@media (max-width:800px){header.top{position:static}.two{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.asof{text-align:left}.hbar{grid-template-columns:1fr;gap:6px}.amt{text-align:left}main{padding:24px 16px 48px}.bar{padding:12px 16px}}
+@media (prefers-reduced-motion:no-preference){.cell.on{transition:transform .15s}.cell.on:hover{transform:scale(1.35)}}
+</style>
+</head>
+<body>
+<div id="gate" hidden><form id="gateForm" class="gcard" autocomplete="on">
+  <img class="gseal" src="https://alro.go.th/assets/themes/default/images/logo/logo-into.png" alt="ตราสำนักงานการปฏิรูปที่ดินเพื่อเกษตรกรรม" width="72" height="72" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="mark gmark" aria-hidden="true" hidden><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M12 21V11" stroke="#d6b46a" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13c-4.2 0-6.5-2.6-6.5-6.5C9.7 6.5 12 9 12 13Z" fill="#d6b46a"/><path d="M12 11c0-3.9 2.3-6.5 6.5-6.5 0 3.9-2.3 6.5-6.5 6.5Z" fill="#fff" fill-opacity=".9"/><path d="M5 21h14" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+  <h1>ฐานข้อมูลกองประสานงาน<br>โครงการพระราชดำริฯ</h1>
+  <p class="gsub">สำหรับบุคลากรภายในกองเท่านั้น</p>
+  <input type="text" name="username" value="alro-division" autocomplete="username" hidden>
+  <label for="gatePw">รหัสผ่านของกอง</label>
+  <input id="gatePw" type="password" autocomplete="current-password" required>
+  <label class="grem"><input id="gateRemember" type="checkbox" checked> จดจำในเครื่องนี้</label>
+  <button id="gateBtn" type="submit">เข้าสู่ระบบ</button>
+  <p id="gateMsg" class="gmsg" role="alert"></p>
+</form></div>
+<div id="loader" role="status"><div class="ring" id="ring"></div><p id="loadMsg">กำลังเตรียมข้อมูล</p></div>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="#overview"><img class="seal-logo" src="https://alro.go.th/assets/themes/default/images/logo/logo-into.png" alt="ตรา ส.ป.ก." width="44" height="44" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="mark" aria-hidden="true" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M12 21V11" stroke="#d6b46a" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13c-4.2 0-6.5-2.6-6.5-6.5C9.7 6.5 12 9 12 13Z" fill="#d6b46a"/><path d="M12 11c0-3.9 2.3-6.5 6.5-6.5 0 3.9-2.3 6.5-6.5 6.5Z" fill="#fff" fill-opacity=".9"/><path d="M5 21h14" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="txt"><b>ฐานข้อมูลกองประสานงานโครงการพระราชดำริฯ</b><span>สำนักงานการปฏิรูปที่ดินเพื่อเกษตรกรรม (ส.ป.ก.)</span></span></a>
+    <nav aria-label="เมนูหลัก"><a href="#overview">ภาพรวม</a><a href="#projects">โครงการ</a><a href="#checks">ความถูกต้อง</a></nav>
+    <a class="seal" id="seal" href="#checks"><i></i><span id="sealText"></span></a>
+    <a class="logout" id="logout" href="#" title="ออกจากระบบ">ออกจากระบบ</a>
+  </div>
+</header>
+<main>
+  <section class="view" id="v-overview">
+    <div class="banner hero">
+      <div><p class="eyebrow">ภาพรวมผู้บริหาร</p><h1>ปีงบประมาณ 2570</h1><p id="heroSub"></p><div class="rule"></div></div>
+      <div class="asof">งบ พ.ร.บ.: แผนจัดสรร กผง. (ครั้งที่ 1 และเต็มปี)<br>ผลเบิกจ่าย: รอนำเข้าจาก alrotracking</div>
+    </div>
+    <div class="stack">
+      <div class="kpis" id="kpis"></div>
+      <div class="panel">
+        <h2>แผนที่งบ พ.ร.บ. รายจังหวัด</h2>
+        <p class="sub">สีเข้มคืองบรวมทุกโครงการในจังหวัดสูง ชี้เพื่อดูยอด กดจังหวัดเพื่อดูว่ามีโครงการใดบ้าง</p>
+        <div class="mapgrid">
+          <div><div class="mapbox2" id="ovMap" role="region" aria-label="แผนที่งบประมาณรายจังหวัด"><div class="mapmsg">กำลังโหลดแผนที่…</div></div><div class="mlegend" id="ovLegend"></div></div>
+          <div class="pinfo" id="provInfo" aria-live="polite"></div>
+        </div>
+        <p class="attr">ขอบเขตจังหวัด: OpenGISData-Thailand (CC BY 4.0) · แผนที่ฐาน: © OpenStreetMap contributors © CARTO</p>
+      </div>
+      <div class="panel">
+        <h2>พื้นที่ดำเนินการและงบ พ.ร.บ. ที่ได้รับจัดสรร</h2>
+        <p class="sub">แต่ละแถวคือโครงการ แต่ละช่องคือจังหวัด สีเข้มคืองบเต็มปีสูง ชี้ช่องเพื่อดูรายละเอียด กดชื่อโครงการเพื่อเปิดหน้าโครงการ (บนมือถือแสดงเป็นรายการ)</p>
+        <div class="matrix-wrap"><div class="matrix" id="matrix"></div><div class="regions" id="regions"></div></div>
+        <div class="mlist" id="mlist"></div>
+        <div class="tip" id="tip" aria-live="polite">&nbsp;</div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="two">
+        <div class="panel">
+          <h2>งบ พ.ร.บ. รายโครงการ</h2>
+          <p class="sub">ความยาวแถบคืองบเต็มปี ส่วนสีอ่อนคือที่จัดสรรแล้วในครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)</p>
+          <div id="pbars"></div>
+        </div>
+        <div class="panel">
+          <h2>เป้าหมายผลผลิต</h2>
+          <p class="sub">จากแผนจัดสรรงบ พ.ร.บ. เต็มปี</p>
+          <div id="targets"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-projects">
+    <div class="hero"><div><h1>ทะเบียนโครงการ</h1><p>17 โครงการ ปีงบประมาณ 2570 เลือกโครงการเพื่อเปิดหน้าโครงการ</p><div class="rule"></div></div></div>
+    <div class="panel tbl-wrap">
+      <table><thead><tr><th>รหัส</th><th>โครงการ</th><th class="r">จังหวัด</th><th class="r">งบเต็มปี (บาท)</th><th class="r">ครั้งที่ 1 (บาท)</th><th class="r">เป้าหมาย</th><th>ผลเบิกจ่าย</th></tr></thead><tbody id="ptable"></tbody><tfoot id="pfoot"></tfoot></table>
+    </div>
+  </section>
+
+  <section class="view" id="v-project"></section>
+
+  <section class="view" id="v-checks">
+    <div class="hero"><div><h1>ความถูกต้องของข้อมูล</h1><p>ระบบตรวจทุกครั้งที่อัปเดตข้อมูลจากชีต (ทุกชั่วโมง) และตรวจซ้ำทุกคืน หากพบข้อไม่ผ่านจะส่งอีเมลแจ้งผู้ดูแล</p><div class="rule"></div></div><div class="asof" id="checkTime"></div></div>
+    <div class="panel" id="checks"></div>
+  </section>
+
+  <p class="note" id="foot"></p>
+</main>
+<script>
+(function(){
+"use strict";
+var API="https://script.google.com/macros/s/AKfycby6qaRhicGEF4YXrmHcPCAOhjNS0eovDfIAoy1dUhW6MkEcfhNPFVkURqdl9K5RhR2h-A/exec";
+var KK="alro_key_v1",CK="alro_payload_v2",MAXAGE=30*60*1000;
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}return null;}
+function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k);if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v);}catch(e){}return null;}
+function savedKey(){return ls(KK)||ss(KK);}
+function cached(){try{var c=JSON.parse(ls(CK)||ss(CK));if(c&&Date.now()-c.t<MAXAGE)return c.d;}catch(e){}return null;}
+var gate=document.getElementById("gate"),gf=document.getElementById("gateForm"),gm=document.getElementById("gateMsg"),gb=document.getElementById("gateBtn");
+function showGate(msg){document.getElementById("loader").classList.add("done");gate.hidden=false;gm.textContent=msg||"";gb.disabled=false;gb.textContent="เข้าสู่ระบบ";document.getElementById("gatePw").focus();}
+function load(key,remember){
+  return fetch(API,{method:"POST",body:key}).then(function(r){if(!r.ok)throw new Error("net");return r.json();}).then(function(d){
+    if(d&&d.error){ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);showGate(key?"รหัสผ่านไม่ถูกต้อง หรือมีการเปลี่ยนรหัสผ่าน":"");return;}
+    var store=remember?ls:ss;store(KK,key);store(CK,JSON.stringify({t:Date.now(),d:d}));
+    gate.hidden=true;start(d);
+  });
+}
+gf.addEventListener("submit",function(e){e.preventDefault();var k=document.getElementById("gatePw").value;if(!k)return;gb.disabled=true;gb.textContent="กำลังตรวจสอบ…";gm.textContent="";
+  load(k,document.getElementById("gateRemember").checked).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่");});});
+document.getElementById("logout").addEventListener("click",function(e){e.preventDefault();e.stopPropagation();ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);location.hash="";location.reload();});
+var hit=savedKey()&&cached(),k0=savedKey();
+if(hit){start(hit);}else if(k0){load(k0,!!ls(KK)).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาลองใหม่");});}else{showGate("");}
+var started=false;
+function start(D){
+if(started)return;started=true;
+var INIT="";
+var DOC=D.doc;
+var P=D.projects,PV=D.provinces,RG=D.region,RN=D.regions;
+var rows=D.budget.map(function(b){return{pid:b[0],prov:b[1],mgmt:b[2],train:b[3],mat:b[4],r1:b[5],ppl:b[6],schT:b[7],schM:b[8],times:b[9],total:b[2]+b[3]+b[4]};});
+var fmt=function(n,d){return Number(n).toLocaleString("th-TH",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
+var code=function(id){return "P"+String(id).padStart(2,"0");};
+function proj(id){return P.find(function(p){return p.id===id;});}
+function rowsOf(id){return rows.filter(function(r){return r.pid===id;});}
+function sum(list,k){return list.reduce(function(a,r){return a+r[k];},0);}
+function pname(p,prov){return p.id===17?p.name+" จ."+PV[prov]:p.name;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function tgt(list){var a=[],ppl=sum(list,"ppl"),st=sum(list,"schT"),sm=sum(list,"schM"),t=sum(list,"times");
+  if(ppl)a.push(fmt(ppl)+" ราย");if(st)a.push(fmt(st)+" โรงเรียน (อบรม)");if(sm)a.push(fmt(sm)+" โรงเรียน (วัสดุ)");if(t)a.push(fmt(t)+" ครั้ง");return a.join(" / ")||"-";}
+var BINS=[[0,20000,.35],[20000,50000,.55],[50000,150000,.78],[150000,1e12,1]];
+function binOf(v){for(var i=0;i<BINS.length;i++){if(v<BINS[i][1])return BINS[i];}return BINS[3];}
+
+function renderOverview(){
+  var provSet=new Set(rows.map(function(r){return r.prov;}));
+  document.getElementById("heroSub").textContent=P.length+" โครงการพระราชดำริ ใน "+provSet.size+" จาก "+PV.length+" จังหวัด";
+  var h="";
+  P.forEach(function(p){
+    h+='<a class="rl" href="#'+code(p.id).toLowerCase()+'" title="'+esc(p.name)+'">'+p.id+'. '+esc(p.short)+'</a>';
+    var map={};rowsOf(p.id).forEach(function(r){map[r.prov]=r;});
+    for(var c=0;c<PV.length;c++){
+      var r=map[c];
+      if(!r){h+='<span class="cell" aria-hidden="true"></span>';continue;}
+      h+='<button class="cell on" style="opacity:'+binOf(r.total)[2]+'" data-p="'+p.id+'" data-c="'+c+'" aria-label="'+esc(p.short)+' '+esc(PV[c])+' งบ '+fmt(r.total)+' บาท"></button>';
+    }
+  });
+  document.getElementById("matrix").innerHTML=h;
+  var rh='<span style="border:0"></span>',cnt={};RG.forEach(function(g){cnt[g]=(cnt[g]||0)+1;});
+  RN.forEach(function(n,i){rh+='<span style="grid-column:span '+cnt[i]+'">'+esc(n)+'</span>';});
+  document.getElementById("regions").innerHTML=rh;
+  document.getElementById("mlist").innerHTML=P.map(function(p){var l=rowsOf(p.id),byR=RN.map(function(){return 0;});l.forEach(function(r){byR[RG[r.prov]]++;});
+    return '<a class="mitem" href="#'+code(p.id).toLowerCase()+'"><div><div class="nm">'+p.id+'. '+esc(p.short)+'</div><div class="m">'+l.length+' จังหวัด | '+RN.map(function(n,i){return byR[i]?esc(n.replace("ภาคตะวันออกเฉียงเหนือ","อีสาน").replace("ภาค",""))+' '+byR[i]:"";}).filter(Boolean).join(" · ")+'</div></div><div class="amt num">'+fmt(sum(l,"total"))+'</div></a>';}).join("");
+  document.getElementById("legend").innerHTML='<span>งบ พ.ร.บ. เต็มปีต่อพื้นที่:</span>'+BINS.map(function(b,i){var lab=i===0?"ไม่ถึง 20,000":i===3?"150,000 ขึ้นไป":fmt(b[0])+" – "+fmt(b[1]-1);return '<span><b style="opacity:'+b[2]+'"></b>'+lab+'</span>';}).join("")+'<span><b style="background:var(--empty);opacity:1"></b>ไม่มีการดำเนินการ</span>';
+  var T=sum(rows,"total"),R1=sum(rows,"r1");
+  document.getElementById("kpis").innerHTML=
+    kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(rows,"mgmt"))+" | ฝึกอบรม "+fmt(sum(rows,"train"))+" | วัสดุ "+fmt(sum(rows,"mat")),"navy")+
+    kpi("จัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)",fmt(R1)+" บาท","ร้อยละ "+fmt(R1/T*100,1)+" ของงบเต็มปี","")+
+    kpi("เงินกองทุนการปฏิรูปที่ดินฯ",fmt(DOC.fund)+" บาท","ยอดรวมตามหนังสือ กษ 1207/ว5816 รอแยกรายโครงการ","")+
+    kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจากไฟล์ส่งออก alrotracking","pend");
+  var list=P.map(function(p){var l=rowsOf(p.id);return{p:p,t:sum(l,"total"),r1:sum(l,"r1"),n:l.length};}).sort(function(a,b){return b.t-a.t;});
+  var mx=list[0].t;
+  document.getElementById("pbars").innerHTML=list.map(function(x){
+    return '<a class="hbar" href="#'+code(x.p.id).toLowerCase()+'"><div><div class="nm">'+x.p.id+'. '+esc(x.p.short)+'</div><div class="m">'+x.n+' จังหวัด</div></div><div class="track"><i style="width:'+(x.t/mx*100).toFixed(1)+'%"></i><i class="r1" style="width:'+(x.r1/mx*100).toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.t)+'</div></a>';}).join("");
+  var tg=[["เกษตรกรเข้ารับการอบรม",sum(rows,"ppl"),"ราย"],["โรงเรียน (อบรม)",sum(rows,"schT"),"แห่ง"],["โรงเรียน (วัสดุการเกษตร)",sum(rows,"schM"),"แห่ง"],["คลินิกเกษตรเคลื่อนที่",sum(rows,"times"),"ครั้ง"]];
+  document.getElementById("targets").innerHTML=tg.map(function(t){return '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">'+t[0]+'</div><div class="amt num" style="font-weight:600">'+fmt(t[1])+' '+t[2]+'</div></div>';}).join("")+
+    '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">เกษตรกรในโครงการ</div><div><span class="tag t-pend">รอข้อมูล</span></div></div>';
+}
+function kpi(l,v,s,cls){return '<div class="kpi '+cls+'"><p class="l">'+l+'</p><p class="v num">'+v+'</p><p class="s num">'+s+'</p></div>';}
+function showTip(e){
+  var b=e.target.closest(".cell.on");if(!b)return;
+  var p=proj(+b.dataset.p),c=+b.dataset.c,r=rows.find(function(x){return x.pid===p.id&&x.prov===c;});
+  document.getElementById("tip").innerHTML='<b>'+esc(pname(p,c))+'</b> | '+esc(PV[c])+' ('+esc(RN[RG[c]])+') งบเต็มปี <span class="num">'+fmt(r.total)+'</span> บาท ครั้งที่ 1 <span class="num">'+fmt(r.r1)+'</span> บาท เป้าหมาย '+tgt([r]);
+}
+
+/* ---------- แผนที่ (Leaflet) ---------- */
+var LEAF_CSS="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",LEAF_JS="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+var GEO_URL="https://cdn.jsdelivr.net/gh/chingchai/OpenGISData-Thailand@625e85d/provinces.geojson";
+var DARK=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches;
+var RAMP=["#ddd7ff","#b9adff","#8f7dfb","#6a55ee","#4127c9"],NOAREA=DARK?"#1b2540":"#e8ecf3",LINE=DARK?"#0b1120":"#ffffff";
+var depP=null,ovMap=null,pjMap=null,ovLayer=null,geoData=null;
+function deps(){
+  if(depP)return depP;
+  depP=new Promise(function(res,rej){
+    var l=document.createElement("link");l.rel="stylesheet";l.href=LEAF_CSS;l.integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";l.crossOrigin="";document.head.appendChild(l);
+    var sc=document.createElement("script");sc.src=LEAF_JS;sc.integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";sc.crossOrigin="";sc.onload=res;sc.onerror=function(){rej(new Error("leaflet"));};document.head.appendChild(sc);
+  }).then(function(){return fetch(GEO_URL).then(function(r){if(!r.ok)throw new Error("geo");return r.json();});}).then(function(g){geoData=g;return g;});
+  depP.catch(function(){depP=null;});
+  return depP;
+}
+var PT=null;
+function provTotals(){
+  if(PT)return PT;
+  PT=PV.map(function(){return{t:0,list:[]};});
+  rows.forEach(function(r){if(r.prov<0)return;PT[r.prov].t+=r.total;PT[r.prov].list.push(r);});
+  return PT;
+}
+function breaks(vals){var v=vals.filter(function(x){return x>0;}).sort(function(a,b){return a-b;});if(!v.length)return[1,2,3,4];
+  var nice=function(x){var p=Math.pow(10,Math.floor(Math.log10(x)));return Math.round(x/p*2)/2*p;};
+  var q=[.2,.4,.6,.8].map(function(f){return nice(v[Math.min(v.length-1,Math.floor(f*v.length))]);});
+  for(var i=1;i<q.length;i++)if(q[i]<=q[i-1])q[i]=q[i-1]+1;return q;}
+function colorOf(v,br){if(!(v>0))return NOAREA;for(var i=0;i<br.length;i++)if(v<br[i])return RAMP[i];return RAMP[4];}
+function legendHtml(br,extra){var h='';RAMP.forEach(function(c,i){var lab=i===0?'ไม่ถึง '+fmt(br[0]):i===4?fmt(br[3])+' ขึ้นไป':fmt(br[i-1])+' – '+fmt(br[i]-1);h+='<span><b style="background:'+c+'"></b>'+lab+'</span>';});
+  return '<span>งบ (บาท):</span>'+h+'<span><b style="background:'+NOAREA+';box-shadow:inset 0 0 0 1px var(--line)"></b>'+(extra||'ไม่มีการดำเนินการ')+'</span>';}
+function baseMap(el){
+  el.innerHTML="";
+  var m=L.map(el,{zoomControl:true,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false,attributionControl:true,minZoom:5,maxZoom:11,zoomSnap:.25});
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/"+(DARK?"dark_nolabels":"light_nolabels")+"/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'}).addTo(m);
+  m.attributionControl.setPrefix(false);
+  el.addEventListener("click",function(){m.scrollWheelZoom.enable();},{once:true});
+  return m;
+}
+function idxOf(f){return PV.indexOf(String(f.properties.pro_th||"").trim());}
+function mapFail(el){el.innerHTML='<div class="mapmsg">โหลดแผนที่ไม่ได้ในขณะนี้<br>ข้อมูลตัวเลขด้านอื่นยังใช้งานได้ตามปกติ</div>';}
+
+function renderOverviewMap(){
+  var el=document.getElementById("ovMap");if(!el)return;
+  if(ovMap){setTimeout(function(){ovMap.invalidateSize();},0);return;}
+  deps().then(function(geo){
+    if(ovMap)return;
+    var T=provTotals(),br=breaks(T.map(function(x){return x.t;}));
+    ovMap=baseMap(el);
+    var sel=null;
+    function style(f){var i=idxOf(f),v=i>=0?T[i].t:0;return{fillColor:colorOf(v,br),fillOpacity:i>=0?.88:.55,color:LINE,weight:.8,opacity:1};}
+    ovLayer=L.geoJSON(geo,{style:style,onEachFeature:function(f,ly){
+      var i=idxOf(f),name=f.properties.pro_th;
+      ly.bindTooltip('<b>'+esc(name)+'</b><br>'+(i>=0&&T[i].t?'งบ '+fmt(T[i].t)+' บาท · '+T[i].list.length+' โครงการ':'ไม่มีการดำเนินการ'),{sticky:true,className:"pt",direction:"top"});
+      ly.on("mouseover",function(){if(ly!==sel)ly.setStyle({weight:2,color:DARK?"#e7edf6":"#14183f"});ly.bringToFront();});
+      ly.on("mouseout",function(){if(ly!==sel)ovLayer.resetStyle(ly);});
+      ly.on("click",function(){if(sel&&sel!==ly)ovLayer.resetStyle(sel);sel=ly;ly.setStyle({weight:2.5,color:"#d6b46a"});showProv(i,name);});
+    }}).addTo(ovMap);
+    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]});
+    document.getElementById("ovLegend").innerHTML=legendHtml(br,"นอกพื้นที่ / ไม่มีการดำเนินการ");
+    showTop();
+  }).catch(function(){mapFail(el);});
+}
+function showTop(){
+  var T=provTotals(),ord=T.map(function(x,i){return{i:i,t:x.t};}).filter(function(x){return x.t>0;}).sort(function(a,b){return b.t-a.t;}).slice(0,10);
+  document.getElementById("provInfo").innerHTML='<h3>10 จังหวัดงบสูงสุด</h3><p class="m">งบ พ.ร.บ. เต็มปีรวมทุกโครงการ · กดเพื่อดูรายละเอียด</p><div style="margin-top:10px">'+
+    ord.map(function(x,k){return '<button type="button" class="prow" data-pi="'+x.i+'"><span><span class="rk">'+(k+1)+'.</span>'+esc(PV[x.i])+'</span><span class="num">'+fmt(x.t)+'</span></button>';}).join("")+'</div>';
+}
+function showProv(i,name){
+  var box=document.getElementById("provInfo");
+  if(i<0){box.innerHTML='<button type="button" class="backlink" data-top="1">‹ 10 จังหวัดงบสูงสุด</button><h3>'+esc(name)+'</h3><p class="m">ไม่อยู่ในพื้นที่ดำเนินการของกองในปีงบประมาณ 2570</p>';return;}
+  var x=provTotals()[i],l=x.list.slice().sort(function(a,b){return b.total-a.total;});
+  box.innerHTML='<button type="button" class="backlink" data-top="1">‹ 10 จังหวัดงบสูงสุด</button><h3>จ.'+esc(PV[i])+'</h3><p class="m">'+esc(RN[RG[i]])+' · '+l.length+' โครงการ</p><p class="big num">'+fmt(x.t)+' บาท</p><p class="m">ครั้งที่ 1: '+fmt(sum(l,"r1"))+' บาท · เป้าหมาย '+tgt(l)+'</p><div style="margin-top:10px">'+
+    l.map(function(r){var p=proj(r.pid);return '<a class="prow" href="#'+code(p.id).toLowerCase()+'"><span>'+p.id+'. '+esc(p.short)+'</span><span class="num">'+fmt(r.total)+'</span></a>';}).join("")+'</div>';
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-pi]");if(b){var i=+b.dataset.pi;if(ovLayer){ovLayer.eachLayer(function(ly){if(idxOf(ly.feature)===i){ly.fire("click");ovMap.flyToBounds(ly.getBounds(),{maxZoom:8,duration:.6});}});}else showProv(i,PV[i]);return;}
+  if(e.target.closest("[data-top]")){showTop();if(ovMap&&ovLayer){ovLayer.eachLayer(function(ly){ovLayer.resetStyle(ly);});ovMap.flyToBounds(ovLayer.getBounds(),{duration:.6});}}
+});
+function renderProjectMap(id){
+  var el=document.getElementById("pjMap");if(!el)return;
+  if(pjMap){pjMap.remove();pjMap=null;}
+  deps().then(function(geo){
+    if(!document.body.contains(el))return;
+    var map={};rowsOf(id).forEach(function(r){map[r.prov]=r;});
+    var vals=Object.keys(map).map(function(k){return map[k].total;}),br=breaks(vals.length>4?vals:provTotals().map(function(x){return x.t;}));
+    pjMap=baseMap(el);
+    var on=[];
+    var lay=L.geoJSON(geo,{style:function(f){var i=idxOf(f),r=map[i];return{fillColor:r?colorOf(r.total,br):NOAREA,fillOpacity:r?.9:.5,color:LINE,weight:.8};},
+      onEachFeature:function(f,ly){var i=idxOf(f),r=map[i];if(r)on.push(ly);
+        ly.bindTooltip('<b>'+esc(f.properties.pro_th)+'</b><br>'+(r?'งบ '+fmt(r.total)+' บาท · ครั้งที่ 1 '+fmt(r.r1)+' บาท':'ไม่อยู่ในพื้นที่โครงการ'),{sticky:true,className:"pt",direction:"top"});}}).addTo(pjMap);
+    var fg=L.featureGroup(on);
+    pjMap.fitBounds(on.length?fg.getBounds():lay.getBounds(),{padding:[16,16],maxZoom:8});
+    document.getElementById("pjLegend").innerHTML=legendHtml(br,"ไม่อยู่ในพื้นที่โครงการ");
+  }).catch(function(){mapFail(el);});
+}
+
+function renderProjects(){
+  document.getElementById("ptable").innerHTML=P.map(function(p){var l=rowsOf(p.id);
+    return '<tr class="link" data-h="'+code(p.id).toLowerCase()+'"><td>'+code(p.id)+'</td><td>'+esc(p.name)+'</td><td class="r num">'+l.length+'</td><td class="r num">'+fmt(sum(l,"total"))+'</td><td class="r num">'+fmt(sum(l,"r1"))+'</td><td class="r num">'+tgt(l)+'</td><td><span class="tag t-pend">รอข้อมูล</span></td></tr>';}).join("");
+  document.getElementById("pfoot").innerHTML='<tr><td></td><td>รวม 17 โครงการ</td><td class="r num">'+rows.length+' พื้นที่</td><td class="r num">'+fmt(sum(rows,"total"))+'</td><td class="r num">'+fmt(sum(rows,"r1"))+'</td><td class="r num">'+tgt(rows)+'</td><td></td></tr>';
+}
+
+function renderProject(id){
+  var p=proj(id),l=rowsOf(id),v=document.getElementById("v-project");
+  if(!p){v.innerHTML='<div class="panel">ไม่พบโครงการ</div>';return;}
+  var T=sum(l,"total"),R1=sum(l,"r1");
+  var trs=l.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td><td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
+  var prev=id>1?'<a href="#'+code(id-1).toLowerCase()+'">‹ โครงการก่อนหน้า</a>':'',next=id<P.length?'<a href="#'+code(id+1).toLowerCase()+'">โครงการถัดไป ›</a>':'';
+  v.innerHTML=
+   '<div class="crumb"><a href="#projects">ทะเบียนโครงการ</a> / '+code(id)+'</div>'+
+   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
+   '<div class="stack">'+
+   '<div class="two"><div class="panel"><h2>ที่มาโครงการ</h2><p class="sub">ความเป็นมา พระราชดำริ และวัตถุประสงค์</p><div class="placeholder">รอสกัดจากเอกสารรายละเอียดโครงการ Roadmap และกรอบแนวคิด ปี 2570 ของ กผง.</div></div>'+
+   '<div class="panel"><h2>แผนที่พื้นที่โครงการ</h2><p class="sub">จังหวัดที่ดำเนินการ (สีเข้มคืองบสูง) · เส้นขอบเขตโครงการและหมุดเกษตรกรตัวอย่างรอไฟล์ KML / GeoJSON</p><div class="mapbox2 sm" id="pjMap" role="region" aria-label="แผนที่พื้นที่โครงการ"><div class="mapmsg">กำลังโหลดแผนที่…</div></div><div class="mlegend" id="pjLegend"></div></div></div>'+
+   '<div class="kpis">'+kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(l,"mgmt"))+" | ฝึกอบรม "+fmt(sum(l,"train"))+(sum(l,"mat")?" | วัสดุ "+fmt(sum(l,"mat")):""),"")+
+     kpi("จัดสรรครั้งที่ 1",fmt(R1)+" บาท","ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของงบเต็มปี","")+
+     kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
+     kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจาก alrotracking","pend")+'</div>'+
+   '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend")+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
+   '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(id===17?'ชื่อโครงการในแต่ละจังหวัดคือ "'+esc(p.name)+' จ.&lt;ชื่อจังหวัด&gt;"':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th><th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td><td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
+   '</div>';
+}
+
+function renderChecks(){
+  var res=D.checks.map(function(c){return [c.label,c.ok,c.detail];}),pass=res.filter(function(r){return r[1];}).length;
+  document.getElementById("checks").innerHTML=res.map(function(r){return '<div class="check"><div class="dot '+(r[1]?"ok":"bad")+'">'+(r[1]?"✓":"!")+'</div><div><p>'+r[0]+'</p><p class="m num">'+r[2]+'</p></div><span class="tag '+(r[1]?"t-ok":"t-bad")+'">'+(r[1]?"ผ่าน":"ไม่ผ่าน")+'</span></div>';}).join("");
+  document.getElementById("seal").classList.toggle("fail",pass!==res.length);
+  document.getElementById("sealText").textContent="ตรวจความถูกต้อง ผ่าน "+pass+"/"+res.length+" ข้อ";
+  document.getElementById("checkTime").textContent="ตรวจล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
+}
+
+var GS=(typeof google!=="undefined"&&google.script&&google.script.history)?google.script:null;
+function route(h){
+  h=(h||"overview").replace(/^#/,"");var m=/^p(\d{2})$/.exec(h),view;
+  if(m&&proj(+m[1])){view="project";renderProject(+m[1]);}
+  else view=["overview","projects","checks"].indexOf(h)>=0?h:"overview";
+  ["overview","projects","project","checks"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===view);});
+  if(view==="overview")setTimeout(renderOverviewMap,0);
+  if(view==="project")setTimeout(function(){renderProjectMap(+m[1]);},0);
+  var navKey=view==="project"?"projects":view;
+  document.querySelectorAll("nav a").forEach(function(a){if(a.getAttribute("href")==="#"+navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  window.scrollTo(0,0);
+}
+function navigate(h){if(GS){GS.history.push(null,{page:h},h);}else if(location.hash.slice(1)!==h){history.pushState(null,"","#"+h);}route(h);}
+document.addEventListener("click",function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();navigate(a.getAttribute("href").slice(1));});
+if(GS){GS.history.setChangeHandler(function(ev){route((ev.location&&(ev.location.hash||(ev.location.parameter&&ev.location.parameter.page)))||"overview");});}
+else{window.addEventListener("hashchange",function(){route(location.hash.slice(1));});}
+var mx=document.getElementById("matrix");
+mx.addEventListener("mouseover",showTip);mx.addEventListener("focusin",showTip);mx.addEventListener("click",showTip);
+document.getElementById("ptable").addEventListener("click",function(e){var tr=e.target.closest("tr");if(tr)navigate(tr.dataset.h);});
+renderOverview();renderProjects();renderChecks();
+document.getElementById("foot").textContent="ข้อมูลจาก Google Sheets ในโฟลเดอร์ฐานข้อมูลกอง อัปเดตล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
+route(INIT||location.hash.slice(1)||"overview");
+requestAnimationFrame(function(){document.getElementById("loader").classList.add("done");});
+}
+})();
+</script>
+</body>
+</html>
