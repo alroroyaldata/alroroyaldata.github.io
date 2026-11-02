@@ -363,12 +363,23 @@ function provTotals(){
   rows.forEach(function(r){if(r.prov<0)return;PT[r.prov].t+=r.total;PT[r.prov].list.push(r);});
   return PT;
 }
-function breaks(vals){var v=vals.filter(function(x){return x>0;}).sort(function(a,b){return a-b;});if(!v.length)return[1,2,3,4];
+function breaks(vals){
+  var v=vals.filter(function(x){return x>0;}).sort(function(a,b){return a-b;});
+  var u=v.filter(function(x,k){return k===0||x!==v[k-1];});
+  if(u.length<=5)return{cat:true,t:u.slice(1),vals:u};
   var nice=function(x){var p=Math.pow(10,Math.floor(Math.log10(x)));return Math.round(x/p*2)/2*p;};
-  var q=[.2,.4,.6,.8].map(function(f){return nice(v[Math.min(v.length-1,Math.floor(f*v.length))]);});
-  for(var i=1;i<q.length;i++)if(q[i]<=q[i-1])q[i]=q[i-1]+1;return q;}
-function colorOf(v,br){if(!(v>0))return NOAREA;for(var i=0;i<br.length;i++)if(v<br[i])return RAMP[i];return RAMP[4];}
-function legendHtml(br,extra){var h='';RAMP.forEach(function(c,i){var lab=i===0?'ไม่ถึง '+fmt(br[0]):i===4?fmt(br[3])+' ขึ้นไป':fmt(br[i-1])+' – '+fmt(br[i]-1);h+='<span><b style="background:'+c+'"></b>'+lab+'</span>';});
+  var t=[];[.2,.4,.6,.8].forEach(function(f){var q=nice(v[Math.min(v.length-1,Math.floor(f*v.length))]);if(q>v[0]&&q<=v[v.length-1]&&(!t.length||q>t[t.length-1]))t.push(q);});
+  return{cat:false,t:t};
+}
+var PICK={1:[3],2:[1,4],3:[0,2,4],4:[0,1,3,4],5:[0,1,2,3,4]};
+function colorOf(v,br){if(!(v>0))return NOAREA;var cs=PICK[br.t.length+1],k=0;while(k<br.t.length&&v>=br.t[k])k++;return RAMP[cs[k]];}
+function legendHtml(br,extra){
+  var n=br.t.length+1,cs=PICK[n],h='';
+  for(var i=0;i<n;i++){var lab;
+    if(br.cat)lab=fmt(br.vals[i]);
+    else if(n===1)lab='ทุกพื้นที่';
+    else lab=i===0?'ไม่ถึง '+fmt(br.t[0]):i===n-1?fmt(br.t[n-2])+' ขึ้นไป':fmt(br.t[i-1])+' – '+fmt(br.t[i]-1);
+    h+='<span><b style="background:'+RAMP[cs[i]]+'"></b>'+lab+'</span>';}
   return '<span>งบ (บาท):</span>'+h+'<span><b style="background:'+NOAREA+';box-shadow:inset 0 0 0 1px var(--line)"></b>'+(extra||'ไม่มีการดำเนินการ')+'</span>';}
 function baseMap(el){
   el.innerHTML="";
@@ -424,7 +435,7 @@ function renderProjectMap(id){
   deps().then(function(geo){
     if(!document.body.contains(el))return;
     var map={};rowsOf(id).forEach(function(r){map[r.prov]=r;});
-    var vals=Object.keys(map).map(function(k){return map[k].total;}),br=breaks(vals.length>4?vals:provTotals().map(function(x){return x.t;}));
+    var br=breaks(Object.keys(map).map(function(k){return map[k].total;}));
     pjMap=baseMap(el);
     var on=[];
     var lay=L.geoJSON(geo,{style:function(f){var i=idxOf(f),r=map[i];return{fillColor:r?colorOf(r.total,br):NOAREA,fillOpacity:r?.9:.5,color:LINE,weight:.8};},
