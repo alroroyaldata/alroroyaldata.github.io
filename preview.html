@@ -153,6 +153,8 @@ tr.link:hover{background:var(--surface-2)}
 .mapbox2.sm{height:440px}
 .mapmsg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
 .leaflet-container{font-family:inherit;background:var(--surface-2)}
+.basetile{filter:grayscale(1) contrast(.85) brightness(1.08);opacity:.75}
+@media (prefers-color-scheme:dark){.basetile{filter:grayscale(1) invert(1) contrast(.8) brightness(.9);opacity:.6}}
 .leaflet-tooltip.pt{font-family:inherit;font-size:13px;border-radius:8px;border:0;box-shadow:0 6px 20px -6px rgba(13,37,61,.35);padding:6px 10px}
 .mlegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
 .mlegend b{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
@@ -215,7 +217,7 @@ tr.link:hover{background:var(--surface-2)}
           <div><div class="mapbox2" id="ovMap" role="region" aria-label="แผนที่งบประมาณรายจังหวัด"><div class="mapmsg">กำลังโหลดแผนที่…</div></div><div class="mlegend" id="ovLegend"></div></div>
           <div class="pinfo" id="provInfo" aria-live="polite"></div>
         </div>
-        <p class="attr">ขอบเขตจังหวัด: OpenGISData-Thailand (CC BY 4.0) · แผนที่ฐาน: © OpenStreetMap contributors © CARTO</p>
+        <p class="attr">ขอบเขตจังหวัด: OpenGISData-Thailand (CC BY 4.0) · แผนที่ฐาน: © OpenStreetMap contributors</p>
       </div>
       <div class="panel">
         <h2>พื้นที่ดำเนินการและงบ พ.ร.บ. ที่ได้รับจัดสรร</h2>
@@ -371,7 +373,7 @@ function legendHtml(br,extra){var h='';RAMP.forEach(function(c,i){var lab=i===0?
 function baseMap(el){
   el.innerHTML="";
   var m=L.map(el,{zoomControl:true,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false,attributionControl:true,minZoom:5,maxZoom:11,zoomSnap:.25});
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/"+(DARK?"dark_nolabels":"light_nolabels")+"/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'}).addTo(m);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,className:"basetile",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(m);
   m.attributionControl.setPrefix(false);
   el.addEventListener("click",function(){m.scrollWheelZoom.enable();},{once:true});
   return m;
