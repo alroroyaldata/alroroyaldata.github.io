@@ -111,6 +111,12 @@ h2{font-weight:600;font-size:19px;margin:0 0 4px}
 .t-pend{background:var(--pend-soft);color:var(--pend)}
 .track i.s2{background:var(--navy-muted)}.track i.s3{background:var(--gold)}
 .lg{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}.lg b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.mch{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:170px;margin-top:8px}
+.mch .c{display:flex;flex-direction:column;justify-content:flex-end;height:100%;cursor:default}
+.mch .c i{display:block;border-radius:4px 4px 0 0;min-height:0}.mch .c i+i{border-radius:0}
+.mch .c.now{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.mlab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+.mlab b{display:block;font-weight:600;color:var(--ink-2,inherit)}
 .ilist{margin:4px 0 12px;padding-left:20px}.ilist li{margin:3px 0;font-size:14px;line-height:1.6}.ilist .q{color:var(--muted);white-space:nowrap}
 .t-ok{background:var(--ok-soft);color:var(--ok)}.t-bad{background:var(--bad-soft);color:var(--bad)}
 .tbl-wrap{overflow-x:auto}
@@ -253,9 +259,14 @@ tr.link:hover{background:var(--surface-2)}
           <div id="targets"></div>
         </div>
       </div>
+      <div class="panel" id="mpPanel" hidden>
+        <h2>แผนการใช้จ่ายรายเดือน</h2>
+        <p class="sub">ต.ค. 69 – ก.ย. 70 ตามแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · นับเฉพาะงบ พ.ร.บ. (จังหวัด) และเงินกองทุนปฏิรูปที่ดิน · ส่วนกลางแสดงแยก ไม่รวมในยอด · ตัวเลขใต้แท่งคือร้อยละสะสมตามแผน</p>
+        <div id="mpBox"></div>
+      </div>
       <div class="panel" id="srcPanel" hidden>
         <h2>งบประมาณรวม 2 แหล่ง รายโครงการ</h2>
-        <p class="sub">ยอดรวมของแต่ละโครงการ = <b>งบ พ.ร.บ.</b> ที่โอนให้ ส.ป.ก.จังหวัด (แผน กผง.) + <b>เงินกองทุนปฏิรูปที่ดิน</b> (หนังสือ ว5816) · งบ พ.ร.บ. <b>ส่วนกลาง</b> แสดงแยกไว้และไม่นับรวมในยอด · ที่มา: ไฟล์ขั้นตอน ปี 70 ของ กปต.</p>
+        <p class="sub">ยอดรวมของแต่ละโครงการ = <b>งบ พ.ร.บ.</b> ที่โอนให้ ส.ป.ก.จังหวัด (แผน กผง.) + <b>เงินกองทุนปฏิรูปที่ดิน</b> (หนังสือ ว5816) · งบ พ.ร.บ. <b>ส่วนกลาง</b> แสดงแยกไว้และไม่นับรวมในยอด · ที่มา: ไฟล์ขั้นตอน ปี 70 ของ กปต. ยืนยันยอดกับแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70</p>
         <div id="srcBars"></div>
         <div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span>ส่วนกลาง: แสดงตัวเลขแยก ไม่รวมในแถบและยอดรวม</span></div>
       </div>
@@ -354,6 +365,24 @@ function renderOverview(){
   document.getElementById("targets").innerHTML=tg.map(function(t){return '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">'+t[0]+'</div><div class="amt num" style="font-weight:600">'+fmt(t[1])+' '+t[2]+'</div></div>';}).join("")+
     '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">เกษตรกรในโครงการ</div><div><span class="tag t-pend">รอข้อมูล</span></div></div>';
   renderSources();
+  var mb=mpHtml(null);if(mb){document.getElementById("mpBox").innerHTML=mb;document.getElementById("mpPanel").hidden=false;}
+}
+var MONS=["ต.ค.","พ.ย.","ธ.ค.","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย."];
+function curMonthIdx(){var d=new Date(),m=d.getMonth(),y=d.getFullYear()+543;var fy=m>=9?y+1:y;if(fy<2570)return -1;if(fy>2570)return 12;return (m+3)%12;}
+function mpHtml(pid){
+  var MP=D.monthPlan;if(!MP||!MP.length)return "";
+  var sel=function(lvl,src){var a=[0,0,0,0,0,0,0,0,0,0,0,0];MP.forEach(function(x){if((pid===null||x.pid===pid)&&x.lvl===lvl&&(!src||x.src===src))x.m.forEach(function(v,i){a[i]+=v||0;});});return a;};
+  var P=sel("จังหวัด","พ.ร.บ."),F=sel("จังหวัด","กองทุน"),C=sel("ส่วนกลาง");
+  var tot=P.map(function(v,i){return v+F[i];}),T=tot.reduce(function(a,b){return a+b;},0),TC=C.reduce(function(a,b){return a+b;},0);
+  if(!T&&!TC)return "";
+  var mx=Math.max.apply(null,tot)||1,cum=0,now=curMonthIdx(),cumNow=0;
+  var bars=tot.map(function(v,i){var hp=P[i]/mx*100,hf=F[i]/mx*100;return '<div class="c'+(i===now?' now':'')+'" title="'+MONS[i]+' · งบ พ.ร.บ. (จังหวัด) '+fmt(P[i])+' · เงินกองทุน '+fmt(F[i])+' · รวม '+fmt(v)+(C[i]?' · ส่วนกลาง (แยก) '+fmt(C[i]):'')+'"><i style="height:'+hf.toFixed(1)+'%;background:var(--gold)"></i><i style="height:'+hp.toFixed(1)+'%;background:var(--primary)"></i></div>';}).join("");
+  var labs=tot.map(function(v,i){cum+=v;if(i<=now)cumNow=cum;return '<div><b>'+MONS[i]+'</b>'+(T?fmt(cum/T*100,0)+'%':'-')+'</div>';}).join("");
+  var k='<div class="kpis" style="margin-bottom:12px">'+kpi("แผนทั้งปี (ไม่รวมส่วนกลาง)",fmt(T)+" บาท","งบ พ.ร.บ. "+fmt(P.reduce(function(a,b){return a+b;},0))+" | กองทุน "+fmt(F.reduce(function(a,b){return a+b;},0)),"")+
+    kpi("แผนสะสมถึงเดือนนี้",now<0?"ยังไม่เริ่มปีงบ":fmt(cumNow)+" บาท",now<0?"":"ร้อยละ "+fmt(T?cumNow/T*100:0,1)+" ของแผนทั้งปี (ถึง "+MONS[Math.min(now,11)]+")","")+
+    kpi("ผลเบิกจ่ายจริง","รอข้อมูล","เทียบแผนรายเดือนเมื่อนำเข้า alrotracking","pend")+
+    kpi("ส่วนกลาง (แยก ไม่รวม)",fmt(TC)+" บาท","แผนรายเดือนของ ส.ป.ก. ส่วนกลาง","")+'</div>';
+  return k+'<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>';
 }
 function pbOf(id){return (D.projBudget||[]).find(function(r){return r.pid===id;});}
 function renderSources(){
@@ -527,6 +556,7 @@ function renderProject(id){
      kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจาก alrotracking","pend")+'</div>'+
    '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+(function(){var pid=id===17?4:id,n=(D.indicators||[]).filter(function(x){return x.pid===pid&&x.type==="เกษตรกรตัวอย่าง";}).reduce(function(a,x){return a+x.target;},0);return n?kpi("เกษตรกรตัวอย่าง","เป้า "+fmt(n)+" ราย","รายชื่อและพิกัดรอข้อมูล","pend"):kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend");})()+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
    planHtml(id)+
+   (function(){var pid=id===17?4:id,h=mpHtml(pid);return h?'<div class="panel"><h2>แผนการใช้จ่ายรายเดือน</h2><p class="sub">ไม่รวมส่วนกลาง (แสดงแยก)'+(id===17?' · แผนรวมกับโครงการที่ 4':pid===4?' · รวมโครงการที่ 17':'')+'</p>'+h+'</div>':"";})()+
    '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(id===17?'ชื่อโครงการในแต่ละจังหวัดคือ "'+esc(p.name)+' จ.&lt;ชื่อจังหวัด&gt;"':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th><th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td><td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
    '</div>';
 }
