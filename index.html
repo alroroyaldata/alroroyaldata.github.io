@@ -933,7 +933,7 @@ function renderProjectMap(id){
   deps().then(function(geo){
     if(!document.body.contains(el))return;
     el.innerHTML="";
-    var base={"แผนที่":L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'}),
+    var base={"แผนที่":L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}),
       "ภาพดาวเทียม":L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})])};
     pjMap=L.map(el,{zoomControl:true,scrollWheelZoom:false,tap:false,minZoom:5,maxZoom:18,zoomSnap:.5,layers:[base["แผนที่"]]});
     pjMap.attributionControl.setPrefix(false);
