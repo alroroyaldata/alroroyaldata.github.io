@@ -220,6 +220,9 @@ body.pm-lock{overflow:hidden}
 .pm-bar{position:absolute;z-index:500;left:50%;transform:translateX(-50%);top:10px;max-width:calc(100% - 20px);background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px -8px rgba(13,37,61,.35);border-radius:12px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .pm-bar input{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;min-width:220px;flex:1;background:var(--surface);color:var(--ink)}
 .pm-bar[hidden]{display:none}
+.ptg{margin:6px 0 10px}.ptg summary{cursor:pointer;font-size:13px;color:var(--primary);width:max-content;list-style:none;padding:3px 10px;border:1px solid var(--line);border-radius:9999px}.ptg summary::-webkit-details-marker{display:none}.ptg summary::before{content:'▸ '}.ptg[open] summary::before{content:'▾ '}
+.ptg .bi-mtw{margin-top:8px;max-height:420px;overflow:auto}.ptg td .rg{display:block;font-size:11px;color:var(--muted)}
+.ptg .pbar i{display:block;height:8px;border-radius:9999px;background:var(--primary);opacity:.75}
 .thlabel{background:none;border:0}.thlabel span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:12px;font-weight:600;color:#fff;text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,.8);pointer-events:none}.thlabel.on span{font-size:14px;color:#ffe9a8}
 .pmx .pm-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
 .pm-btn svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
@@ -826,11 +829,38 @@ function renderSources(){
   h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">งบ พ.ร.บ. '+fmt(tp)+' · กองทุน '+fmt(tf)+'<br>ส่วนกลาง (แยก ไม่รวมในยอด) '+fmt(tc)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
   document.getElementById("srcBars").innerHTML=h;document.getElementById("srcPanel").hidden=false;
 }
+// shared logic (will be embedded in site): indicator target -> per-province breakdown from plan items
+function provTargets(items,cols,pid,target,unit){
+  var ix={};cols.forEach(function(c,i){ix[c]=i;});
+  var num=function(q){var m=/^\s*([\d,]+(?:\.\d+)?)/.exec(String(q==null?"":q));return m?+m[1].replace(/,/g,""):NaN;};
+  var unitOf=function(r){var u=String(r[ix.unit]||"").trim();if(u)return u;var m=/^\s*[\d,.]+\s*(\S+)/.exec(String(r[ix.qty]||""));return m?m[1]:"";};
+  var R=items.filter(function(r){return r[ix.pid]===pid;}),kids={};
+  R.forEach(function(r){if(r[ix.parent]!==""&&r[ix.parent]!=null)(kids[r[ix.parent]]=kids[r[ix.parent]]||[]).push(r);});
+  var keys=Object.keys(kids);
+  for(var k=0;k<keys.length;k++){var c=kids[keys[k]];if(c.length<2)continue;
+    var pv={},ok=true,sum=0;
+    c.forEach(function(r){var p=String(r[ix.prov]||"");var q=num(r[ix.qty]);if(!p||pv[p]!=null||!(q>=0)||unitOf(r)!==unit){ok=false;return;}pv[p]=q;sum+=q;});
+    if(ok&&Object.keys(pv).length>1&&Math.abs(sum-target)<0.5)return pv;}
+  return null;
+}
+
+
+function alroActFor(id,x){var q=alroP(id);if(!q)return null;var A=q.acts.filter(function(a){return a.unit===x.unit&&a.pv;});if(!A.length)return null;
+  var par=function(s){var m=/\(([^)]*)\)\s*$/.exec(s||"");return m?m[1].replace(/\s+/g,"").slice(0,12):"";},px=par(x.item);
+  return A.filter(function(a){return px&&par(a.label)===px;})[0]||A.filter(function(a){return a.label===x.item;})[0]||A.filter(function(a){return Math.abs(a.plan-x.target)<.5;})[0]||(A.length===1?A[0]:null);}
+function provBreak(id,x){
+  if(!D.items||!D.itemCols)return "";var pid=id===17?4:id,pv=provTargets(D.items,D.itemCols,pid,x.target,x.unit);if(!pv)return "";
+  var act=alroActFor(id,x),L=Object.keys(pv).sort(function(a,b){return pv[b]-pv[a]||a.localeCompare(b,"th");}),done=0,mx=Math.max.apply(null,L.map(function(k){return pv[k];}))||1;
+  var rows=L.map(function(k){var d=act&&act.pv[k]?act.pv[k][1]:null;if(d!=null)done+=d;var i=PV.indexOf(k);
+    return '<tr><td>จ.'+esc(k)+'<small class="rg">'+(i>=0?esc(RN[RG[i]]||""):"")+'</small></td><td class="r num">'+fmt(pv[k])+'</td><td class="pbar"><i style="width:'+(pv[k]/mx*100).toFixed(1)+'%"></i></td><td class="r num'+(d==null?' z':'')+'">'+(d==null?'–':fmt(d))+'</td><td class="r num'+(d==null?' z':'')+'">'+(d==null?'–':fmt(pv[k]?d/pv[k]*100:0,1))+'</td></tr>';}).join("");
+  var T=x.target;
+  return '<details class="ptg"><summary>แจงรายจังหวัด ('+L.length+' จังหวัด)</summary><div class="bi-mtw"><table class="bi-mt" style="min-width:560px"><thead><tr><th>จังหวัด</th><th class="r">เป้าหมาย ('+esc(x.unit)+')</th><th style="width:22%"></th><th class="r">ผล (alrotracking)</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr class="sum"><td>รวม</td><td class="r num b">'+fmt(T)+'</td><td></td><td class="r num b">'+(act?fmt(done):'–')+'</td><td class="r num b">'+(act?fmt(T?done/T*100:0,1):'–')+'</td></tr></tfoot></table></div><p class="bi-src">เป้าหมายรายจังหวัดจากแผนปฏิบัติงานฯ ปี 70 (รวมได้เท่ากับเป้าหมายโครงการ) · ผลจากไฟล์ alrotracking '+(act?'ณ '+thDate(D.alro.latest.date):'— รอไฟล์ปี 2570')+'</p></details>';
+}
 function planHtml(id){
   var pid=id===17?4:id,r=pbOf(pid),I=(D.indicators||[]).filter(function(x){return x.pid===pid;});
   if(!r&&!I.length)return "";
   var g=function(t){return I.filter(function(x){return x.type===t;});};
-  var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span></li>';}).join("")+'</ul>';};
+  var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span>'+provBreak(id,x)+'</li>';}).join("")+'</ul>';};
   var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมโครงการที่ 17 ขยายผลธนาคารอาหารชุมชน)':'')+'</p>';
   if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. (จังหวัด)",fmt(r.prbProv)+" บาท","ส่วนกลางแยกต่างหาก "+fmt(r.prbAll-r.prbProv)+" บาท (ไม่รวม)","")+kpi("เงินกองทุนปฏิรูปที่ดิน",fmt(r.fund)+" บาท",r.fund?"อนุมัติตามหนังสือ ว5816":"โครงการนี้ไม่ได้รับเงินกองทุน","")+kpi("รวม 2 แหล่ง",fmt(r.prbProv+r.fund)+" บาท","งบ พ.ร.บ. (จังหวัด) + เงินกองทุน · ไม่รวมส่วนกลาง","navy")+'</div>';
   [["เป้าหมายหลักโครงการ","เป้าหมายหลัก"],["หลักสูตรอบรม","หลักสูตรอบรม"],["สนับสนุนปัจจัย/วัสดุ","การสนับสนุน"],["เกษตรกรตัวอย่าง","เกษตรกรตัวอย่าง"]].forEach(function(t){var l=g(t[0]);if(l.length)h+='<div class="h4">'+t[1]+'</div>'+li(l);});
