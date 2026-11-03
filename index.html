@@ -109,6 +109,9 @@ h2{font-weight:600;font-size:19px;margin:0 0 4px}
 .amt{text-align:right;font-size:14px}
 .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:9999px;white-space:nowrap}
 .t-pend{background:var(--pend-soft);color:var(--pend)}
+.track i.s2{background:var(--navy-muted)}.track i.s3{background:var(--gold)}
+.lg{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}.lg b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.ilist{margin:4px 0 12px;padding-left:20px}.ilist li{margin:3px 0;font-size:14px;line-height:1.6}.ilist .q{color:var(--muted);white-space:nowrap}
 .t-ok{background:var(--ok-soft);color:var(--ok)}.t-bad{background:var(--bad-soft);color:var(--bad)}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
@@ -250,6 +253,12 @@ tr.link:hover{background:var(--surface-2)}
           <div id="targets"></div>
         </div>
       </div>
+      <div class="panel" id="srcPanel" hidden>
+        <h2>งบประมาณรวม 2 แหล่ง รายโครงการ</h2>
+        <p class="sub">งบ พ.ร.บ. ทั้งโครงการ (ส่วนจังหวัดตามแผน กผง. + ส่วนกลาง) และเงินกองทุนการปฏิรูปที่ดินฯ ตามไฟล์ขั้นตอน ปี 70 ของ กปต.</p>
+        <div id="srcBars"></div>
+        <div class="lg"><span><b style="background:var(--primary)"></b>พ.ร.บ. ส่วนจังหวัด</span><span><b style="background:var(--navy-muted)"></b>พ.ร.บ. ส่วนกลาง</span><span><b style="background:var(--gold)"></b>เงินกองทุนฯ</span></div>
+      </div>
     </div>
   </section>
 
@@ -335,7 +344,7 @@ function renderOverview(){
   document.getElementById("kpis").innerHTML=
     kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(rows,"mgmt"))+" | ฝึกอบรม "+fmt(sum(rows,"train"))+" | วัสดุ "+fmt(sum(rows,"mat")),"navy")+
     kpi("จัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)",fmt(R1)+" บาท","ร้อยละ "+fmt(R1/T*100,1)+" ของงบเต็มปี","")+
-    kpi("เงินกองทุนการปฏิรูปที่ดินฯ",fmt((D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund)+" บาท","แยกราย 72 จังหวัดตามหนังสือ ว5816 (ไม่ได้แยกรายโครงการ)","")+
+    kpi("เงินกองทุนการปฏิรูปที่ดินฯ",fmt((D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund)+" บาท",(D.projBudget?"แยกราย 72 จังหวัด (ว5816) และรายโครงการ (แผน กปต.)":"แยกราย 72 จังหวัดตามหนังสือ ว5816 (ไม่ได้แยกรายโครงการ)"),"")+
     kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจากไฟล์ส่งออก alrotracking","pend");
   var list=P.map(function(p){var l=rowsOf(p.id);return{p:p,t:sum(l,"total"),r1:sum(l,"r1"),n:l.length};}).sort(function(a,b){return b.t-a.t;});
   var mx=list[0].t;
@@ -344,6 +353,28 @@ function renderOverview(){
   var tg=[["เกษตรกรเข้ารับการอบรม",sum(rows,"ppl"),"ราย"],["โรงเรียน (อบรม)",sum(rows,"schT"),"แห่ง"],["โรงเรียน (วัสดุการเกษตร)",sum(rows,"schM"),"แห่ง"],["คลินิกเกษตรเคลื่อนที่",sum(rows,"times"),"ครั้ง"]];
   document.getElementById("targets").innerHTML=tg.map(function(t){return '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">'+t[0]+'</div><div class="amt num" style="font-weight:600">'+fmt(t[1])+' '+t[2]+'</div></div>';}).join("")+
     '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">เกษตรกรในโครงการ</div><div><span class="tag t-pend">รอข้อมูล</span></div></div>';
+  renderSources();
+}
+function pbOf(id){return (D.projBudget||[]).find(function(r){return r.pid===id;});}
+function renderSources(){
+  var B=D.projBudget;if(!B||!B.length)return;
+  var L=B.map(function(r){var p=proj(r.pid);return{r:r,p:p,all:r.prbAll+r.fund};}).sort(function(a,b){return b.all-a.all;});
+  var mx=L[0].all,ta=0,tp=0,tc=0,tf=0;
+  var h=L.map(function(x){var r=x.r,c=r.prbAll-r.prbProv;ta+=x.all;tp+=r.prbProv;tc+=c;tf+=r.fund;
+    var w1=r.prbProv/mx*100,w2=c/mx*100,w3=r.fund/mx*100;
+    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="พ.ร.บ. ส่วนจังหวัด '+fmt(r.prbProv)+' · ส่วนกลาง '+fmt(c)+' · เงินกองทุนฯ '+fmt(r.fund)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (+17)':'')+'</div><div class="m">พ.ร.บ. '+fmt(r.prbAll)+' · กองทุน '+fmt(r.fund)+'</div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s2" style="left:'+w1.toFixed(1)+'%;width:'+w2.toFixed(1)+'%"></i><i class="s3" style="left:'+(w1+w2).toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
+  h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">พ.ร.บ. จังหวัด '+fmt(tp)+' · ส่วนกลาง '+fmt(tc)+' · กองทุน '+fmt(tf)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
+  document.getElementById("srcBars").innerHTML=h;document.getElementById("srcPanel").hidden=false;
+}
+function planHtml(id){
+  var pid=id===17?4:id,r=pbOf(pid),I=(D.indicators||[]).filter(function(x){return x.pid===pid;});
+  if(!r&&!I.length)return "";
+  var g=function(t){return I.filter(function(x){return x.type===t;});};
+  var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span></li>';}).join("")+'</ul>';};
+  var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมโครงการที่ 17 ขยายผลธนาคารอาหารชุมชน)':'')+'</p>';
+  if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. ทั้งโครงการ",fmt(r.prbAll)+" บาท","ส่วนจังหวัด "+fmt(r.prbProv)+" | ส่วนกลาง "+fmt(r.prbAll-r.prbProv),"")+kpi("เงินกองทุนฯ",fmt(r.fund)+" บาท",r.fund?"แผน กปต.":"ไม่มีเงินกองทุนฯ","")+kpi("รวม 2 แหล่ง",fmt(r.prbAll+r.fund)+" บาท","พ.ร.บ. + เงินกองทุนฯ","navy")+'</div>';
+  [["เป้าหมายหลักโครงการ","เป้าหมายหลัก"],["หลักสูตรอบรม","หลักสูตรอบรม"],["สนับสนุนปัจจัย/วัสดุ","การสนับสนุน"],["เกษตรกรตัวอย่าง","เกษตรกรตัวอย่าง"]].forEach(function(t){var l=g(t[0]);if(l.length)h+='<div class="h4">'+t[1]+'</div>'+li(l);});
+  return h+'</div>';
 }
 function kpi(l,v,s,cls){return '<div class="kpi '+cls+'"><p class="l">'+l+'</p><p class="v num">'+v+'</p><p class="s num">'+s+'</p></div>';}
 function showTip(e){
@@ -494,7 +525,8 @@ function renderProject(id){
      kpi("จัดสรรครั้งที่ 1",fmt(R1)+" บาท","ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของงบเต็มปี","")+
      kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
      kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจาก alrotracking","pend")+'</div>'+
-   '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend")+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
+   '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+(function(){var pid=id===17?4:id,n=(D.indicators||[]).filter(function(x){return x.pid===pid&&x.type==="เกษตรกรตัวอย่าง";}).reduce(function(a,x){return a+x.target;},0);return n?kpi("เกษตรกรตัวอย่าง","เป้า "+fmt(n)+" ราย","รายชื่อและพิกัดรอข้อมูล","pend"):kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend");})()+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
+   planHtml(id)+
    '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(id===17?'ชื่อโครงการในแต่ละจังหวัดคือ "'+esc(p.name)+' จ.&lt;ชื่อจังหวัด&gt;"':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th><th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td><td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
    '</div>';
 }
