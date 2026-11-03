@@ -373,7 +373,7 @@ body.pm-lock{overflow:hidden}
   </section>
 
   <section class="view" id="v-projects">
-    <div class="hero"><div><h1>ทะเบียนโครงการ</h1><p>17 โครงการ ปีงบประมาณ 2570 เลือกโครงการเพื่อเปิดหน้าโครงการ</p><div class="rule"></div></div></div>
+    <div class="hero"><div><h1>ทะเบียนโครงการ</h1><p><span id="pcount">16</span> โครงการ ปีงบประมาณ 2570 เลือกโครงการเพื่อเปิดหน้าโครงการ</p><div class="rule"></div></div></div>
     <div class="panel tbl-wrap">
       <table><thead><tr><th>รหัส</th><th>โครงการ</th><th class="r">จังหวัด</th><th class="r">งบเต็มปี (บาท)</th><th class="r">ครั้งที่ 1 (บาท)</th><th class="r">เป้าหมาย</th><th>ผลเบิกจ่าย</th></tr></thead><tbody id="ptable"></tbody><tfoot id="pfoot"></tfoot></table>
     </div>
@@ -684,6 +684,9 @@ var BI=(D.items&&D.itemCols)?itemsBuild(D.items,D.itemCols):null;document.getEle
 (function(){var dp=document.getElementById("divPanel");if(dp&&D.itemsDiv&&D.itemsDiv.length&&D.itemCols){dp.innerHTML=divPanelHtml(D.itemsDiv,D.itemCols);dp.hidden=false;}})();
 function agriOf(f){if(!D.items)return null;var ix=D.itemCols,ci=ix.indexOf("cat"),fi=ix.indexOf("fund"),ai=ix.indexOf("amount");return D.items.reduce(function(a,r){return a+(r[ci]==="วัสดุการเกษตร"&&r[fi]===f?r[ai]:0);},0);}
 var rows=D.budget.map(function(b){return{pid:b[0],prov:b[1],mgmt:b[2],train:b[3],mat:b[4],r1:b[5],ppl:b[6],schT:b[7],schM:b[8],times:b[9],total:b[2]+b[3]+b[4]};});
+/* โครงการขยายผลธนาคารอาหารชุมชน (เกษตรวิชญา) เป็นกิจกรรมหนึ่งของโครงการที่ 4 ตามเอกสาร — รวมเข้าโครงการที่ 4 */
+var SUBACT={17:"กิจกรรมขยายผลตามแนวพระราชดำริ"};
+(function(){var m={},out=[],F=["mgmt","train","mat","r1","ppl","schT","schM","times","total"];rows.forEach(function(r){var act=SUBACT[r.pid]?SUBACT[r.pid]:"",c=Object.assign({act:act},r);if(SUBACT[r.pid])r.pid=4;c.pid=r.pid;var k=r.pid+"|"+r.prov;if(m[k]){F.forEach(function(f){m[k][f]+=r[f];});m[k].parts.push(c);}else{r.parts=[c];m[k]=r;out.push(r);}});rows=out;var s=P.filter(function(p){return SUBACT[p.id];});P=P.filter(function(p){return !SUBACT[p.id];});var p4=P.filter(function(p){return p.id===4;})[0];if(p4)p4.subs=s;})();
 var fmt=function(n,d){return Number(n).toLocaleString("th-TH",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
 var code=function(id){return "P"+String(id).padStart(2,"0");};
 function proj(id){return P.find(function(p){return p.id===id;});}
@@ -825,7 +828,7 @@ function renderSources(){
   var mx=L[0].all,ta=0,tp=0,tc=0,tf=0;
   var h=L.map(function(x){var r=x.r,c=r.prbAll-r.prbProv;ta+=x.all;tp+=r.prbProv;tc+=c;tf+=r.fund;
     var w1=r.prbProv/mx*100,w3=r.fund/mx*100;
-    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="งบ พ.ร.บ. (จังหวัด) '+fmt(r.prbProv)+' · เงินกองทุนปฏิรูปที่ดิน '+fmt(r.fund)+' · ส่วนกลางแยกต่างหาก '+fmt(c)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (+17)':'')+'</div><div class="m">งบ พ.ร.บ. '+fmt(r.prbProv)+' · กองทุน '+fmt(r.fund)+' · <span title="ไม่รวมในยอด">ส่วนกลาง (แยก) '+fmt(c)+'</span></div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s3" style="left:'+w1.toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
+    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="งบ พ.ร.บ. (จังหวัด) '+fmt(r.prbProv)+' · เงินกองทุนปฏิรูปที่ดิน '+fmt(r.fund)+' · ส่วนกลางแยกต่างหาก '+fmt(c)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (รวมกิจกรรมขยายผล)':'')+'</div><div class="m">งบ พ.ร.บ. '+fmt(r.prbProv)+' · กองทุน '+fmt(r.fund)+' · <span title="ไม่รวมในยอด">ส่วนกลาง (แยก) '+fmt(c)+'</span></div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s3" style="left:'+w1.toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
   h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">งบ พ.ร.บ. '+fmt(tp)+' · กองทุน '+fmt(tf)+'<br>ส่วนกลาง (แยก ไม่รวมในยอด) '+fmt(tc)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
   document.getElementById("srcBars").innerHTML=h;document.getElementById("srcPanel").hidden=false;
 }
@@ -861,7 +864,7 @@ function planHtml(id){
   if(!r&&!I.length)return "";
   var g=function(t){return I.filter(function(x){return x.type===t;});};
   var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span>'+provBreak(id,x)+'</li>';}).join("")+'</ul>';};
-  var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมโครงการที่ 17 ขยายผลธนาคารอาหารชุมชน)':'')+'</p>';
+  var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมกิจกรรมขยายผลตามแนวพระราชดำริ)':'')+'</p>';
   if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. (จังหวัด)",fmt(r.prbProv)+" บาท","ส่วนกลางแยกต่างหาก "+fmt(r.prbAll-r.prbProv)+" บาท (ไม่รวม)","")+kpi("เงินกองทุนปฏิรูปที่ดิน",fmt(r.fund)+" บาท",r.fund?"อนุมัติตามหนังสือ ว5816":"โครงการนี้ไม่ได้รับเงินกองทุน","")+kpi("รวม 2 แหล่ง",fmt(r.prbProv+r.fund)+" บาท","งบ พ.ร.บ. (จังหวัด) + เงินกองทุน · ไม่รวมส่วนกลาง","navy")+'</div>';
   [["เป้าหมายหลักโครงการ","เป้าหมายหลัก"],["หลักสูตรอบรม","หลักสูตรอบรม"],["สนับสนุนปัจจัย/วัสดุ","การสนับสนุน"],["เกษตรกรตัวอย่าง","เกษตรกรตัวอย่าง"]].forEach(function(t){var l=g(t[0]);if(l.length)h+='<div class="h4">'+t[1]+'</div>'+li(l);});
   return h+'</div>';
@@ -1179,9 +1182,10 @@ document.addEventListener("input",function(e){if(e.target.id==="pmQ"){pinState.q
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("pmModal")&&!document.getElementById("pmModal").hidden){pmModal("");endPlace();drawPins(false);}else if(pinState.full){var b=document.querySelector('[data-pm="full"]');b&&b.click();}}});
 
 function renderProjects(){
+  var pc=document.getElementById("pcount");if(pc)pc.textContent=P.length;
   document.getElementById("ptable").innerHTML=P.map(function(p){var l=rowsOf(p.id);
     return '<tr class="link" data-h="'+code(p.id).toLowerCase()+'"><td>'+code(p.id)+'</td><td>'+esc(p.name)+'</td><td class="r num">'+l.length+'</td><td class="r num">'+fmt(sum(l,"total"))+'</td><td class="r num">'+fmt(sum(l,"r1"))+'</td><td class="r num">'+tgt(l)+'</td><td><span class="tag t-pend">รอข้อมูล</span></td></tr>';}).join("");
-  document.getElementById("pfoot").innerHTML='<tr><td></td><td>รวม 17 โครงการ</td><td class="r num">'+rows.length+' พื้นที่</td><td class="r num">'+fmt(sum(rows,"total"))+'</td><td class="r num">'+fmt(sum(rows,"r1"))+'</td><td class="r num">'+tgt(rows)+'</td><td></td></tr>';
+  document.getElementById("pfoot").innerHTML='<tr><td></td><td>รวม '+P.length+' โครงการ</td><td class="r num">'+rows.length+' พื้นที่</td><td class="r num">'+fmt(sum(rows,"total"))+'</td><td class="r num">'+fmt(sum(rows,"r1"))+'</td><td class="r num">'+tgt(rows)+'</td><td></td></tr>';
 }
 
 function bgHtml(p){
@@ -1193,18 +1197,22 @@ function bgHtml(p){
   h+='<p class="attr">ที่มา: '+esc(x.src)+(x.conf&&x.conf!=="สูง"?' · ความเชื่อมั่น: '+esc(x.conf):'')+'</p>';
   return h;
 }
+function subActHtml(p){if(!p.subs||!p.subs.length)return "";return p.subs.map(function(s){var x=s.info||{},pv={};rows.forEach(function(r){if(r.pid===p.id)(r.parts||[]).forEach(function(c){if(c.act)pv[PV[c.prov]]=1;});});var n=Object.keys(pv);
+  var h='<div class="h4" style="margin-top:18px">กิจกรรมย่อย: '+esc(SUBACT[s.id])+'</div><p style="margin:0 0 6px;font-size:14px"><b>'+esc(s.name)+'</b> — ดำเนินการ '+n.length+' จังหวัด ('+esc(n.join(" "))+') · ชื่อในแต่ละจังหวัด: "'+esc(s.name)+' จ.&lt;ชื่อจังหวัด&gt;"</p>';
+  if(x.bg)h+='<div class="bgtext"><p>'+esc(x.bg)+'</p></div>';if(x.obj&&x.obj.length)h+='<div class="h4">วัตถุประสงค์ของกิจกรรม</div><ol class="objs">'+x.obj.map(function(o){return "<li>"+esc(o)+"</li>";}).join("")+'</ol>';if(x.area)h+='<div class="h4">พื้นที่ตามเอกสาร</div><p style="margin:0 0 8px;font-size:14px">'+esc(x.area)+'</p>';if(x.src)h+='<p class="attr">ที่มา: '+esc(x.src)+'</p>';return h;}).join("");}
 function renderProject(id){
   var p=proj(id),l=rowsOf(id),v=document.getElementById("v-project");
   if(!p){v.innerHTML='<div class="panel">ไม่พบโครงการ</div>';return;}
   var T=sum(l,"total"),R1=sum(l,"r1");
-  var trs=l.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td><td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
+  var HA=!!(p.subs&&p.subs.length),fl=HA?[].concat.apply([],l.map(function(r){return r.parts;})).sort(function(a,b){return (a.act?1:0)-(b.act?1:0);}):l;
+  var trs=fl.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td>'+(HA?'<td>'+(r.act?'ขยายผล':'กิจกรรมหลัก')+'</td>':'')+'<td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
   var prev=id>1?'<a href="#'+code(id-1).toLowerCase()+'">‹ โครงการก่อนหน้า</a>':'',next=id<P.length?'<a href="#'+code(id+1).toLowerCase()+'">โครงการถัดไป ›</a>':'';
   v.innerHTML=
    '<div class="crumb"><a href="#projects">ทะเบียนโครงการ</a> / '+code(id)+'</div>'+
-   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
+   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด'+(p.subs&&p.subs.length?' (รวม'+p.subs.map(function(s){return SUBACT[s.id];}).join(", ")+')':'')+' | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
    '<div class="stack">'+
    pinPanelHtml(id)+
-   '<div class="panel"><h2>ที่มาโครงการ</h2>'+bgHtml(p)+'</div>'+
+   '<div class="panel"><h2>ที่มาโครงการ</h2>'+bgHtml(p)+subActHtml(p)+'</div>'+
    '<div class="kpis">'+kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(l,"mgmt"))+" | ฝึกอบรม "+fmt(sum(l,"train"))+(sum(l,"mat")?" | วัสดุ "+fmt(sum(l,"mat")):""),"")+
      kpi("จัดสรรครั้งที่ 1",fmt(R1)+" บาท","ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของงบเต็มปี","")+
      kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
@@ -1213,7 +1221,7 @@ function renderProject(id){
    planHtml(id)+
    (BI?'<section class="panel" id="biPanel"></section>':"")+
    alroPanel(id)+
-   '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(id===17?'ชื่อโครงการในแต่ละจังหวัดคือ "'+esc(p.name)+' จ.&lt;ชื่อจังหวัด&gt;"':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th><th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ (พ.ร.บ.)</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td><td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
+   '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(HA?'แยกตามหมวดค่าใช้จ่ายและกิจกรรม · ขยายผล = '+esc(p.subs.map(function(s){return s.name;}).join(", "))+' จ.&lt;ชื่อจังหวัด&gt;':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th>'+(HA?'<th>กิจกรรม</th>':'')+'<th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ (พ.ร.บ.)</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td>'+(HA?'<td></td>':'')+'<td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
    '</div>';
   if(BI){var bp=document.getElementById("biPanel");if(bp){itemsPanelRender(bp,BI,id===17?4:id);if(id===17)bp.querySelector(".sub").insertAdjacentHTML("afterbegin","แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน (เลือกจังหวัดเพื่อดูส่วนขยายผล) · ");}}
 }
@@ -1228,7 +1236,7 @@ function renderChecks(){
 
 var GS=(typeof google!=="undefined"&&google.script&&google.script.history)?google.script:null;
 function route(h){
-  h=(h||"overview").replace(/^#/,"");var m=/^p(\d{2})$/.exec(h),view;
+  h=(h||"overview").replace(/^#/,"");if(h==="p17"){h="p04";try{history.replaceState(null,"","#p04");}catch(e){}}var m=/^p(\d{2})$/.exec(h),view;
   if(m&&proj(+m[1])){view="project";renderProject(+m[1]);}
   else view=["overview","projects","checks"].indexOf(h)>=0?h:"overview";
   ["overview","projects","project","checks"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===view);});
