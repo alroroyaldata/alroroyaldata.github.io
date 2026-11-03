@@ -220,6 +220,52 @@ body.pm-lock{overflow:hidden}
 .pm-bar{position:absolute;z-index:500;left:50%;transform:translateX(-50%);top:10px;max-width:calc(100% - 20px);background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px -8px rgba(13,37,61,.35);border-radius:12px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .pm-bar input{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;min-width:220px;flex:1;background:var(--surface);color:var(--ink)}
 .pm-bar[hidden]{display:none}
+.pmx .pm-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.pm-btn svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
+.pm-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);height:640px}
+.pm-mapcol{position:relative;min-width:0}
+.mapbox2.pm{height:100%;border:0;border-radius:0}
+.mapbox2.pm.sat .leaflet-control-attribution{background:rgba(255,255,255,.75)}
+.pm-ctl{position:absolute;z-index:450;display:flex;gap:6px}
+.pm-ctl.tl{top:12px;left:12px;flex-direction:column}
+.pm-ctl.tr{top:12px;right:12px}
+.pm-ctl button{font:inherit;font-size:13px;display:grid;place-items:center;min-width:36px;height:36px;border:0;background:var(--surface);color:var(--ink);border-radius:10px;box-shadow:0 2px 10px rgba(13,37,61,.18);cursor:pointer;padding:0 10px}
+.pm-ctl button svg{width:18px;height:18px}
+.pm-ctl button:hover{background:var(--surface-2)}
+.pm-ctl.seg{gap:0;background:var(--surface);border-radius:10px;box-shadow:0 2px 10px rgba(13,37,61,.18);padding:3px}
+.pm-ctl.seg button{box-shadow:none;height:30px;border-radius:8px;padding:0 12px}
+.pm-ctl.seg button[aria-pressed=true]{background:var(--navy);color:var(--navy-ink)}
+.pm-legend{position:absolute;z-index:450;left:12px;bottom:12px;background:var(--surface);border-radius:12px;box-shadow:0 2px 12px rgba(13,37,61,.18);padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ink-2);max-width:calc(100% - 140px)}
+.pl-row{display:flex;align-items:center;gap:6px;padding:3px 4px;border-radius:6px}
+.pl-row b{margin-left:auto;padding-left:10px;color:var(--ink)}
+.pl-btn{font:inherit;font-size:12px;border:0;background:none;color:inherit;cursor:pointer;text-align:left;width:100%}
+.pl-btn:hover{background:var(--surface-2)}.pl-btn[aria-pressed=false]{opacity:.4}
+.pl-area{display:inline-block;width:14px;height:10px;border-radius:3px;background:rgba(106,85,238,.15);box-shadow:inset 0 0 0 2px #4a35e8}
+.pm-side{border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--surface)}
+.pm-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.pm-tabs button{font:inherit;font-size:14px;border:0;background:none;color:var(--muted);padding:13px 8px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.pm-tabs button[aria-selected=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--primary)}
+.pm-sbody{overflow:auto;flex:1;padding:10px 12px 14px}
+.pm-hint{font-size:12px;color:var(--muted);margin:2px 4px 8px}
+.pm-plist,.pm-cards{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.pm-plist button{font:inherit;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer}
+.pm-plist button:hover{border-color:var(--primary)}.pm-plist button.on{border-color:#a6802c;background:rgba(214,180,106,.12)}
+.pp-n{font-size:14px;font-weight:600;display:flex;flex-direction:column}.pp-n small,.pp-v small{font-size:11px;color:var(--muted);font-weight:400}
+.pp-v{font-size:13px;text-align:right;display:flex;flex-direction:column}
+.pp-c{min-width:24px;height:24px;border-radius:9999px;background:var(--primary-soft);color:var(--primary);font-size:12px;font-weight:600;display:grid;place-items:center}
+.pm-search input{font:inherit;font-size:13px;width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--surface);color:var(--ink);margin-bottom:10px}
+.pm-cards li{display:flex;align-items:stretch;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pc-main{font:inherit;flex:1;min-width:0;text-align:left;border:0;background:none;color:var(--ink);padding:9px 12px;cursor:pointer;display:flex;flex-direction:column;gap:1px}
+.pc-main:hover{background:var(--surface-2)}.pc-main b{font-size:14px}.pc-main small{font-size:12px;color:var(--muted)}
+.pc-t{font-size:11px;color:var(--c);font-weight:600}
+.pc-nav{display:grid;place-items:center;width:44px;color:var(--primary);border-left:1px solid var(--line)}.pc-nav svg{width:18px;height:18px}.pc-nav:hover{background:var(--primary-soft)}
+.pm-emptybox{text-align:center;padding:28px 16px;color:var(--muted)}.pm-emptybox>svg{width:36px;height:36px;color:var(--pend)}
+.pm-emptybox b{display:block;color:var(--ink);font-size:15px;margin:8px 0 4px}.pm-emptybox p{font-size:13px;margin:0 0 14px}.pm-emptybox .pm-mini{font-size:12px;margin:10px 0 0}
+.pm-wrap.full{position:fixed;inset:0;z-index:1000;background:var(--bg);padding:12px}
+.pm-wrap.full .pm-grid{height:calc(100vh - 24px)}
+.pm-bar{top:12px;left:60px;right:auto;transform:none;max-width:calc(100% - 200px)}
+@media (max-width:980px){.pm-grid{grid-template-columns:1fr;height:auto}.mapbox2.pm{height:480px}.pm-side{border-left:0;border-top:1px solid var(--line);max-height:420px}.pm-bar{left:12px;right:12px;max-width:none;top:56px}.pm-wrap.full .pm-grid{height:auto}.pm-wrap.full .mapbox2.pm{height:calc(100vh - 80px)}}
+
 .pm-bar button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
 .pm-bar .ghost{background:none}.pm-bar .or{color:var(--muted)}
 .pinico{background:none;border:0}
@@ -915,45 +961,92 @@ function provAt(lat,lng){if(!geoData)return "";var pt=[lng,lat];for(var k=0;k<ge
 function parseLL(s){s=String(s||"").trim();var m=/@(-?\d+\.\d+),(-?\d+\.\d+)/.exec(s)||/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/.exec(s)||/[?&](?:q|ll|query)=(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/.exec(s)||/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{2,3}\.\d+)\s*$/.exec(s);return m?[+m[1],+m[2]]:null;}
 function provsOfProject(id){var s={};rowsOf(id).forEach(function(r){s[PV[r.prov]]=1;});if(id===4)rowsOf(17).forEach(function(r){s[PV[r.prov]]=1;});if(id===17)rowsOf(4).forEach(function(r){s[PV[r.prov]]=1;});return s;}
 
+var PM_IC={fit:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  full:'<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  exit:'<svg viewBox="0 0 24 24"><path d="M4 9h5V4M20 9h-5V4M4 15h5v5M20 15h-5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  nav:'<svg viewBox="0 0 24 24"><path d="M12 2 4 21l8-4 8 4z" fill="currentColor"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>'};
 function pinPanelHtml(id){
-  var n=pinsOf(id===17?4:id).length;
-  return '<div class="panel"><div class="pm-head"><div><h2>แผนที่โครงการ</h2><p class="sub">พื้นที่ดำเนินการ (กรอบสีม่วง) และหมุดพิกัด · คลิกหมุดเพื่อดูรายละเอียดและนำทาง</p></div>'+
-    '<div class="pm-tools"><button type="button" class="pm-btn" data-pm="fit" title="ซูมให้เห็นทั้งโครงการ">ดูทั้งโครงการ</button><button type="button" class="pm-btn" data-pm="full" title="ขยายเต็มจอ">เต็มจอ</button><button type="button" class="pm-btn pri" data-pm="add">+ ปักหมุด</button></div></div>'+
-    '<div class="pm-chips" id="pmChips"></div>'+
-    '<div class="pm-wrap" id="pmWrap"><div class="pm-bar" id="pmBar" hidden></div><div class="mapbox2 pm" id="pjMap" role="region" aria-label="แผนที่โครงการ"><div class="mapmsg">กำลังโหลดแผนที่…</div></div></div>'+
-    '<div class="mlegend" id="pjLegend"></div>'+
-    '<div class="pm-list"><div class="pm-lhead"><b>รายการหมุด</b> <span class="sub num" id="pmCount">'+n+' จุด</span><input type="search" id="pmQ" placeholder="ค้นหาชื่อ ตำบล อำเภอ" aria-label="ค้นหาหมุด"></div><div id="pmRows"></div></div>'+
+  return '<div class="panel pmx"><div class="pm-head"><div><h2>แผนที่โครงการ</h2><p class="sub">พื้นที่ดำเนินการและหมุดพิกัดของโครงการ · เลือกจังหวัดหรือหมุดจากแถบด้านขวาเพื่อซูมไปยังตำแหน่ง</p></div>'+
+    '<button type="button" class="pm-btn pri" data-pm="add">'+PM_IC.pin+'ปักหมุด</button></div>'+
+    '<div class="pm-wrap" id="pmWrap"><div class="pm-grid"><div class="pm-mapcol">'+
+      '<div class="mapbox2 pm" id="pjMap" role="region" aria-label="แผนที่โครงการ"><div class="mapmsg">กำลังโหลดแผนที่…</div></div>'+
+      '<div class="pm-bar" id="pmBar" hidden></div>'+
+      '<div class="pm-ctl tl"><button type="button" data-pm="fit" title="ดูทั้งโครงการ" aria-label="ดูทั้งโครงการ">'+PM_IC.fit+'</button><button type="button" data-pm="full" title="เต็มจอ" aria-label="เต็มจอ">'+PM_IC.full+'</button></div>'+
+      '<div class="pm-ctl tr seg" role="group" aria-label="แผนที่ฐาน"><button type="button" data-bm="map" aria-pressed="true">แผนที่</button><button type="button" data-bm="sat" aria-pressed="false">ดาวเทียม</button></div>'+
+      '<div class="pm-legend" id="pjLegend"></div>'+
+    '</div><aside class="pm-side" aria-label="รายการพื้นที่และหมุด"><div class="pm-tabs" role="tablist"><button type="button" role="tab" data-pt="prov"></button><button type="button" role="tab" data-pt="pins"></button></div><div class="pm-sbody" id="pmSide"></div></aside></div></div>'+
     '<div class="pm-modal" id="pmModal" hidden></div></div>';
 }
 function renderProjectMap(id){
   var el=document.getElementById("pjMap");if(!el)return;
   if(pjMap){pjMap.remove();pjMap=null;}
-  pinState.id=id;pinState.pid=id===17?4:id;pinState.mode="";pinState.tmp=null;pinState.markers={};
+  pinState.id=id;pinState.pid=id===17?4:id;pinState.mode="";pinState.tmp=null;pinState.markers={};pinState.provLayers={};pinState.selProv="";
+  pinState.tab=pinState.tab||"prov";if(pinsOf(pinState.pid).length&&!pinState.tabSet)pinState.tab="pins";
   pinChips();pinRows();
   deps().then(function(geo){
     if(!document.body.contains(el))return;
     el.innerHTML="";
-    var base={"แผนที่":L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}),
-      "ภาพดาวเทียม":L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})])};
-    pjMap=L.map(el,{zoomControl:true,scrollWheelZoom:false,tap:false,minZoom:5,maxZoom:18,zoomSnap:.5,layers:[base["แผนที่"]]});
+    pinState.base={map:L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),
+      sat:L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})])};
+    pjMap=L.map(el,{zoomControl:false,scrollWheelZoom:false,tap:false,minZoom:5,maxZoom:18,zoomSnap:.25,zoomDelta:.5,wheelPxPerZoomLevel:90,layers:[pinState.base.map]});
     pjMap.attributionControl.setPrefix(false);
-    L.control.layers(base,null,{position:"topright",collapsed:false}).addTo(pjMap);
-    L.control.scale({imperial:false,position:"bottomleft"}).addTo(pjMap);
+    L.control.zoom({position:"bottomright",zoomInTitle:"ซูมเข้า",zoomOutTitle:"ซูมออก"}).addTo(pjMap);
+    L.control.scale({imperial:false,position:"bottomright"}).addTo(pjMap);
     el.addEventListener("click",function(){pjMap.scrollWheelZoom.enable();},{once:true});
     var mine=provsOfProject(id),on=[];
-    var lay=L.geoJSON(geo,{style:function(f){var a=!!mine[String(f.properties.pro_th||"").trim()];return a?{fillColor:"#6a55ee",fillOpacity:.10,color:"#4a35e8",weight:2,opacity:.9}:{fillOpacity:0,color:"#8a96ab",weight:.6,opacity:.6};},
-      onEachFeature:function(f,ly){var nm=String(f.properties.pro_th||"").trim(),a=!!mine[nm];if(a)on.push(ly);
-        if(a){var r=rowsOf(id).filter(function(x){return PV[x.prov]===nm;})[0];ly.bindTooltip('<b>จ.'+esc(nm)+'</b>'+(r?'<br>งบ พ.ร.บ. '+fmt(r.total)+' บาท':''),{sticky:true,className:"pt",direction:"top"});}}}).addTo(pjMap);
+    var lay=L.geoJSON(geo,{style:function(f){return provStyle(!!mine[String(f.properties.pro_th||"").trim()],false);},
+      onEachFeature:function(f,ly){var nm=String(f.properties.pro_th||"").trim();if(!mine[nm])return;on.push(ly);pinState.provLayers[nm]=ly;
+        ly.bindTooltip('จ.'+esc(nm),{sticky:true,className:"pt",direction:"top"});ly.on("click",function(e){if(pinState.mode==="place")return;selectProv(nm,true);});}}).addTo(pjMap);
+    pinState.provAll=lay;
     var fg=L.featureGroup(on);
-    lockToThailand(pjMap,lay,{fitTo:on.length?fg.getBounds():null,padding:[20,20],maxZoom:9});
-    pjMap.setMaxZoom(18);
     pinState.area=on.length?fg.getBounds():lay.getBounds();
+    lockToThailand(pjMap,lay,{fitTo:pinState.area,padding:[28,28],maxZoom:on.length>1?9:10});
+    pjMap.setMaxZoom(18);
     pinState.layer=L.layerGroup().addTo(pjMap);
-    drawPins(true);
+    drawPins(!!pinsOf(pinState.pid).length);
     pjMap.on("click",function(e){if(pinState.mode==="place")placeAt(e.latlng.lat,e.latlng.lng);});
-    document.getElementById("pjLegend").innerHTML='<span><b style="background:rgba(106,85,238,.18);box-shadow:inset 0 0 0 2px #4a35e8"></b>จังหวัดในพื้นที่โครงการ</span>'+PIN_ORDER.map(function(t){return '<span><i class="pdot" style="background:'+PIN_T[t].c+'"></i>'+t+'</span>';}).join("")+'<span>สลับ "ภาพดาวเทียม" ได้ที่มุมขวาบน</span>';
+    setBase(pinState.baseKey||"map");
   }).catch(function(){mapFail(el);});
 }
+function provStyle(inArea,sel){return !inArea?{fillOpacity:0,color:"#94a3b8",weight:.6,opacity:.55}:sel?{fillColor:"#d6b46a",fillOpacity:.22,color:"#a6802c",weight:3,opacity:1}:{fillColor:"#6a55ee",fillOpacity:.08,color:"#4a35e8",weight:2,opacity:.9,dashArray:null};}
+function setBase(k){if(!pjMap||!pinState.base)return;pinState.baseKey=k;["map","sat"].forEach(function(x){if(x===k)pinState.base[x].addTo(pjMap);else pjMap.removeLayer(pinState.base[x]);});
+  document.querySelectorAll("[data-bm]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.bm===k));});document.getElementById("pjMap").classList.toggle("sat",k==="sat");}
+function selectProv(nm,zoom){
+  pinState.selProv=pinState.selProv===nm&&!zoom?"":nm;
+  Object.keys(pinState.provLayers).forEach(function(k){pinState.provLayers[k].setStyle(provStyle(true,k===pinState.selProv));});
+  var ly=pinState.provLayers[nm];if(ly&&zoom&&pjMap){pjMap.flyToBounds(ly.getBounds(),{padding:[30,30],maxZoom:11,duration:.6});ly.bringToFront();}
+  pinRows();
+}
+function pinChips(){
+  var all=pinsOf(pinState.pid),c=function(t){return all.filter(function(p){return p.type===t;}).length;},nprov=Object.keys(provsOfProject(pinState.id)).length;
+  var lg=document.getElementById("pjLegend");
+  if(lg)lg.innerHTML='<div class="pl-row"><i class="pl-area"></i>พื้นที่โครงการ <b class="num">'+nprov+'</b> จังหวัด</div>'+PIN_ORDER.map(function(t){var off=!!pinState.filter[t];return '<button type="button" class="pl-row pl-btn" data-pf="'+t+'" aria-pressed="'+(!off)+'" title="แสดง/ซ่อน '+t+'"><i class="pdot" style="background:'+PIN_T[t].c+'"></i>'+t+' <b class="num">'+c(t)+'</b></button>';}).join("");
+  document.querySelectorAll("[data-pt]").forEach(function(b){var k=b.dataset.pt;b.textContent=k==="prov"?"พื้นที่ ("+nprov+")":"หมุดพิกัด ("+all.length+")";b.setAttribute("aria-selected",String(k===pinState.tab));});
+}
+function pinRows(){
+  var el=document.getElementById("pmSide");if(!el)return;
+  if(pinState.tab==="prov"){
+    var l=rowsOf(pinState.id).slice().sort(function(a,b){return b.total-a.total;}),all=pinsOf(pinState.pid),cnt=function(nm){return all.filter(function(p){return p.prov===nm;}).length;};
+    var fund=function(i){return (D.fundProv&&D.fundProv[i])||0;};
+    el.innerHTML='<p class="pm-hint">กดชื่อจังหวัดเพื่อซูมไปยังพื้นที่</p><ul class="pm-plist">'+l.map(function(r){var nm=PV[r.prov],n=cnt(nm);
+      return '<li><button type="button" data-zp="'+esc(nm)+'" class="'+(pinState.selProv===nm?"on":"")+'"><span class="pp-n">จ.'+esc(nm)+'<small>'+esc(RN[RG[r.prov]]||"")+'</small></span><span class="pp-v num">'+fmt(r.total)+'<small>บาท (งบ พ.ร.บ.)</small></span>'+(n?'<span class="pp-c num" title="จำนวนหมุด">'+n+'</span>':'')+'</button></li>';}).join("")+'</ul>';
+    return;
+  }
+  var V=visiblePins().filter(function(p){return !pinState.selProv||p.prov===pinState.selProv;});
+  var total=pinsOf(pinState.pid).length;
+  el.innerHTML='<div class="pm-search"><input type="search" id="pmQ" placeholder="ค้นหาชื่อ หมู่บ้าน ตำบล อำเภอ" aria-label="ค้นหาหมุด" value="'+esc(pinState.q)+'"></div>'+
+    (pinState.selProv?'<p class="pm-hint">เฉพาะ จ.'+esc(pinState.selProv)+' · <button type="button" class="linkbtn" data-zp="">ดูทุกจังหวัด</button></p>':'')+
+    (V.length?'<ul class="pm-cards">'+V.map(function(p){var c=(PIN_T[p.type]||{}).c;return '<li style="--c:'+c+'"><button type="button" class="pc-main" data-pg="'+esc(p.id)+'"><span class="pc-t">'+esc(p.type)+'</span><b>'+esc(p.name)+'</b><small>'+esc(pinWhere(p)||"ไม่ระบุที่ตั้ง")+'</small></button><a class="pc-nav" href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'" target="_blank" rel="noopener" title="นำทางด้วย Google Maps" aria-label="นำทางไป '+esc(p.name)+'">'+PM_IC.nav+'</a></li>';}).join("")+'</ul>':
+      '<div class="pm-emptybox">'+PM_IC.pin+'<b>'+(total?'ไม่พบหมุดตามเงื่อนไข':'ยังไม่มีหมุดในโครงการนี้')+'</b><p>'+(total?'ลองเปลี่ยนคำค้นหรือเปิดประเภทหมุดในคำอธิบายแผนที่':'ปักหมุดเกษตรกรตัวอย่าง โรงเรียน หรือศูนย์/แปลง เพื่อให้ทุกคนในกองเห็นตำแหน่งและนำทางได้')+'</p>'+(total?'':'<button type="button" class="pm-btn pri" data-pm="add">'+PM_IC.pin+'ปักหมุดแรก</button><p class="pm-mini">หรือเพิ่มหลายจุดพร้อมกันในชีต "จุดพิกัดโครงการ70"</p>')+'</div>');
+  var q=document.getElementById("pmQ");if(q&&pinState.qFocus){q.focus();q.setSelectionRange(q.value.length,q.value.length);}
+}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-pt]");if(t){pinState.tab=t.dataset.pt;pinState.tabSet=true;pinChips();pinRows();return;}
+  var z=e.target.closest("[data-zp]");if(z){var nm=z.dataset.zp;if(!nm){selectProv("",false);pinState.selProv="";pinRows();if(pjMap&&pinState.area)pjMap.flyToBounds(pinState.area,{padding:[28,28],maxZoom:9,duration:.6});return;}selectProv(nm,true);return;}
+  var bm=e.target.closest("[data-bm]");if(bm){setBase(bm.dataset.bm);return;}
+});
+
 function visiblePins(){var f=pinState.filter,q=pinState.q.toLowerCase();return pinsOf(pinState.pid).filter(function(p){return !f[p.type]&&(!q||(p.name+" "+pinWhere(p)+" "+p.detail).toLowerCase().indexOf(q)>=0);});}
 function pinPopup(p){
   var ed=!!editKey(),gm="https://www.google.com/maps/dir/?api=1&destination="+p.lat+","+p.lng;
@@ -969,19 +1062,6 @@ function drawPins(fit){
   V.forEach(function(p){var mk=L.marker([p.lat,p.lng],{icon:pinIcon(p.type),title:p.name,riseOnHover:true,keyboard:true}).bindPopup(pinPopup(p),{maxWidth:300,className:"pmpop"}).bindTooltip(esc(p.name),{direction:"top",offset:[0,-34],className:"pt"});
     mk.addTo(pinState.layer);pinState.markers[p.id]=mk;pts.push([p.lat,p.lng]);});
   if(fit&&pts.length){var b=L.latLngBounds(pts);if(pinState.area)b.extend(pinState.area);pjMap.fitBounds(b,{padding:[24,24],maxZoom:14});}
-}
-function pinChips(){
-  var all=pinsOf(pinState.pid),c=function(t){return all.filter(function(p){return p.type===t;}).length;};
-  var el=document.getElementById("pmChips");if(!el)return;
-  el.innerHTML=PIN_ORDER.map(function(t){var off=!!pinState.filter[t];return '<button type="button" class="pm-chip" data-pf="'+t+'" aria-pressed="'+(!off)+'" style="--c:'+PIN_T[t].c+'"><i></i>'+t+' <b class="num">'+c(t)+'</b></button>';}).join("")+
-    (all.length?'':'<span class="pm-empty">ยังไม่มีหมุดในโครงการนี้ · กด "+ ปักหมุด" เพื่อเริ่ม หรือเพิ่มในชีต "จุดพิกัดโครงการ70"</span>');
-  var cnt=document.getElementById("pmCount");if(cnt)cnt.textContent=all.length+" จุด";
-}
-function pinRows(){
-  var el=document.getElementById("pmRows");if(!el)return;var V=visiblePins();
-  el.innerHTML=V.length?'<div class="bi-mtw"><table class="bi-mt" style="min-width:620px"><thead><tr><th>ชื่อ</th><th>ประเภท</th><th>ที่ตั้ง</th><th class="r">พิกัด</th><th></th></tr></thead><tbody>'+
-    V.map(function(p){return '<tr><td><button type="button" class="linkbtn" data-pg="'+esc(p.id)+'">'+esc(p.name)+'</button></td><td><span class="pp-t" style="--c:'+(PIN_T[p.type]||{}).c+'">'+esc(p.type)+'</span></td><td>'+esc(pinWhere(p))+'</td><td class="r num">'+p.lat.toFixed(5)+', '+p.lng.toFixed(5)+'</td><td><a href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'" target="_blank" rel="noopener">นำทาง</a></td></tr>';}).join("")+'</tbody></table></div>':
-    '<p class="sub" style="margin:8px 0 0">'+(pinsOf(pinState.pid).length?'ไม่พบหมุดตามตัวกรอง':'ยังไม่มีหมุด')+'</p>';
 }
 function pmBar(html){var b=document.getElementById("pmBar");if(!b)return;b.hidden=!html;b.innerHTML=html||"";}
 function askEditor(then){
@@ -1048,7 +1128,7 @@ document.addEventListener("click",function(e){
   var b=e.target.closest("[data-pm]");
   if(b){var a=b.dataset.pm;
     if(a==="fit"&&pjMap){drawPins(true);if(!visiblePins().length&&pinState.area)pjMap.fitBounds(pinState.area,{padding:[20,20],maxZoom:9});}
-    else if(a==="full"){var w=document.getElementById("pmWrap");pinState.full=!pinState.full;w.classList.toggle("full",pinState.full);document.body.classList.toggle("pm-lock",pinState.full);b.textContent=pinState.full?"ออกจากเต็มจอ":"เต็มจอ";setTimeout(function(){pjMap&&pjMap.invalidateSize();},50);}
+    else if(a==="full"){var w=document.getElementById("pmWrap");pinState.full=!pinState.full;w.classList.toggle("full",pinState.full);document.body.classList.toggle("pm-lock",pinState.full);b.innerHTML=pinState.full?PM_IC.exit:PM_IC.full;b.title=pinState.full?"ออกจากเต็มจอ":"เต็มจอ";setTimeout(function(){pjMap&&pjMap.invalidateSize();},50);}
     else if(a==="add")startPlace();
     else if(a==="cancel")endPlace();
     else if(a==="gps"){if(!navigator.geolocation){toast("เบราว์เซอร์ไม่รองรับตำแหน่ง");return;}b.textContent="กำลังหาตำแหน่ง…";navigator.geolocation.getCurrentPosition(function(pos){placeAt(pos.coords.latitude,pos.coords.longitude);},function(){b.textContent="ใช้ตำแหน่งของฉัน";toast("ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง");},{enableHighAccuracy:true,timeout:15000});}
@@ -1063,7 +1143,7 @@ document.addEventListener("click",function(e){
     else if(pe.dataset.pe==="del")askEditor(function(){if(!confirm('ลบหมุด "'+p.name+'" ?\n(ระบบเก็บประวัติไว้ในชีต ย้อนคืนได้)'))return;pinPost("delete",{id:p.id,by:ls("alro_by")||""}).then(function(){pinChips();pinRows();drawPins(false);toast("ลบหมุดแล้ว");}).catch(function(er){toast(er.message);});});
   }
 });
-document.addEventListener("input",function(e){if(e.target.id==="pmQ"){pinState.q=e.target.value;pinRows();drawPins(false);}});
+document.addEventListener("input",function(e){if(e.target.id==="pmQ"){pinState.q=e.target.value;pinState.qFocus=true;pinRows();pinState.qFocus=false;drawPins(false);}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("pmModal")&&!document.getElementById("pmModal").hidden){pmModal("");endPlace();drawPins(false);}else if(pinState.full){var b=document.querySelector('[data-pm="full"]');b&&b.click();}}});
 
 function renderProjects(){
