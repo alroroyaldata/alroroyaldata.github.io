@@ -527,6 +527,18 @@ body.pm-lock{overflow:hidden}
     });
     return out;
   }
+  /* การโอนเงินให้จังหวัดจริง ตามหนังสือแจ้งโอน (ไม่ใช่แผนรายเดือน) */
+  function trfHtml(pid, t) {
+    var T = window.__TRF && window.__TRF[pid]; if (!T) return "";
+    var tr = function (doc, f, mon, a, st, ok) { return "<tr><td>" + doc + "</td><td>" + badge(f) + "</td><td>" + mon + '</td><td class="r num b">' + (a == null ? "–" : fmt(a)) + '</td><td><span class="tag ' + (ok ? "t-ok" : "t-pend") + '">' + st + "</span></td></tr>"; };
+    var rest = T.prbAll - T.r1;
+    return '<p class="bi-h4">การโอนเงินให้ ส.ป.ก.จังหวัดจริง (ตามหนังสือแจ้งโอน)</p><div class="bi-mtw"><table class="bi-mt"><thead><tr><th>หนังสือ / ครั้งที่</th><th>แหล่งเงิน</th><th>เดือนที่โอน</th><th class="r">จำนวน (บาท)</th><th>สถานะตรวจ</th></tr></thead><tbody>' +
+      tr("แผนจัดสรรงบ พ.ร.บ. ครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)", "prb", "รอวันที่ในหนังสือแจ้งโอน", T.r1, "ยอดตรงกับเอกสาร กผง.", true) +
+      (rest > 0 ? tr("งบ พ.ร.บ. ส่วนที่เหลือ (ยังไม่จัดสรร)", "prb", "–", rest, "ยังไม่โอน", false) : "") +
+      (T.fund ? tr("กษ 1207/ว5816 ลว 27 ต.ค. 69 โอนขายบิลเงินกองทุนฯ", "fund", "ต.ค. 69", T.fund, "ยอดตามแผน รอเทียบสิ่งที่แนบหนังสือ", false) : "") +
+      '</tbody><tfoot><tr class="sum"><td>รวมโอนแล้วตามหนังสือ</td><td></td><td></td><td class="r num b">' + fmt(T.r1 + T.fund) + "</td><td></td></tr></tfoot></table></div>" +
+      '<p class="bi-src">ที่มา: แผนจัดสรรงงบประมาณ 70 พรบ. (รายจังหวัดครั้งที่1).pdf และหนังสือ กษ 1207/ว5816 ในโฟลเดอร์ แจ้งโอนจัดสรรปี 70 ครั้งที่ 1 · โอนครั้งถัดไปจะเพิ่มเมื่อมีหนังสือแจ้งโอน</p>';
+  }
   /* เงินของโครงการไปทางไหน + เดือนไหน (ไม่ขึ้นกับตัวกรอง) */
   function flowHtml(BI, pid) {
     var p = BI.projects.find(function (x) { return x.id === pid; });
@@ -538,12 +550,13 @@ body.pm-lock{overflow:hidden}
       (t.invest ? card("งบลงทุน (ครุภัณฑ์ / สิ่งก่อสร้าง)", t.invest, "งบ พ.ร.บ. งบลงทุน · ลงพื้นที่ จ." + esc(L.filter(function (l) { return l.f === "invest"; })[0].pv || ""), "iv") : "") +
       card("ตั้งจ่ายส่วนกลาง (งบ พ.ร.บ.) · แยก ไม่รวม", t.central, "งบบริหาร ส.ป.ก. " + fmt(spk) + " · งบบริหารโครงการ กปร. " + fmt(kpr), "cn") + "</div>";
     var rows = [];
-    if (t.prb) rows.push({ d: 0, t: "โอนให้จังหวัด", f: "prb", a: t.prb, m: ch.prb });
-    if (t.fund) rows.push({ d: 0, t: "โอนให้จังหวัด", f: "fund", a: t.fund, m: ch.fund });
+    if (t.prb) rows.push({ d: 0, t: "แผนใช้จ่ายในจังหวัด", f: "prb", a: t.prb, m: ch.prb });
+    if (t.fund) rows.push({ d: 0, t: "แผนใช้จ่ายในจังหวัด", f: "fund", a: t.fund, m: ch.fund });
     if (t.invest) rows.push({ d: 0, t: "งบลงทุน", f: "invest", a: t.invest, m: ch.invest });
     var tm = addM(addM(addM(Z12(), ch.prb), ch.fund), ch.invest);
-    var foot = [{ t: "รวมเงินที่ลงพื้นที่ (ไม่รวมส่วนกลาง)", a: t.prb + t.fund + t.invest, m: tm, cls: "sum" }, { t: "ตั้งจ่ายส่วนกลาง (แยก ไม่รวม)", f: "central", a: t.central, m: ch.central, cls: "cen" }];
-    return h + '<p class="bi-h4">โอน / ตั้งจ่ายเดือนไหน เท่าไร</p>' + mtable(rows, foot);
+    var foot = [{ t: "รวมแผนใช้จ่ายในพื้นที่ (ไม่รวมส่วนกลาง)", a: t.prb + t.fund + t.invest, m: tm, cls: "sum" }, { t: "แผนตั้งจ่ายส่วนกลาง (แยก ไม่รวม)", f: "central", a: t.central, m: ch.central, cls: "cen" }];
+    return h + trfHtml(pid, t) + '<p class="bi-h4">แผนการใช้จ่ายรายเดือน (ตามแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · เป็นแผน ไม่ใช่ยอดโอนจริง)</p>' + mtable(rows, foot) +
+      '<p class="bi-src">ตัวเลขรายเดือนคัดจากไฟล์ต้นทางตามแถว (ชี้รายการเพื่อดูเลขแถว) · ระบบไม่ได้แบ่งเฉลี่ยเอง เช่น ค่าจ้างเหมารายเดือนไฟล์ต้นทางระบุไว้เดือนละเท่ากัน</p>';
   }
   function render(el, BI, pid, f) {
     var p = BI.projects.find(function (x) { return x.id === pid; });
@@ -685,6 +698,7 @@ var BI=(D.items&&D.itemCols)?itemsBuild(D.items,D.itemCols):null;document.getEle
 function agriOf(f){if(!D.items)return null;var ix=D.itemCols,ci=ix.indexOf("cat"),fi=ix.indexOf("fund"),ai=ix.indexOf("amount");return D.items.reduce(function(a,r){return a+(r[ci]==="วัสดุการเกษตร"&&r[fi]===f?r[ai]:0);},0);}
 var rows=D.budget.map(function(b){return{pid:b[0],prov:b[1],mgmt:b[2],train:b[3],mat:b[4],r1:b[5],ppl:b[6],schT:b[7],schM:b[8],times:b[9],total:b[2]+b[3]+b[4]};});
 /* โครงการขยายผลธนาคารอาหารชุมชน (เกษตรวิชญา) เป็นกิจกรรมหนึ่งของโครงการที่ 4 ตามเอกสาร — รวมเข้าโครงการที่ 4 */
+window.__TRF={};(function(){D.budget.forEach(function(b){var p=b[0]===17?4:b[0],x=window.__TRF[p]=window.__TRF[p]||{r1:0,prbAll:0,fund:0};x.r1+=b[5];x.prbAll+=b[2]+b[3]+b[4];});(D.projBudget||[]).forEach(function(r){if(window.__TRF[r.pid])window.__TRF[r.pid].fund=r.fund||0;});})();
 var SUBACT={"ขยายผล":"กิจกรรมขยายผลตามแนวพระราชดำริ"};function actLabel(a){return SUBACT[a]||a;}
 /* ชีตระบุกิจกรรมย่อยในคอลัมน์ "กิจกรรม" (budget[10], projects[].subs) · รองรับข้อมูลรุ่นเก่าที่ยังมีรหัส 17 */
 (function(){D.budget.forEach(function(b,i){rows[i].act=b[10]?String(b[10]):"";if(b[0]===17){rows[i].pid=4;rows[i].act="ขยายผล";}});var leg=P.filter(function(p){return p.id===17;})[0];P=P.filter(function(p){return p.id!==17;});var p4=P.filter(function(p){return p.id===4;})[0];if(leg&&p4&&!(p4.subs&&p4.subs.length))p4.subs=[{act:"ขยายผล",name:leg.name,info:leg.info||{}}];var m={},out=[],F=["mgmt","train","mat","r1","ppl","schT","schM","times","total"];rows.forEach(function(r){var c=Object.assign({},r),k=r.pid+"|"+r.prov;if(m[k]){F.forEach(function(f){m[k][f]+=r[f];});m[k].parts.push(c);}else{r.parts=[c];m[k]=r;out.push(r);}});rows=out;})();
