@@ -685,8 +685,9 @@ var BI=(D.items&&D.itemCols)?itemsBuild(D.items,D.itemCols):null;document.getEle
 function agriOf(f){if(!D.items)return null;var ix=D.itemCols,ci=ix.indexOf("cat"),fi=ix.indexOf("fund"),ai=ix.indexOf("amount");return D.items.reduce(function(a,r){return a+(r[ci]==="วัสดุการเกษตร"&&r[fi]===f?r[ai]:0);},0);}
 var rows=D.budget.map(function(b){return{pid:b[0],prov:b[1],mgmt:b[2],train:b[3],mat:b[4],r1:b[5],ppl:b[6],schT:b[7],schM:b[8],times:b[9],total:b[2]+b[3]+b[4]};});
 /* โครงการขยายผลธนาคารอาหารชุมชน (เกษตรวิชญา) เป็นกิจกรรมหนึ่งของโครงการที่ 4 ตามเอกสาร — รวมเข้าโครงการที่ 4 */
-var SUBACT={17:"กิจกรรมขยายผลตามแนวพระราชดำริ"};
-(function(){var m={},out=[],F=["mgmt","train","mat","r1","ppl","schT","schM","times","total"];rows.forEach(function(r){var act=SUBACT[r.pid]?SUBACT[r.pid]:"",c=Object.assign({act:act},r);if(SUBACT[r.pid])r.pid=4;c.pid=r.pid;var k=r.pid+"|"+r.prov;if(m[k]){F.forEach(function(f){m[k][f]+=r[f];});m[k].parts.push(c);}else{r.parts=[c];m[k]=r;out.push(r);}});rows=out;var s=P.filter(function(p){return SUBACT[p.id];});P=P.filter(function(p){return !SUBACT[p.id];});var p4=P.filter(function(p){return p.id===4;})[0];if(p4)p4.subs=s;})();
+var SUBACT={"ขยายผล":"กิจกรรมขยายผลตามแนวพระราชดำริ"};function actLabel(a){return SUBACT[a]||a;}
+/* ชีตระบุกิจกรรมย่อยในคอลัมน์ "กิจกรรม" (budget[10], projects[].subs) · รองรับข้อมูลรุ่นเก่าที่ยังมีรหัส 17 */
+(function(){D.budget.forEach(function(b,i){rows[i].act=b[10]?String(b[10]):"";if(b[0]===17){rows[i].pid=4;rows[i].act="ขยายผล";}});var leg=P.filter(function(p){return p.id===17;})[0];P=P.filter(function(p){return p.id!==17;});var p4=P.filter(function(p){return p.id===4;})[0];if(leg&&p4&&!(p4.subs&&p4.subs.length))p4.subs=[{act:"ขยายผล",name:leg.name,info:leg.info||{}}];var m={},out=[],F=["mgmt","train","mat","r1","ppl","schT","schM","times","total"];rows.forEach(function(r){var c=Object.assign({},r),k=r.pid+"|"+r.prov;if(m[k]){F.forEach(function(f){m[k][f]+=r[f];});m[k].parts.push(c);}else{r.parts=[c];m[k]=r;out.push(r);}});rows=out;})();
 var fmt=function(n,d){return Number(n).toLocaleString("th-TH",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
 var code=function(id){return "P"+String(id).padStart(2,"0");};
 function proj(id){return P.find(function(p){return p.id===id;});}
@@ -1197,19 +1198,19 @@ function bgHtml(p){
   h+='<p class="attr">ที่มา: '+esc(x.src)+(x.conf&&x.conf!=="สูง"?' · ความเชื่อมั่น: '+esc(x.conf):'')+'</p>';
   return h;
 }
-function subActHtml(p){if(!p.subs||!p.subs.length)return "";return p.subs.map(function(s){var x=s.info||{},pv={};rows.forEach(function(r){if(r.pid===p.id)(r.parts||[]).forEach(function(c){if(c.act)pv[PV[c.prov]]=1;});});var n=Object.keys(pv);
-  var h='<div class="h4" style="margin-top:18px">กิจกรรมย่อย: '+esc(SUBACT[s.id])+'</div><p style="margin:0 0 6px;font-size:14px"><b>'+esc(s.name)+'</b> — ดำเนินการ '+n.length+' จังหวัด ('+esc(n.join(" "))+') · ชื่อในแต่ละจังหวัด: "'+esc(s.name)+' จ.&lt;ชื่อจังหวัด&gt;"</p>';
+function subActHtml(p){if(!p.subs||!p.subs.length)return "";return p.subs.map(function(s){var x=s.info||{},pv={};rows.forEach(function(r){if(r.pid===p.id)(r.parts||[]).forEach(function(c){if(c.act===s.act)pv[PV[c.prov]]=1;});});var n=Object.keys(pv);
+  var h='<div class="h4" style="margin-top:18px">กิจกรรมย่อย: '+esc(actLabel(s.act))+'</div><p style="margin:0 0 6px;font-size:14px"><b>'+esc(s.name||'')+'</b> — ดำเนินการ '+n.length+' จังหวัด ('+esc(n.join(" "))+') · ชื่อในแต่ละจังหวัด: "'+esc(s.name)+' จ.&lt;ชื่อจังหวัด&gt;"</p>';
   if(x.bg)h+='<div class="bgtext"><p>'+esc(x.bg)+'</p></div>';if(x.obj&&x.obj.length)h+='<div class="h4">วัตถุประสงค์ของกิจกรรม</div><ol class="objs">'+x.obj.map(function(o){return "<li>"+esc(o)+"</li>";}).join("")+'</ol>';if(x.area)h+='<div class="h4">พื้นที่ตามเอกสาร</div><p style="margin:0 0 8px;font-size:14px">'+esc(x.area)+'</p>';if(x.src)h+='<p class="attr">ที่มา: '+esc(x.src)+'</p>';return h;}).join("");}
 function renderProject(id){
   var p=proj(id),l=rowsOf(id),v=document.getElementById("v-project");
   if(!p){v.innerHTML='<div class="panel">ไม่พบโครงการ</div>';return;}
   var T=sum(l,"total"),R1=sum(l,"r1");
   var HA=!!(p.subs&&p.subs.length),fl=HA?[].concat.apply([],l.map(function(r){return r.parts;})).sort(function(a,b){return (a.act?1:0)-(b.act?1:0);}):l;
-  var trs=fl.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td>'+(HA?'<td>'+(r.act?'ขยายผล':'กิจกรรมหลัก')+'</td>':'')+'<td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
+  var trs=fl.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td>'+(HA?'<td>'+esc(r.act||'กิจกรรมหลัก')+'</td>':'')+'<td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
   var prev=id>1?'<a href="#'+code(id-1).toLowerCase()+'">‹ โครงการก่อนหน้า</a>':'',next=id<P.length?'<a href="#'+code(id+1).toLowerCase()+'">โครงการถัดไป ›</a>':'';
   v.innerHTML=
    '<div class="crumb"><a href="#projects">ทะเบียนโครงการ</a> / '+code(id)+'</div>'+
-   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด'+(p.subs&&p.subs.length?' (รวม'+p.subs.map(function(s){return SUBACT[s.id];}).join(", ")+')':'')+' | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
+   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด'+(p.subs&&p.subs.length?' (รวม'+p.subs.map(function(s){return actLabel(s.act);}).join(", ")+')':'')+' | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
    '<div class="stack">'+
    pinPanelHtml(id)+
    '<div class="panel"><h2>ที่มาโครงการ</h2>'+bgHtml(p)+subActHtml(p)+'</div>'+
