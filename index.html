@@ -220,6 +220,7 @@ body.pm-lock{overflow:hidden}
 .pm-bar{position:absolute;z-index:500;left:50%;transform:translateX(-50%);top:10px;max-width:calc(100% - 20px);background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px -8px rgba(13,37,61,.35);border-radius:12px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .pm-bar input{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;min-width:220px;flex:1;background:var(--surface);color:var(--ink)}
 .pm-bar[hidden]{display:none}
+.thlabel{background:none;border:0}.thlabel span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:12px;font-weight:600;color:#fff;text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,.8);pointer-events:none}.thlabel.on span{font-size:14px;color:#ffe9a8}
 .pmx .pm-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
 .pm-btn svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
 .pm-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);height:640px}
@@ -988,17 +989,18 @@ function renderProjectMap(id){
     if(!document.body.contains(el))return;
     el.innerHTML="";
     pinState.base={map:L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),
-      sat:L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})])};
+      sat:L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'})])};
     pjMap=L.map(el,{zoomControl:false,scrollWheelZoom:false,tap:false,minZoom:5,maxZoom:18,zoomSnap:.25,zoomDelta:.5,wheelPxPerZoomLevel:90,layers:[pinState.base.map]});
     pjMap.attributionControl.setPrefix(false);
     L.control.zoom({position:"bottomright",zoomInTitle:"ซูมเข้า",zoomOutTitle:"ซูมออก"}).addTo(pjMap);
-    L.control.scale({imperial:false,position:"bottomright"}).addTo(pjMap);
+    var sc=L.control.scale({imperial:false,position:"bottomright"});sc._updateMetric=function(mx){var m=this._getRoundNum(mx);this._updateScale(this._mScale,m<1000?fmt(m)+" ม.":fmt(m/1000)+" กม.",m/mx);};sc.addTo(pjMap);
     el.addEventListener("click",function(){pjMap.scrollWheelZoom.enable();},{once:true});
     var mine=provsOfProject(id),on=[];
     var lay=L.geoJSON(geo,{style:function(f){return provStyle(!!mine[String(f.properties.pro_th||"").trim()],false);},
       onEachFeature:function(f,ly){var nm=String(f.properties.pro_th||"").trim();if(!mine[nm])return;on.push(ly);pinState.provLayers[nm]=ly;
         ly.bindTooltip('จ.'+esc(nm),{sticky:true,className:"pt",direction:"top"});ly.on("click",function(e){if(pinState.mode==="place")return;selectProv(nm,true);});}}).addTo(pjMap);
     pinState.provAll=lay;
+    pinState.labels=L.layerGroup();lay.eachLayer(function(ly){var nm=String(ly.feature.properties.pro_th||"").trim();if(!nm)return;var c=ly.getBounds().getCenter();L.marker(c,{interactive:false,keyboard:false,icon:L.divIcon({className:"thlabel"+(mine[nm]?" on":""),html:'<span>'+esc(nm)+'</span>',iconSize:[0,0]})}).addTo(pinState.labels);});
     var fg=L.featureGroup(on);
     pinState.area=on.length?fg.getBounds():lay.getBounds();
     lockToThailand(pjMap,lay,{fitTo:pinState.area,padding:[28,28],maxZoom:on.length>1?9:10});
@@ -1010,7 +1012,7 @@ function renderProjectMap(id){
   }).catch(function(){mapFail(el);});
 }
 function provStyle(inArea,sel){return !inArea?{fillOpacity:0,color:"#94a3b8",weight:.6,opacity:.55}:sel?{fillColor:"#d6b46a",fillOpacity:.22,color:"#a6802c",weight:3,opacity:1}:{fillColor:"#6a55ee",fillOpacity:.08,color:"#4a35e8",weight:2,opacity:.9,dashArray:null};}
-function setBase(k){if(!pjMap||!pinState.base)return;pinState.baseKey=k;["map","sat"].forEach(function(x){if(x===k)pinState.base[x].addTo(pjMap);else pjMap.removeLayer(pinState.base[x]);});
+function setBase(k){if(!pjMap||!pinState.base)return;pinState.baseKey=k;if(pinState.labels){if(k==="sat")pinState.labels.addTo(pjMap);else pjMap.removeLayer(pinState.labels);}["map","sat"].forEach(function(x){if(x===k)pinState.base[x].addTo(pjMap);else pjMap.removeLayer(pinState.base[x]);});
   document.querySelectorAll("[data-bm]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.bm===k));});document.getElementById("pjMap").classList.toggle("sat",k==="sat");}
 function selectProv(nm,zoom){
   pinState.selProv=pinState.selProv===nm&&!zoom?"":nm;
