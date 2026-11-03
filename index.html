@@ -255,9 +255,9 @@ tr.link:hover{background:var(--surface-2)}
       </div>
       <div class="panel" id="srcPanel" hidden>
         <h2>งบประมาณรวม 2 แหล่ง รายโครงการ</h2>
-        <p class="sub">เงินของแต่ละโครงการมาจาก 2 แหล่ง: <b>งบ พ.ร.บ.</b> (งบประมาณแผ่นดินที่รัฐจัดสรรทุกปี) แบ่งเป็นส่วนที่โอนให้ ส.ป.ก.จังหวัด กับส่วนกลาง (ส.ป.ก. ส่วนกลาง) และ <b>เงินกองทุนปฏิรูปที่ดิน</b> ซึ่งอนุมัติแยกตามหนังสือ ว5816 · ที่มา: ไฟล์ขั้นตอน ปี 70 ของ กปต. (ยอดส่วนกลาง คำนวณจากงบทั้งโครงการ ลบส่วนที่โอนให้จังหวัด)</p>
+        <p class="sub">ยอดรวมของแต่ละโครงการ = <b>งบ พ.ร.บ.</b> ที่โอนให้ ส.ป.ก.จังหวัด (แผน กผง.) + <b>เงินกองทุนปฏิรูปที่ดิน</b> (หนังสือ ว5816) · งบ พ.ร.บ. <b>ส่วนกลาง</b> แสดงแยกไว้และไม่นับรวมในยอด · ที่มา: ไฟล์ขั้นตอน ปี 70 ของ กปต.</p>
         <div id="srcBars"></div>
-        <div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. – โอนให้จังหวัด</span><span><b style="background:var(--navy-muted)"></b>งบ พ.ร.บ. – ส่วนกลาง</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span></div>
+        <div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span>ส่วนกลาง: แสดงตัวเลขแยก ไม่รวมในแถบและยอดรวม</span></div>
       </div>
     </div>
   </section>
@@ -358,12 +358,12 @@ function renderOverview(){
 function pbOf(id){return (D.projBudget||[]).find(function(r){return r.pid===id;});}
 function renderSources(){
   var B=D.projBudget;if(!B||!B.length)return;
-  var L=B.map(function(r){var p=proj(r.pid);return{r:r,p:p,all:r.prbAll+r.fund};}).sort(function(a,b){return b.all-a.all;});
+  var L=B.map(function(r){var p=proj(r.pid);return{r:r,p:p,all:r.prbProv+r.fund};}).sort(function(a,b){return b.all-a.all;});
   var mx=L[0].all,ta=0,tp=0,tc=0,tf=0;
   var h=L.map(function(x){var r=x.r,c=r.prbAll-r.prbProv;ta+=x.all;tp+=r.prbProv;tc+=c;tf+=r.fund;
-    var w1=r.prbProv/mx*100,w2=c/mx*100,w3=r.fund/mx*100;
-    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="งบ พ.ร.บ. โอนให้จังหวัด '+fmt(r.prbProv)+' · ส่วนกลาง '+fmt(c)+' · เงินกองทุนปฏิรูปที่ดิน '+fmt(r.fund)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (+17)':'')+'</div><div class="m">งบ พ.ร.บ. '+fmt(r.prbAll)+' · กองทุน '+fmt(r.fund)+'</div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s2" style="left:'+w1.toFixed(1)+'%;width:'+w2.toFixed(1)+'%"></i><i class="s3" style="left:'+(w1+w2).toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
-  h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">โอนให้จังหวัด '+fmt(tp)+' · ส่วนกลาง '+fmt(tc)+' · กองทุน '+fmt(tf)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
+    var w1=r.prbProv/mx*100,w3=r.fund/mx*100;
+    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="งบ พ.ร.บ. (จังหวัด) '+fmt(r.prbProv)+' · เงินกองทุนปฏิรูปที่ดิน '+fmt(r.fund)+' · ส่วนกลางแยกต่างหาก '+fmt(c)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (+17)':'')+'</div><div class="m">งบ พ.ร.บ. '+fmt(r.prbProv)+' · กองทุน '+fmt(r.fund)+' · <span title="ไม่รวมในยอด">ส่วนกลาง (แยก) '+fmt(c)+'</span></div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s3" style="left:'+w1.toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
+  h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">งบ พ.ร.บ. '+fmt(tp)+' · กองทุน '+fmt(tf)+'<br>ส่วนกลาง (แยก ไม่รวมในยอด) '+fmt(tc)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
   document.getElementById("srcBars").innerHTML=h;document.getElementById("srcPanel").hidden=false;
 }
 function planHtml(id){
@@ -372,7 +372,7 @@ function planHtml(id){
   var g=function(t){return I.filter(function(x){return x.type===t;});};
   var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span></li>';}).join("")+'</ul>';};
   var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมโครงการที่ 17 ขยายผลธนาคารอาหารชุมชน)':'')+'</p>';
-  if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. ทั้งโครงการ",fmt(r.prbAll)+" บาท","โอนให้จังหวัด "+fmt(r.prbProv)+" | ส่วนกลาง "+fmt(r.prbAll-r.prbProv),"")+kpi("เงินกองทุนปฏิรูปที่ดิน",fmt(r.fund)+" บาท",r.fund?"อนุมัติตามหนังสือ ว5816":"โครงการนี้ไม่ได้รับเงินกองทุน","")+kpi("รวม 2 แหล่ง",fmt(r.prbAll+r.fund)+" บาท","งบ พ.ร.บ. + เงินกองทุน","navy")+'</div>';
+  if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. (จังหวัด)",fmt(r.prbProv)+" บาท","ส่วนกลางแยกต่างหาก "+fmt(r.prbAll-r.prbProv)+" บาท (ไม่รวม)","")+kpi("เงินกองทุนปฏิรูปที่ดิน",fmt(r.fund)+" บาท",r.fund?"อนุมัติตามหนังสือ ว5816":"โครงการนี้ไม่ได้รับเงินกองทุน","")+kpi("รวม 2 แหล่ง",fmt(r.prbProv+r.fund)+" บาท","งบ พ.ร.บ. (จังหวัด) + เงินกองทุน · ไม่รวมส่วนกลาง","navy")+'</div>';
   [["เป้าหมายหลักโครงการ","เป้าหมายหลัก"],["หลักสูตรอบรม","หลักสูตรอบรม"],["สนับสนุนปัจจัย/วัสดุ","การสนับสนุน"],["เกษตรกรตัวอย่าง","เกษตรกรตัวอย่าง"]].forEach(function(t){var l=g(t[0]);if(l.length)h+='<div class="h4">'+t[1]+'</div>'+li(l);});
   return h+'</div>';
 }
