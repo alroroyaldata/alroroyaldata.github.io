@@ -558,7 +558,7 @@ tr.link:hover{background:var(--surface-2)}
 (function(){
 "use strict";
 var API="https://script.google.com/macros/s/AKfycby6qaRhicGEF4YXrmHcPCAOhjNS0eovDfIAoy1dUhW6MkEcfhNPFVkURqdl9K5RhR2h-A/exec";
-var KK="alro_key_v1",CK="alro_payload_v5",MAXAGE=30*60*1000;
+var KK="alro_key_v1",CK="alro_payload_v6",MAXAGE=30*60*1000;
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}return null;}
 function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k);if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v);}catch(e){}return null;}
 function savedKey(){return ls(KK)||ss(KK);}
@@ -624,7 +624,7 @@ function renderOverview(){
     kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(rows,"mgmt"))+" | ฝึกอบรม "+fmt(sum(rows,"train"))+" | วัสดุการเกษตร (อพ.สธ.) "+fmt(sum(rows,"mat")),"navy")+
     kpi("จัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)",fmt(R1)+" บาท","ร้อยละ "+fmt(R1/T*100,1)+" ของงบเต็มปี","")+
     kpi("เงินกองทุนการปฏิรูปที่ดินฯ",fmt((D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund)+" บาท",(BI?"เป็นวัสดุการเกษตร "+fmt(agriOf("กองทุน"))+" · วัสดุการเกษตรรวม 2 แหล่ง "+fmt(agriOf("กองทุน")+agriOf("พ.ร.บ."))+" บาท":D.projBudget?"เงินนอกงบ พ.ร.บ. แยกรายจังหวัด (ว5816) และรายโครงการ (แผน กปต.)":"แยกราย 72 จังหวัดตามหนังสือ ว5816 (ไม่ได้แยกรายโครงการ)"),"")+
-    kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจากไฟล์ส่งออก alrotracking","pend");
+    alroKpi(null);
   var list=P.map(function(p){var l=rowsOf(p.id);return{p:p,t:sum(l,"total"),r1:sum(l,"r1"),n:l.length};}).sort(function(a,b){return b.t-a.t;});
   var mx=list[0].t;
   document.getElementById("pbars").innerHTML=list.map(function(x){
@@ -649,7 +649,7 @@ function mpHtml(pid){
   var labs=tot.map(function(v,i){cum+=v;if(i<=now)cumNow=cum;return '<div><b>'+MONS[i]+'</b>'+(T?fmt(cum/T*100,0)+'%':'-')+'</div>';}).join("");
   var k='<div class="kpis" style="margin-bottom:12px">'+kpi("แผนทั้งปี (ไม่รวมส่วนกลาง)",fmt(T)+" บาท","งบ พ.ร.บ. "+fmt(P.reduce(function(a,b){return a+b;},0))+" | กองทุน "+fmt(F.reduce(function(a,b){return a+b;},0)),"")+
     kpi("แผนสะสมถึงเดือนนี้",now<0?"ยังไม่เริ่มปีงบ":fmt(cumNow)+" บาท",now<0?"":"ร้อยละ "+fmt(T?cumNow/T*100:0,1)+" ของแผนทั้งปี (ถึง "+MONS[Math.min(now,11)]+")","")+
-    kpi("ผลเบิกจ่ายจริง","รอข้อมูล","เทียบแผนรายเดือนเมื่อนำเข้า alrotracking","pend")+
+    alroKpi(null)+
     kpi("ส่วนกลาง (แยก ไม่รวม)",fmt(TC)+" บาท","แผนรายเดือนของ ส.ป.ก. ส่วนกลาง","")+'</div>';
   return k+'<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>';
 }
@@ -670,13 +670,56 @@ function mpKprHtml(){
   var P=sum(S.pP)+sum(S.cP),F=sum(S.pF)+sum(S.cF),IV=sum(S.iv);
   var k='<div class="kpis" style="margin-bottom:12px">'+kpi("แผนทั้งปี (งบ กปร.)",fmt(T)+" บาท","งบ พ.ร.บ. "+fmt(P)+" | กองทุน "+fmt(F)+" · โอนจังหวัด "+fmt(sum(S.pP)+sum(S.pF))+" | ส่วนกลาง "+fmt(sum(S.cP)+sum(S.cF)),"navy")+
     kpi("แผนสะสมถึงเดือนนี้",now<0?"ยังไม่เริ่มปีงบ":fmt(cumNow)+" บาท",now<0?"":"ร้อยละ "+fmt(cumNow/T*100,1)+" ของแผนทั้งปี (ถึง "+MONS[Math.min(now,11)]+")","")+
-    kpi("ผลเบิกจ่ายจริง","รอข้อมูล","เทียบแผนรายเดือนเมื่อนำเข้า alrotracking","pend")+
+    alroKpi(null)+
     kpi("งบลงทุน (สวผ.) แยก",fmt(IV)+" บาท","ไม่รวมในแผน กปร. · ครุภัณฑ์ / สิ่งก่อสร้าง","")+'</div>';
   var tb='<div class="bi-mtw" style="margin-top:14px"><table class="bi-mt"><thead><tr><th>ช่องทาง / แหล่งเงิน</th><th class="r">รวม</th>'+MONS.map(function(m,i){return '<th class="r">'+m+(i<3?"69":"70")+'</th>';}).join("")+'</tr></thead><tbody>'+
     [["โอนให้จังหวัด · งบ พ.ร.บ.",S.pP],["โอนให้จังหวัด · เงินกองทุนฯ",S.pF],["ตั้งจ่ายส่วนกลาง · งบ พ.ร.บ.",S.cP],["ตั้งจ่ายส่วนกลาง · เงินกองทุนฯ",S.cF]].map(function(x){return '<tr><td>'+x[0]+'</td><td class="r num b">'+fmt(sum(x[1]))+'</td>'+x[1].map(function(v){return '<td class="r num'+(v?'':' z')+'">'+(v?fmt(v):'–')+'</td>';}).join("")+'</tr>';}).join("")+
     '</tbody><tfoot><tr class="sum"><td>รวมแผน กปร.</td><td class="r num b">'+fmt(T)+'</td>'+tot.map(function(v){return '<td class="r num">'+fmt(v)+'</td>';}).join("")+'</tr>'+
     (IV?'<tr class="cen"><td>งบลงทุน (สวผ.) แยก ไม่รวม</td><td class="r num b">'+fmt(IV)+'</td>'+S.iv.map(function(v){return '<td class="r num'+(v?'':' z')+'">'+(v?fmt(v):'–')+'</td>';}).join("")+'</tr>':'')+'</tfoot></table></div>';
   return k+'<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:var(--primary)"></b>โอนจังหวัด · งบ พ.ร.บ.</span><span><b style="background:var(--gold)"></b>โอนจังหวัด · เงินกองทุนฯ</span><span><b style="background:var(--navy-muted)"></b>ส่วนกลาง · งบ พ.ร.บ.</span><span><b style="background:var(--pend)"></b>ส่วนกลาง · เงินกองทุนฯ</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>'+tb;
+}
+/* ผลการเบิกจ่ายจาก alrotracking (D.alro จาก Apps Script: ไฟล์ในโฟลเดอร์ 01_ผลการเบิกจ่าย_alrotracking) */
+function alroP(id){var L=D.alro&&D.alro.latest;if(!L)return null;var f=function(x){return L.projects.filter(function(q){return q.pid===x;})[0];};return f(id)||(id===17?f(4):null);}
+function alroSum(m,i){return (m.prb?m.prb[i]:0)+(m.fund?m.fund[i]:0);}
+function alroKpi(id){var L=D.alro&&D.alro.latest;
+  if(!L)return kpi("ผลเบิกจ่าย","รอข้อมูล","รอไฟล์ alrotracking ปี "+(D.alro&&D.alro.fy||2570),"pend");
+  if(id==null){var pl=0,sp=0;L.projects.forEach(function(q){pl+=alroSum(q.m,0);sp+=alroSum(q.m,1);});return kpi("ผลเบิกจ่าย",fmt(sp)+" บาท","ร้อยละ "+fmt(pl?sp/pl*100:0,1)+" ของแผน "+fmt(pl)+" · ณ "+thDate(L.date),"");}
+  var q=alroP(id);if(!q)return kpi("ผลเบิกจ่าย","ไม่พบในไฟล์","ไฟล์ alrotracking ณ "+thDate(L.date),"pend");
+  var pl=alroSum(q.m,0),sp=alroSum(q.m,1);return kpi("ผลเบิกจ่าย",fmt(sp)+" บาท","ร้อยละ "+fmt(pl?sp/pl*100:0,1)+" ของแผน · ณ "+thDate(L.date),"");}
+function thDate(d){if(!d)return "-";var x=d.split("-");return (+x[2])+" "+MONS[((+x[1])+2)%12]+" "+String(+x[0]+543).slice(2);}
+function alroPanel(id){
+  var A=D.alro,pid=id===17?4:id,head='<div class="panel"><h2>ผลการเบิกจ่ายรายเดือนของโครงการ</h2>';
+  if(!A||!A.latest){
+    var fl=(A&&A.files||[]).map(function(f){return esc(f.name)+" (ปี "+f.fy+")";});
+    return head+'<p class="sub">จากไฟล์ส่งออกของ alrotracking</p><div class="kpis"><div class="kpi pend" style="grid-column:1/-1"><p class="l">สถานะข้อมูล</p><p class="v">รอไฟล์ alrotracking ปี '+(A&&A.fy||2570)+'</p><p class="s">วางไฟล์ส่งออก (.xlsx) ในโฟลเดอร์ Drive "01_ผลการเบิกจ่าย_alrotracking" ระบบอ่านเองภายใน 1 ชั่วโมง · ส่งออกเป็นระยะ (เช่น สิ้นเดือน) เพื่อให้เห็นผลรายเดือน'+(fl.length?'<br>ไฟล์ที่พบในโฟลเดอร์ (ไม่ใช่ปีนี้ จึงไม่นำมาแสดง): '+fl.join(", "):'')+(A&&A.error?'<br>อ่านโฟลเดอร์ไม่ได้: '+esc(A.error):'')+'</p></div></div></div>';
+  }
+  var q=alroP(id);if(!q)return head+'<p class="sub">ไม่พบโครงการนี้ในไฟล์ alrotracking ณ '+thDate(A.latest.date)+'</p></div>';
+  var pl=alroSum(q.m,0),sp=alroSum(q.m,1),pc=function(a,b){return b?fmt(a/b*100,1):"0.0";};
+  var k='<div class="kpis" style="margin-bottom:12px">'+
+    kpi("เบิกจ่ายแล้ว (พ.ร.บ. + กองทุน)",fmt(sp)+" บาท","ร้อยละ "+pc(sp,pl)+" ของแผนในระบบ "+fmt(pl),"navy")+
+    kpi("งบ พ.ร.บ.",q.m.prb?fmt(q.m.prb[1])+" บาท":"-",q.m.prb?"ร้อยละ "+pc(q.m.prb[1],q.m.prb[0])+" ของ "+fmt(q.m.prb[0]):"ไม่มีในไฟล์","")+
+    kpi("เงินกองทุนฯ",q.m.fund?fmt(q.m.fund[1])+" บาท":"-",q.m.fund?"ร้อยละ "+pc(q.m.fund[1],q.m.fund[0])+" ของ "+fmt(q.m.fund[0]):"ไม่มีในไฟล์","")+
+    kpi("ข้อมูล ณ",thDate(A.latest.date),esc(A.latest.file||""),"")+'</div>';
+  // รายเดือน: ยอดสะสม ณ ไฟล์ล่าสุดของแต่ละเดือน
+  var cum=[null,null,null,null,null,null,null,null,null,null,null,null];
+  (A.series||[]).forEach(function(x){var r=x.byPid.filter(function(b){return b[0]===(alroP(id)||{}).pid;})[0];if(!r)return;var mo=((+x.date.split("-")[1])+2)%12;cum[mo]=r[1]+r[2];});
+  var last=0,inc=cum.map(function(v){if(v==null)return null;var d=v-last;last=v;return d;});
+  var plan=[0,0,0,0,0,0,0,0,0,0,0,0];
+  if(D.items&&D.itemCols){var ix={};D.itemCols.forEach(function(c,i){ix[c]=i;});var kid={};D.items.forEach(function(r){if(r[ix.parent]!==""&&r[ix.parent]!=null)kid[r[ix.pid]+"-"+r[ix.parent]]=1;});
+    D.items.forEach(function(r){if(r[ix.pid]!==pid||kid[pid+"-"+r[ix.seq]])return;if(r[ix.fund]!=="พ.ร.บ."&&r[ix.fund]!=="กองทุน")return;r[ix.m].forEach(function(v,i){plan[i]+=v||0;});});}
+  var mx=Math.max.apply(null,plan.concat(inc.map(function(v){return v||0;})))||1,now=curMonthIdx(),pc2=0,sc=0;
+  var bars=plan.map(function(p,i){var a=inc[i];return '<div class="c'+(i===now?' now':'')+'" title="'+MONS[i]+' · แผน (ไฟล์แผนปฏิบัติงาน) '+fmt(p)+' · เบิกจ่าย '+(a==null?'ยังไม่มีไฟล์':fmt(a))+'" style="flex-direction:row;align-items:flex-end;gap:2px"><i style="flex:1;height:'+(p/mx*100).toFixed(1)+'%;background:none;outline:1.5px dashed var(--pend);outline-offset:-1.5px;border-radius:3px 3px 0 0"></i><i style="flex:1;height:'+((a||0)/mx*100).toFixed(1)+'%;background:var(--ok);border-radius:3px 3px 0 0"></i></div>';}).join("");
+  var labs=plan.map(function(p,i){pc2+=p;return '<div><b>'+MONS[i]+'</b>'+(cum[i]==null?'–':fmt(pl?cum[i]/pl*100:0,0)+'%')+'</div>';}).join("");
+  var pcum=0,tb='<div class="bi-mtw" style="margin-top:14px"><table class="bi-mt" style="min-width:640px"><thead><tr><th>เดือน</th><th class="r">แผนตั้งจ่าย (แผนปฏิบัติงาน)</th><th class="r">แผนสะสม</th><th class="r">เบิกจ่ายในเดือน</th><th class="r">เบิกจ่ายสะสม</th><th class="r">ร้อยละสะสม (ของแผนในระบบ)</th></tr></thead><tbody>'+
+    plan.map(function(p,i){pcum+=p;return '<tr><td>'+MONS[i]+(i<3?"69":"70")+'</td><td class="r num">'+fmt(p)+'</td><td class="r num">'+fmt(pcum)+'</td><td class="r num'+(inc[i]==null?' z':'')+'">'+(inc[i]==null?'–':fmt(inc[i]))+'</td><td class="r num'+(cum[i]==null?' z':'')+'">'+(cum[i]==null?'–':fmt(cum[i]))+'</td><td class="r num">'+(cum[i]==null?'–':pc(cum[i],pl))+'</td></tr>';}).join("")+'</tbody></table></div>';
+  var acts=q.acts.length?'<p class="bi-h4">ผลการดำเนินงาน (ขั้นตอนหลัก)</p><div class="bi-mtw"><table class="bi-mt" style="min-width:560px"><thead><tr><th>กิจกรรม</th><th class="r">แผนงาน</th><th class="r">ผลงาน</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+
+    q.acts.map(function(a){return '<tr'+(a.sum?' class="hd"':'')+'><td>'+esc(a.label)+'</td><td class="r num">'+fmt(a.plan)+' '+esc(a.unit)+'</td><td class="r num">'+fmt(a.done)+' '+esc(a.unit)+'</td><td class="r num">'+pc(a.done,a.plan)+'</td></tr>';}).join("")+'</tbody></table></div>':"";
+  var pv=q.prov.length>1?'<p class="bi-h4">แยกรายจังหวัด / หน่วยงาน</p><div class="bi-mtw"><table class="bi-mt" style="min-width:720px"><thead><tr><th>จังหวัด / หน่วยงาน</th><th class="r">แผน พ.ร.บ.</th><th class="r">เบิก พ.ร.บ.</th><th class="r">แผน กองทุน</th><th class="r">เบิก กองทุน</th><th class="r">ร้อยละรวม</th></tr></thead><tbody>'+
+    q.prov.map(function(r){var m=r.m,a=alroSum(m,0),b=alroSum(m,1);return '<tr'+(r.central?' class="cen"':'')+'><td>'+esc(r.prov)+'</td><td class="r num">'+(m.prb?fmt(m.prb[0]):'–')+'</td><td class="r num">'+(m.prb?fmt(m.prb[1]):'–')+'</td><td class="r num">'+(m.fund?fmt(m.fund[0]):'–')+'</td><td class="r num">'+(m.fund?fmt(m.fund[1]):'–')+'</td><td class="r num">'+pc(b,a)+'</td></tr>';}).join("")+'</tbody></table></div>':"";
+  var note=q.m.total&&Math.abs(q.m.total[1]-sp)>1?'<p class="bi-src">หมายเหตุ: ช่อง "รวมงบประมาณ" ในไฟล์ alrotracking = '+fmt(q.m.total[1])+' บาท ไม่เท่ากับ พ.ร.บ. + กองทุน ('+fmt(sp)+') เว็บแสดงยอดแยกแหล่งเงินตามไฟล์</p>':"";
+  return head+'<p class="sub">แท่งเส้นประ = แผนตั้งจ่ายรายเดือน (แผนปฏิบัติงาน ไม่รวมส่วนกลาง) · แท่งเขียว = เบิกจ่ายจริงในเดือน (จาก alrotracking) · ตัวเลขใต้แท่ง = ร้อยละเบิกจ่ายสะสม'+(id===17?' · ใช้ข้อมูลโครงการที่ 4 จนกว่า alrotracking จะแยกโครงการ':'')+'</p>'+k+
+    '<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:none;outline:1.5px dashed var(--pend)"></b>แผนตั้งจ่าย</span><span><b style="background:var(--ok)"></b>เบิกจ่ายจริง</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>'+tb+acts+pv+note+
+    '<p class="bi-src">ที่มา: '+esc(A.latest.file||"")+' (alrotracking) ณ '+thDate(A.latest.date)+' · รายเดือนคำนวณจากไฟล์ส่งออกที่วางในโฟลเดอร์ตามวันที่</p></div>';
 }
 function pbOf(id){return (D.projBudget||[]).find(function(r){return r.pid===id;});}
 function renderSources(){
@@ -847,11 +890,11 @@ function renderProject(id){
    '<div class="kpis">'+kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(l,"mgmt"))+" | ฝึกอบรม "+fmt(sum(l,"train"))+(sum(l,"mat")?" | วัสดุ "+fmt(sum(l,"mat")):""),"")+
      kpi("จัดสรรครั้งที่ 1",fmt(R1)+" บาท","ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของงบเต็มปี","")+
      kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
-     kpi("ผลเบิกจ่าย","รอข้อมูล","นำเข้าจาก alrotracking","pend")+'</div>'+
+     alroKpi(id)+'</div>'+
    '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+(function(){var pid=id===17?4:id,n=(D.indicators||[]).filter(function(x){return x.pid===pid&&x.type==="เกษตรกรตัวอย่าง";}).reduce(function(a,x){return a+x.target;},0);return n?kpi("เกษตรกรตัวอย่าง","เป้า "+fmt(n)+" ราย","รายชื่อและพิกัดรอข้อมูล","pend"):kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend");})()+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
    planHtml(id)+
    (BI?'<section class="panel" id="biPanel"></section>':"")+
-   (function(){var pid=id===17?4:id,h=mpHtml(pid);return h?'<div class="panel"><h2>แผนการใช้จ่ายรายเดือนของโครงการ</h2><p class="sub">เฉพาะโครงการนี้ · ไม่รวมส่วนกลาง (แสดงแยก)'+(id===17?' · แผนรวมกับโครงการที่ 4':pid===4?' · รวมโครงการที่ 17':'')+'</p>'+h+'</div>':"";})()+
+   alroPanel(id)+
    '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(id===17?'ชื่อโครงการในแต่ละจังหวัดคือ "'+esc(p.name)+' จ.&lt;ชื่อจังหวัด&gt;"':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th><th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ (พ.ร.บ.)</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td><td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
    '</div>';
   if(BI){var bp=document.getElementById("biPanel");if(bp){itemsPanelRender(bp,BI,id===17?4:id);if(id===17)bp.querySelector(".sub").insertAdjacentHTML("afterbegin","แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน (เลือกจังหวัดเพื่อดูส่วนขยายผล) · ");}}
