@@ -153,6 +153,7 @@ tr.link:hover{background:var(--surface-2)}
 .mapbox2.sm{height:440px}
 .mapmsg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
 .leaflet-container{font-family:inherit;background:var(--surface-2)}
+.thmask{fill:var(--surface-2)} /* สีพื้นนอกประเทศไทยตามธีมสว่าง/มืด */
 .basetile{filter:grayscale(1) contrast(.85) brightness(1.08);opacity:.75}
 @media (prefers-color-scheme:dark){.basetile{filter:grayscale(1) invert(1) contrast(.8) brightness(.9);opacity:.6}}
 .leaflet-tooltip.pt{font-family:inherit;font-size:13px;border-radius:8px;border:0;box-shadow:0 6px 20px -6px rgba(13,37,61,.35);padding:6px 10px}
@@ -397,7 +398,7 @@ function renderOverviewMap(){
       ly.on("mouseout",function(){if(ly!==sel)ovLayer.resetStyle(ly);});
       ly.on("click",function(){if(sel&&sel!==ly)ovLayer.resetStyle(sel);sel=ly;ly.setStyle({weight:2.5,color:"#d6b46a"});showProv(i,name);});
     }}).addTo(ovMap);
-    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]});
+    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]}); lockToThailand(ovMap, ovLayer);
     document.getElementById("ovLegend").innerHTML=legendHtml(br,"นอกพื้นที่ / ไม่มีการดำเนินการ");
     showTop();
   }).catch(function(){mapFail(el);});
@@ -432,6 +433,7 @@ function renderProjectMap(id){
         ly.bindTooltip('<b>'+esc(f.properties.pro_th)+'</b><br>'+(r?'งบ '+fmt(r.total)+' บาท · ครั้งที่ 1 '+fmt(r.r1)+' บาท':'ไม่อยู่ในพื้นที่โครงการ'),{sticky:true,className:"pt",direction:"top"});}}).addTo(pjMap);
     var fg=L.featureGroup(on);
     pjMap.fitBounds(on.length?fg.getBounds():lay.getBounds(),{padding:[16,16],maxZoom:8});
+    lockToThailand(pjMap, lay, {fitTo: on.length?fg.getBounds():null, padding:[16,16], maxZoom:8});
     document.getElementById("pjLegend").innerHTML=legendHtml(br,"ไม่อยู่ในพื้นที่โครงการ");
   }).catch(function(){mapFail(el);});
 }
@@ -496,6 +498,25 @@ route(INIT||location.hash.slice(1)||"overview");
 requestAnimationFrame(function(){document.getElementById("loader").classList.add("done");});
 }
 })();
+
+/* จำกัดขอบเขตแผนที่ให้เหลือเฉพาะประเทศไทย: บังพื้นที่นอกไทย + ล็อกการลาก/ซูม
+   opts.fitTo: ขอบเขตที่ต้องการแสดงหลังล็อก (เช่น จังหวัดของโครงการ) ถ้าไม่ระบุจะแสดงทั้งประเทศ */
+function lockToThailand(map, provLayer, opts){
+  if(!map||!provLayer||!provLayer.getLayers().length) return;
+  opts=opts||{};
+  const holes=[];
+  const flat=a=>Array.isArray(a[0])&&Array.isArray(a[0][0])?a.forEach(flat):holes.push(Array.isArray(a[0])?a[0]:a);
+  provLayer.eachLayer(p=>{ if(p.getLatLngs) flat(p.getLatLngs()); });
+  if(!map.getPane('thMask')){ const p=map.createPane('thMask'); p.style.zIndex=350; p.style.pointerEvents='none'; }
+  if(map._thMask) map.removeLayer(map._thMask);
+  map._thMask=L.polygon([[[-90,-360],[90,-360],[90,360],[-90,360]],...holes],
+    {pane:'thMask',stroke:false,fillColor:'#eef2f8',fillOpacity:1,fillRule:'evenodd',interactive:false,className:'thmask'}).addTo(map);
+  const b=provLayer.getBounds();
+  map.setMaxBounds(b.pad(0.15)); map.options.maxBoundsViscosity=1;
+  map.setMinZoom(map.getBoundsZoom(b));
+  if(opts.fitTo&&opts.fitTo.isValid&&opts.fitTo.isValid()) map.fitBounds(opts.fitTo,{padding:opts.padding||[16,16],maxZoom:opts.maxZoom||8});
+  else map.fitBounds(b);
+}
 </script>
 </body>
 </html>
