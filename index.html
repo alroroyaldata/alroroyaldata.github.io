@@ -421,7 +421,7 @@ function renderOverviewMap(){
       ly.on("mouseout",function(){if(ly!==sel)ovLayer.resetStyle(ly);});
       ly.on("click",function(){if(sel&&sel!==ly)ovLayer.resetStyle(sel);sel=ly;ly.setStyle({weight:2.5,color:"#d6b46a"});showProv(i,name);});
     }}).addTo(ovMap);
-    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]});
+    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]}); lockToThailand(ovMap, ovLayer);
     document.getElementById("ovLegend").innerHTML=legendHtml(ovBr,"นอกพื้นที่ / ไม่มีการดำเนินการ",MLAB[METRIC]);
     showTop();
   }).catch(function(){mapFail(el);});
@@ -530,6 +530,21 @@ route(INIT||location.hash.slice(1)||"overview");
 requestAnimationFrame(function(){document.getElementById("loader").classList.add("done");});
 }
 })();
+
+/* จำกัดขอบเขตแผนที่ให้เหลือเฉพาะประเทศไทย: บังพื้นที่นอกไทย + ล็อกการลาก/ซูม */
+function lockToThailand(map, provLayer){
+  if(!map||!provLayer||!provLayer.getLayers().length) return;
+  const holes=[];
+  const flat=a=>Array.isArray(a[0])&&Array.isArray(a[0][0])?a.forEach(flat):holes.push(Array.isArray(a[0])?a[0]:a);
+  provLayer.eachLayer(p=>{ if(p.getLatLngs) flat(p.getLatLngs()); });
+  if(!map.getPane('thMask')){ const p=map.createPane('thMask'); p.style.zIndex=350; p.style.pointerEvents='none'; }
+  if(map._thMask) map.removeLayer(map._thMask);
+  map._thMask=L.polygon([[[-90,-360],[90,-360],[90,360],[-90,360]],...holes],
+    {pane:'thMask',stroke:false,fillColor:'#f4f5f7',fillOpacity:1,fillRule:'evenodd',interactive:false}).addTo(map);
+  const b=provLayer.getBounds();
+  map.setMaxBounds(b.pad(0.15)); map.options.maxBoundsViscosity=1;
+  map.setMinZoom(map.getBoundsZoom(b)); map.fitBounds(b);
+}
 </script>
 </body>
 </html>
