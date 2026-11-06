@@ -1215,6 +1215,15 @@ function bgHtml(p){
 function subActHtml(p){if(!p.subs||!p.subs.length)return "";return p.subs.map(function(s){var x=s.info||{},pv={};rows.forEach(function(r){if(r.pid===p.id)(r.parts||[]).forEach(function(c){if(c.act===s.act)pv[PV[c.prov]]=1;});});var n=Object.keys(pv);
   var h='<div class="h4" style="margin-top:18px">กิจกรรมย่อย: '+esc(actLabel(s.act))+'</div><p style="margin:0 0 6px;font-size:14px"><b>'+esc(s.name||'')+'</b> — ดำเนินการ '+n.length+' จังหวัด ('+esc(n.join(" "))+') · ชื่อในแต่ละจังหวัด: "'+esc(s.name)+' จ.&lt;ชื่อจังหวัด&gt;"</p>';
   if(x.bg)h+='<div class="bgtext"><p>'+esc(x.bg)+'</p></div>';if(x.obj&&x.obj.length)h+='<div class="h4">วัตถุประสงค์ของกิจกรรม</div><ol class="objs">'+x.obj.map(function(o){return "<li>"+esc(o)+"</li>";}).join("")+'</ol>';if(x.area)h+='<div class="h4">พื้นที่ตามเอกสาร</div><p style="margin:0 0 8px;font-size:14px">'+esc(x.area)+'</p>';if(x.src)h+='<p class="attr">ที่มา: '+esc(x.src)+'</p>';return h;}).join("");}
+/* ผลการอบรมเกษตรกร ตัวชี้วัด กปร. ตัวที่ 6 ปี 2568 (ตามเอกสาร) — D.kpi6 จาก Apps Script: [จังหวัด,โครงการ,เป้า,ผล,%นำไปใช้,%รายได้เพิ่ม,เกษตรก่อน,เกษตรหลัง,รวมก่อน,รวมหลัง] */
+var K6KEY=["ภูฟ้า","ปิดทอง","ห้วยไฟ","แม่อาว","ฟาร์มตัวอย่าง","ทุ่งสมเด็จ","ห้วยเขย่ง","พัชรสุธา","ที่ดินพระราชทาน","ราบเชิงเขา","ปากพนัง","เกษตรวิชญา"];
+function k6Rows(p){var k=K6KEY.filter(function(x){return String(p.name).indexOf(x)>=0;})[0];if(!k||!D.kpi6)return [];return D.kpi6.filter(function(r){return String(r[1]).indexOf(k)>=0;});}
+function k6Html(p){var R=k6Rows(p);if(!R.length)return "";var t=0,a=0;
+  var tr=R.map(function(r){t+=+r[2]||0;a+=+r[3]||0;var ok=r[4]>=70&&r[5]>=10;
+    return '<tr><td>'+esc(r[0])+'</td><td class="r num">'+fmt(r[2])+' / '+fmt(r[3])+'</td><td class="r num">'+fmt(r[4],2)+'</td><td class="r num">'+fmt(r[5],2)+'</td><td class="r num">'+fmt(r[6])+' → '+fmt(r[7])+'</td><td class="r num">'+fmt(r[8])+' → '+fmt(r[9])+'</td><td><span class="tag '+(ok?'t-ok':'t-bad')+'">'+(ok?'ผ่าน':'ไม่ผ่าน')+'</span></td></tr>';}).join("");
+  return '<div class="panel tbl-wrap"><h2>ผลการอบรมเกษตรกร ปี 2568</h2><p class="sub">ตัวชี้วัด กปร. ตัวที่ 6 รอบที่ 2 (1 เม.ย. – 30 ก.ย. 2568) · เกณฑ์: นำความรู้ไปใช้ ≥ ร้อยละ 70 และรายได้เพิ่ม ≥ ร้อยละ 10 · อบรม '+fmt(a)+' ราย จากเป้า '+fmt(t)+' ราย</p>'+
+   '<table><thead><tr><th>จังหวัด</th><th class="r">เป้า / ผล (ราย)</th><th class="r">นำความรู้ไปใช้ (%)</th><th class="r">รายได้เพิ่ม (%)</th><th class="r">รายได้สุทธิภาคเกษตร/ปี (บาท)</th><th class="r">รายได้สุทธิรวม/ปี (บาท)</th><th>ผล</th></tr></thead><tbody>'+tr+'</tbody></table>'+
+   '<p class="attr">ที่มา: สรุปข้อมูลเกษตรกรที่เข้ารับการอบรม 12 โครงการ (ตัวชี้วัด กปร. ตัวที่ 6) · รายได้เป็นค่าเฉลี่ยต่อครัวเรือน ก่อน → หลังอบรม</p></div>';}
 function renderProject(id){
   var p=proj(id),l=rowsOf(id),v=document.getElementById("v-project");
   if(!p){v.innerHTML='<div class="panel">ไม่พบโครงการ</div>';return;}
@@ -1233,6 +1242,7 @@ function renderProject(id){
      kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
      alroKpi(id)+'</div>'+
    '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+(function(){var pid=id===17?4:id,n=(D.indicators||[]).filter(function(x){return x.pid===pid&&x.type==="เกษตรกรตัวอย่าง";}).reduce(function(a,x){return a+x.target;},0);return n?kpi("เกษตรกรตัวอย่าง","เป้า "+fmt(n)+" ราย","รายชื่อและพิกัดรอข้อมูล","pend"):kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend");})()+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
+   k6Html(p)+
    planHtml(id)+
    (BI?'<section class="panel" id="biPanel"></section>':"")+
    alroPanel(id)+
