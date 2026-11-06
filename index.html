@@ -198,6 +198,29 @@ tr.link:hover{background:var(--surface-2)}
 @media (max-width:640px){.brand span{display:none}.banner{padding:24px 20px;border-radius:16px}.seal span{display:none}}
 @media (max-width:800px){header.top{position:static}.two{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.asof{text-align:left}.hbar{grid-template-columns:1fr;gap:6px}.amt{text-align:left}main{padding:24px 16px 48px}.bar{padding:12px 16px}}
 @media (prefers-reduced-motion:no-preference){.cell.on{transition:transform .15s}.cell.on:hover{transform:scale(1.35)}}
+.dv-twin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.dv-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.dv-h{padding:16px 22px;color:#fff}.dv-h small{font-size:12px;opacity:.8;font-weight:600}.dv-h h2{margin:2px 0 0;font-size:20px;color:#fff}
+.dv-h.kpg{background:var(--navy)}.dv-h.kpt{background:#14532d}
+.dv-b{padding:18px 22px;display:flex;flex-direction:column;gap:14px}
+.dv-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dv-st span{display:block;font-size:12px;color:var(--muted)}.dv-st b{display:block;font-size:22px;line-height:1.3}.dv-st i{display:block;font-style:normal;font-size:12px;color:var(--ink-2)}
+.dv-3.sm{background:var(--surface-2);border-radius:12px;padding:12px}.dv-3.sm .dv-st b{font-size:18px}
+.dv-pl{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px}
+.dv-bar{position:relative;height:10px;background:var(--surface-2);border-radius:99px}.dv-bar.big{height:12px}
+.dv-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px}.dv-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--gold)}
+.dv-sub{font-size:13px;font-weight:600}
+.dv-ir{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:8px;align-items:center;font-size:12px}
+.dv-ir span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dv-ir b{text-align:right}
+.dv-note{margin:0;font-size:12px;color:var(--muted)}
+.dv-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px}
+.dv-empty{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:var(--surface-2)}.dv-empty p{margin:6px 0 0;font-size:14px}.dv-cols{font-size:12px!important;color:var(--muted)}
+.dv-filt{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin:4px 0 10px}.dv-filt label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+.dv-filt input,.dv-filt select{font:inherit;font-size:14px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}.dv-filt input{min-width:260px}
+.dv-z{color:var(--muted)}.dv-tot td{font-weight:700;border-top:2px solid var(--line)}
+.dv-pager{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.dv-pager button{font:inherit;font-size:13px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}.dv-pager button:disabled{opacity:.4;cursor:default}
+.sec-head{margin:8px 0 -4px;font-size:15px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+@media (max-width:900px){.dv-twin{grid-template-columns:1fr}.dv-3{grid-template-columns:1fr 1fr}.dv-filt input{min-width:0;width:100%}}
 </style>
 <style id="bicss"></style>
 <style>
@@ -322,10 +345,13 @@ body.pm-lock{overflow:hidden}
 <main>
   <section class="view" id="v-overview">
     <div class="banner hero">
-      <div><p class="eyebrow">ภาพรวมผู้บริหาร</p><h1>ปีงบประมาณ 2570</h1><p id="heroSub"></p><div class="rule"></div></div>
+      <div><p class="eyebrow">ภาพรวมกอง · กผง. + กปต.</p><h1>เงินถึงพื้นที่ และผลถึงเกษตรกร</h1><p id="heroSub"></p><div class="rule"></div></div>
       <div class="asof">งบ พ.ร.บ.: แผนจัดสรร กผง. (ครั้งที่ 1 และเต็มปี)<br>ผลเบิกจ่าย: รอนำเข้าจาก alrotracking</div>
     </div>
     <div class="stack">
+      <div id="divTwin"></div>
+      <div class="panel" id="farmerPanel"></div>
+      <p class="sec-head">รายละเอียด กผง. · งบประมาณและแผน ปีงบประมาณ 2570</p>
       <div class="kpis" id="kpis"></div>
       <div class="panel">
         <h2>แผนที่งบประมาณรายจังหวัด</h2>
@@ -1278,7 +1304,87 @@ else{window.addEventListener("hashchange",function(){route(location.hash.slice(1
 var mx=document.getElementById("matrix");
 mx.addEventListener("mouseover",showTip);mx.addEventListener("focusin",showTip);mx.addEventListener("click",showTip);
 document.getElementById("ptable").addEventListener("click",function(e){var tr=e.target.closest("tr");if(tr)navigate(tr.dataset.h);});
-renderOverview();renderProjects();renderChecks();
+/* ===== ภาพรวมกอง 2 กลุ่มงาน: กผง. (เงิน) + กปต. (ผลต่อเกษตรกร) · ฐานรายชื่อเกษตรกร =====
+   D.farmers: [รหัส, ชื่อ-สกุล, เลขบัตร(ปิดบัง), pid, ปีงบ, จังหวัด, อำเภอ, ตำบล, ประเภท, รายได้ก่อน, รายได้หลัง, เชื่อมจปฐ, lat, lng]
+   D.modelFarmers: [ปี, pid, จังหวัด, ชื่อ-สกุล, ที่อยู่, โทร, องค์ความรู้, ความพร้อม, ถ่ายทอดได้, ชื่อโครงการในชีต] */
+var FV={tab:"all",q:"",pid:0,y:0,page:0},FARMER_SHEET="https://docs.google.com/spreadsheets/d/1wSmbpbEiCenc3uBdTvwdz5XQ4WcrPzNKIF7vwFHfbAQ/edit";
+function pshort(id){var p=proj(id);return p?(p.short||p.name):"ไม่ระบุโครงการ";}
+function k6pid(r){var k=K6KEY.filter(function(x){return String(r[1]).indexOf(x)>=0;})[0];if(!k)return 0;var p=P.filter(function(p){return String(p.name).indexOf(k)>=0;})[0];return p?p.id:0;}
+function dvStat(l,v,s){return '<div class="dv-st"><span>'+l+'</span><b class="num">'+v+'</b><i>'+s+'</i></div>';}
+function dvHeat(v,max){if(!v)return '<td class="r num dv-z">–</td>';var a=Math.min(1,v/max);return '<td class="r num" style="background:rgba(31,138,91,'+(0.08+a*0.62).toFixed(2)+');color:'+(a>0.55?'#fff':'inherit')+'">'+fmt(v)+'</td>';}
+function renderDivision(){
+  var T=sum(rows,"total"),R1=sum(rows,"r1"),FD=(D.projBudget||[]).reduce(function(a,r){return a+(r.fund||0);},0);
+  var L=D.alro&&D.alro.latest,pl=0,sp=0;if(L)L.projects.forEach(function(q){pl+=alroSum(q.m,0);sp+=alroSum(q.m,1);});
+  var K=D.kpi6||[],KT=D.kpi6Total,kt=0,ka=0;K.forEach(function(r){kt+=r[2];ka+=r[3];});
+  var pass=K.filter(function(r){return r[4]>=70&&r[5]>=10;}).length;
+  var FA=D.farmers||[],MF=D.modelFarmers||[],u={};FA.forEach(function(f){u[f[0]||f[1]+"|"+f[2]]=1;});var nF=Object.keys(u).length;
+  var mfY={};MF.forEach(function(m){mfY[m[0]]=(mfY[m[0]]||0)+1;});var ys=Object.keys(mfY).sort(),lastY=ys[ys.length-1];
+  var top=K.slice().sort(function(a,b){return b[5]-a[5];}).slice(0,8),mx=Math.max.apply(null,top.map(function(r){return r[5];}).concat([20]));
+  var bars=top.map(function(r){return '<div class="dv-ir"><span>'+esc(r[0])+' · '+esc(r[1])+'</span><div class="dv-bar"><i style="width:'+(r[5]/mx*100).toFixed(1)+'%;background:var(--ok)"></i><u style="left:'+(10/mx*100).toFixed(1)+'%"></u></div><b class="num">'+fmt(r[5],2)+'%</b></div>';}).join("");
+  document.getElementById("divTwin").innerHTML='<div class="dv-twin">'+
+   '<article class="dv-card"><header class="dv-h kpg"><small>กลุ่มงบประมาณและแผนงาน</small><h2>กผง. · เงินไปถึงไหนแล้ว</h2></header><div class="dv-b">'+
+     '<div class="dv-3">'+dvStat("งบ พ.ร.บ. เต็มปี (จังหวัด)",fmt(T),"บาท")+dvStat("จัดสรรครั้งที่ 1",fmt(R1),"ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของเต็มปี")+dvStat("เงินกองทุนฯ",FD?fmt(FD):"รอข้อมูล","บาท")+'</div>'+
+     (L?'<div class="dv-pl"><span>ผลเบิกจ่ายสะสม ณ '+thDate(L.date)+'</span><b class="num">'+fmt(sp)+' บาท · ร้อยละ '+fmt(pl?sp/pl*100:0,1)+' ของแผน</b></div><div class="dv-bar big"><i style="width:'+Math.min(100,pl?sp/pl*100:0).toFixed(1)+'%;background:var(--primary)"></i></div>':'<p><span class="tag t-pend">ผลเบิกจ่าย: รอไฟล์ alrotracking</span></p>')+
+     '<div class="dv-sub">งบ พ.ร.บ. สูงสุด 8 โครงการ · สีเข้ม = จัดสรรครั้งที่ 1 แล้ว</div>'+(function(){var a={};rows.forEach(function(r){var x=a[r.pid]=a[r.pid]||{t:0,r1:0};x.t+=r.total;x.r1+=r.r1;});var L2=Object.keys(a).map(function(k){return {id:+k,t:a[k].t,r1:a[k].r1};}).sort(function(x,y){return y.t-x.t;}).slice(0,8),m2=L2.length?L2[0].t:1;
+       return L2.map(function(x){return '<div class="dv-ir"><span>'+code(x.id)+' · '+esc(pshort(x.id))+'</span><div class="dv-bar"><i style="width:'+(x.t/m2*100).toFixed(1)+'%;background:var(--primary-soft)"></i><i style="width:'+(x.r1/m2*100).toFixed(1)+'%;background:var(--primary)"></i></div><b class="num">'+fmt(x.t/1e6,2)+' ล.</b></div>';}).join("");})()+
+     '<p class="dv-note">ยอดรวมไม่รวมส่วนกลาง (แสดงแยก) · แผนที่งบ ตารางรายจังหวัด และแผนรายเดือน อยู่ในส่วน “รายละเอียด กผง.” ด้านล่าง</p></div></article>'+
+   '<article class="dv-card"><header class="dv-h kpt"><small>กลุ่มประสานงานและติดตาม</small><h2>กปต. · เกษตรกรได้อะไร</h2></header><div class="dv-b">'+
+     (K.length?'<div class="dv-3">'+dvStat("อบรมปี 2568 (จังหวัด)",fmt(ka)+" / "+fmt(kt),"ราย (ผล / เป้า)")+dvStat("นำความรู้ไปใช้",KT?fmt(KT[0],2)+"%":"-","ภาพรวมตามเอกสาร · เกณฑ์ ≥ 70%")+dvStat("รายได้เพิ่ม",KT?fmt(KT[1],2)+"%":"-","ภาพรวมตามเอกสาร · เกณฑ์ ≥ 10%")+'</div>'+
+       '<div class="dv-sub">รายได้เพิ่มสูงสุด 8 พื้นที่ · ผ่านเกณฑ์ '+pass+'/'+K.length+' พื้นที่ · เส้นทอง = เกณฑ์ 10%</div>'+bars:'<p><span class="tag t-pend">ผลการอบรม: รอข้อมูล</span></p>')+
+     '<div class="dv-3 sm">'+dvStat("เกษตรกรในฐานข้อมูล",nF?fmt(nF):"รอข้อมูล",nF?"ราย (ไม่นับซ้ำ)":"รอรายชื่อจากโครงการ")+dvStat("เกษตรกรตัวอย่าง",MF.length?fmt(MF.length):"รอข้อมูล",ys.length?"สะสม ปี "+ys[0]+"–"+lastY:"")+dvStat("ปีล่าสุด",lastY?fmt(mfY[lastY])+" ราย":"-","เกษตรกรตัวอย่าง ปี "+(lastY||"-"))+'</div>'+
+     '<p class="dv-note">ที่มา: ตัวชี้วัด กปร. ตัวที่ 6 ปี 2568 รอบ 2 · ชีตเกษตรกรตัวอย่างพระราชดำริ</p></div></article></div>';
+  renderFarmers();
+}
+function renderFarmers(){
+  var el=document.getElementById("farmerPanel"),FA=D.farmers||[],MF=D.modelFarmers||[],K=D.kpi6||[];
+  var tabs=[["all","รายชื่อทั้งหมด"],["matrix","รายโครงการ × ปี"],["model","เกษตรกรตัวอย่าง"]];
+  var h='<div class="dv-top"><div><p class="eyebrow" style="color:var(--ok)">กปต. · ฐานข้อมูลกลาง</p><h2 style="margin:0">ฐานรายชื่อเกษตรกร</h2><p class="sub" style="margin:4px 0 0">รายชื่อเดียวใช้ได้ทุกโครงการ · แยกรายโครงการ รายปี · แสดงชื่อ-สกุลเต็มสำหรับบุคลากรในกอง · เลขบัตรประชาชนปิดบังเสมอ</p></div>'+
+    '<div class="seg" role="group" aria-label="มุมมองฐานเกษตรกร">'+tabs.map(function(t){return '<button type="button" data-ftab="'+t[0]+'" aria-pressed="'+(FV.tab===t[0])+'">'+t[1]+'</button>';}).join("")+'</div></div>';
+  var pids=P.map(function(p){return p.id;}),pOpt=function(sel){return '<option value="0">ทุกโครงการ</option>'+P.map(function(p){return '<option value="'+p.id+'"'+(sel===p.id?' selected':'')+'>'+code(p.id)+' '+esc(pshort(p.id))+'</option>';}).join("");};
+  if(FV.tab==="all"){
+    if(!FA.length){
+      h+='<div class="dv-empty"><b>รอข้อมูลรายชื่อเกษตรกร</b><p>โครงสร้างฐานข้อมูลพร้อมแล้ว เมื่อกรอกรายชื่อใน <a href="'+FARMER_SHEET+'" target="_blank" rel="noopener">ชีต “ฐานรายชื่อเกษตรกร_กปต (ทุกโครงการ)”</a> รายชื่อจะขึ้นที่นี่อัตโนมัติ (ภายใน 6 ชั่วโมง หรือทันทีเมื่อสั่งรีเฟรช)</p><p class="dv-cols">คอลัมน์: รหัสเกษตรกร · คำนำหน้า · ชื่อ · สกุล · เลขบัตรประชาชน · รหัสโครงการ (1–16) · ปีงบประมาณ · จังหวัด · อำเภอ · ตำบล · หมู่บ้าน · ประเภท · รายได้ก่อน · รายได้หลัง · เชื่อม จปฐ · ละติจูด · ลองจิจูด · แหล่งข้อมูล</p></div>';
+      h+='<div class="tbl-wrap"><table><thead><tr><th>รหัส</th><th>โครงการ</th><th class="r">รายชื่อในฐาน</th><th class="r">อบรมปี 68 (กปร.6)</th><th class="r">เกษตรกรตัวอย่าง</th><th>สถานะ</th></tr></thead><tbody>'+
+        P.map(function(p){var k=K.filter(function(r){return k6pid(r)===p.id;}).reduce(function(a,r){return a+r[3];},0),m=MF.filter(function(x){return x[1]===p.id;}).length;
+          return '<tr><td>'+code(p.id)+'</td><td>'+esc(p.name)+'</td><td class="r num">0</td><td class="r num">'+(k?fmt(k):'–')+'</td><td class="r num">'+(m?fmt(m):'–')+'</td><td><span class="tag t-pend">รอข้อมูล</span></td></tr>';}).join("")+'</tbody></table></div>';
+    }else{
+      var q=FV.q.trim().toLowerCase(),f=FA.filter(function(r){return (!FV.pid||r[3]===FV.pid)&&(!FV.y||r[4]===FV.y)&&(!q||(r[1]+" "+r[5]+" "+r[6]+" "+r[7]+" "+pshort(r[3])+" "+r[0]).toLowerCase().indexOf(q)>=0);});
+      var yrs=[];FA.forEach(function(r){if(r[4]&&yrs.indexOf(r[4])<0)yrs.push(r[4]);});yrs.sort();
+      var PG=50,np=Math.max(1,Math.ceil(f.length/PG));if(FV.page>=np)FV.page=np-1;var pg=f.slice(FV.page*PG,FV.page*PG+PG);
+      h+='<div class="dv-filt"><label>ค้นหา <input type="search" id="fq" value="'+esc(FV.q)+'" placeholder="ชื่อ-สกุล · จังหวัด · อำเภอ · รหัส"></label><label>โครงการ <select id="fp">'+pOpt(FV.pid)+'</select></label><label>ปีงบประมาณ <select id="fy"><option value="0">ทุกปี</option>'+yrs.map(function(y){return '<option'+(FV.y===y?' selected':'')+'>'+y+'</option>';}).join("")+'</select></label></div>'+
+        '<p class="sub">พบ '+fmt(f.length)+' รายการ จาก '+fmt(FA.length)+' · หน้า '+(FV.page+1)+'/'+np+'</p>'+
+        '<div class="tbl-wrap"><table><thead><tr><th>รหัส</th><th>ชื่อ-สกุล</th><th>เลขบัตร</th><th>โครงการ</th><th class="r">ปี</th><th>ที่อยู่</th><th>ประเภท</th><th class="r">รายได้ก่อน → หลัง</th><th>จปฐ.</th></tr></thead><tbody>'+
+        pg.map(function(r){return '<tr><td class="num">'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td class="num" style="color:var(--muted)">'+esc(r[2])+'</td><td>'+code(r[3])+' '+esc(pshort(r[3]))+'</td><td class="r num">'+(r[4]||'-')+'</td><td>'+esc([r[7]?"ต."+r[7]:"",r[6]?"อ."+r[6]:"",r[5]?"จ."+r[5]:""].filter(Boolean).join(" "))+'</td><td>'+esc(r[8]||'-')+'</td><td class="r num">'+(r[9]!=null&&r[10]!=null?fmt(r[9])+' → '+fmt(r[10]):'-')+'</td><td>'+(r[11]?'<span class="tag t-ok">เชื่อมแล้ว</span>':'-')+'</td></tr>';}).join("")+'</tbody></table></div>'+
+        (np>1?'<div class="dv-pager"><button type="button" data-fpg="-1"'+(FV.page?'':' disabled')+'>‹ ก่อนหน้า</button><button type="button" data-fpg="1"'+(FV.page<np-1?'':' disabled')+'>ถัดไป ›</button></div>':'');
+    }
+  }else if(FV.tab==="matrix"){
+    var Y=[2566,2567,2568,2569,2570];FA.forEach(function(r){if(r[4]&&Y.indexOf(r[4])<0)Y.push(r[4]);});Y.sort();
+    var cnt={},mx=1;FA.forEach(function(r){var k=r[3]+"|"+r[4];cnt[k]=(cnt[k]||0)+1;if(cnt[k]>mx)mx=cnt[k];});
+    h+='<p class="sub">จำนวนรายชื่อเกษตรกรในฐาน แยกรายโครงการ × ปีงบประมาณ'+(FA.length?'':' · <span class="tag t-pend">รอข้อมูลรายชื่อ</span>')+' · คอลัมน์สุดท้ายคือผลอบรมปี 2568 ตามตัวชี้วัด กปร. 6 (ใช้อ้างอิง)</p>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>โครงการ</th>'+Y.map(function(y){return '<th class="r">'+y+'</th>';}).join("")+'<th class="r">รวม</th><th class="r">อบรม 68 (กปร.6)</th></tr></thead><tbody>'+
+      P.map(function(p){var t=0,c=Y.map(function(y){var v=cnt[p.id+"|"+y]||0;t+=v;return dvHeat(v,mx);}).join(""),k=K.filter(function(r){return k6pid(r)===p.id;}).reduce(function(a,r){return a+r[3];},0);
+        return '<tr><td>'+code(p.id)+' '+esc(pshort(p.id))+'</td>'+c+'<td class="r num"><b>'+(t?fmt(t):'–')+'</b></td><td class="r num" style="color:var(--muted)">'+(k?fmt(k):'–')+'</td></tr>';}).join("")+'</tbody></table></div>';
+  }else{
+    var MY=[];MF.forEach(function(m){if(MY.indexOf(m[0])<0)MY.push(m[0]);});MY.sort();
+    var mc={},mm=1;MF.forEach(function(m){var k=m[1]+"|"+m[0];mc[k]=(mc[k]||0)+1;if(mc[k]>mm)mm=mc[k];});
+    var mp=P.filter(function(p){return MF.some(function(m){return m[1]===p.id;});});var un=MF.filter(function(m){return !m[1];}).length;
+    h+=MF.length?'<p class="sub">เกษตรกรตัวอย่าง (ศูนย์ต้นแบบ/แปลงเรียนรู้) แยกรายโครงการ × ปี · ที่มา: ชีต “เกษตรกรตัวอย่างพระราชดำริ” แท็บรายปี'+(un?' · ไม่ระบุโครงการ '+un+' ราย':'')+'</p>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>โครงการ</th>'+MY.map(function(y){return '<th class="r">'+y+'</th>';}).join("")+'<th class="r">รวม</th></tr></thead><tbody>'+
+      mp.map(function(p){var t=0,c=MY.map(function(y){var v=mc[p.id+"|"+y]||0;t+=v;return dvHeat(v,mm);}).join("");return '<tr><td>'+code(p.id)+' '+esc(pshort(p.id))+'</td>'+c+'<td class="r num"><b>'+fmt(t)+'</b></td></tr>';}).join("")+
+      '<tr class="dv-tot"><td>รวม</td>'+MY.map(function(y){return '<td class="r num">'+fmt(MF.filter(function(m){return m[0]===y;}).length)+'</td>';}).join("")+'<td class="r num">'+fmt(MF.length)+'</td></tr></tbody></table></div>':'<div class="dv-empty"><b>รอข้อมูลเกษตรกรตัวอย่าง</b></div>';
+    if(MF.length){var f2=MF.filter(function(m){return (!FV.pid||m[1]===FV.pid)&&(!FV.y||m[0]===FV.y);});
+      h+='<div class="dv-filt"><label>โครงการ <select id="fp">'+pOpt(FV.pid)+'</select></label><label>ปี <select id="fy"><option value="0">ทุกปี</option>'+MY.map(function(y){return '<option'+(FV.y===y?' selected':'')+'>'+y+'</option>';}).join("")+'</select></label><span class="sub" style="margin:0">'+fmt(f2.length)+' ราย</span></div>'+
+        '<div class="tbl-wrap"><table><thead><tr><th class="r">ปี</th><th>ชื่อ-สกุล</th><th>โครงการ</th><th>จังหวัด</th><th>องค์ความรู้</th><th>ความพร้อม</th><th>ถ่ายทอดได้</th><th>โทร</th><th>ที่อยู่ศูนย์/แปลง</th></tr></thead><tbody>'+
+        f2.map(function(m){return '<tr><td class="r num">'+m[0]+'</td><td>'+esc(m[3])+'</td><td>'+(m[1]?code(m[1])+' '+esc(pshort(m[1])):esc(m[9]||'-'))+'</td><td>'+esc(m[2])+'</td><td>'+esc(m[6])+'</td><td>'+esc(m[7])+'</td><td>'+esc(m[8])+'</td><td class="num">'+esc(m[5])+'</td><td>'+esc(m[4])+'</td></tr>';}).join("")+'</tbody></table></div>';}
+  }
+  el.innerHTML=h;
+}
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-ftab],[data-fpg]");if(!t||!document.getElementById("farmerPanel").contains(t))return;
+  if(t.dataset.ftab){FV.tab=t.dataset.ftab;FV.pid=0;FV.y=0;FV.page=0;}else FV.page+=+t.dataset.fpg;renderFarmers();});
+document.addEventListener("change",function(e){if(e.target.id==="fp"){FV.pid=+e.target.value;FV.page=0;renderFarmers();}else if(e.target.id==="fy"){FV.y=+e.target.value;FV.page=0;renderFarmers();}});
+var fqT;document.addEventListener("input",function(e){if(e.target.id!=="fq")return;clearTimeout(fqT);fqT=setTimeout(function(){FV.q=e.target.value;FV.page=0;renderFarmers();var i=document.getElementById("fq");if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250);});
+
+renderOverview();renderDivision();renderProjects();renderChecks();
 document.getElementById("foot").textContent="ข้อมูลจาก Google Sheets ในโฟลเดอร์ฐานข้อมูลกอง อัปเดตล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
 route(INIT||location.hash.slice(1)||"overview");
 requestAnimationFrame(function(){document.getElementById("loader").classList.add("done");});
