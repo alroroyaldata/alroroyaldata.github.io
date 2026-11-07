@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="ฐานข้อมูลกองประสานงานโครงการพระราชดำริและโครงการพิเศษ ปีงบประมาณ 2570">
+<meta name="theme-color" content="#0e1a33">
+<link rel="icon" type="image/png" href="https://alro.go.th/assets/themes/default/images/logo/logo-into.png">
+<title>ฐานข้อมูลกองประสานงานโครงการพระราชดำริฯ ปี 2570</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fa;--surface:#ffffff;--surface-2:#eef2f8;--ink:#0d253d;--ink-2:#34475f;--muted:#64748d;--line:#e1e6ee;
+  --primary:#4a35e8;--primary-ink:#ffffff;--primary-soft:#e9e6ff;--gold:#a6802c;
+  --ok:#1f8a5b;--ok-soft:#e3f4ec;--warn:#b7770f;--warn-soft:#fbf0dc;--bad:#c92f57;--bad-soft:#fbe5ec;--empty:#e8ecf3;
+  --navy:#14183f;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8a96ab;--pend-soft:#eef1f6;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1120;--surface:#121a2c;--surface-2:#18223a;--ink:#e7edf6;--ink-2:#c3cee0;--muted:#8e9bb3;--line:#24304a;
+  --primary:#8a7dff;--primary-ink:#0b1120;--primary-soft:#262457;--gold:#d6b46a;
+  --ok:#4cc38a;--ok-soft:#12301f;--warn:#e3a540;--warn-soft:#33260d;--bad:#f0718f;--bad-soft:#3a1521;--empty:#1b2540;
+  --navy:#1d2257;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8e9bb3;--pend-soft:#1b2540;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0b1120;--surface:#121a2c;--surface-2:#18223a;--ink:#e7edf6;--ink-2:#c3cee0;--muted:#8e9bb3;--line:#24304a;
+  --primary:#8a7dff;--primary-ink:#0b1120;--primary-soft:#262457;--gold:#d6b46a;
+  --ok:#4cc38a;--ok-soft:#12301f;--warn:#e3a540;--warn-soft:#33260d;--bad:#f0718f;--bad-soft:#3a1521;--empty:#1b2540;
+  --navy:#1d2257;--navy-ink:#ffffff;--navy-muted:#b9b9f9;--pend:#8e9bb3;--pend-soft:#1b2540;color-scheme:dark;}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter","Noto Sans Thai",Tahoma,sans-serif;font-size:15px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1440px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;line-height:1.3;margin-right:auto;text-decoration:none;min-width:0}
+.brand .mark{flex:none;width:38px;height:38px;border-radius:10px;background:linear-gradient(140deg,var(--navy),#2b2f7a);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.brand .mark svg{width:22px;height:22px}
+.brand .mark[hidden],.gmark[hidden]{display:none}
+.seal-logo{flex:none;width:44px;height:44px;border-radius:50%;object-fit:contain;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.gseal{width:72px;height:72px;border-radius:50%;object-fit:contain;background:#fff;margin-bottom:6px;box-shadow:0 0 0 1px var(--line)}
+.brand .txt{display:flex;flex-direction:column;min-width:0}
+.brand b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand span{font-size:12px;color:var(--muted)}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;padding:7px 14px;border-radius:9999px;color:var(--ink-2);font-size:14px}
+nav a:hover{background:var(--surface-2)}
+nav a[aria-current="page"]{background:var(--navy);color:var(--navy-ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.seal{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:9999px;font-size:13px;background:var(--ok-soft);color:var(--ok);text-decoration:none}
+.seal.fail{background:var(--bad-soft);color:var(--bad)}
+.seal i{width:8px;height:8px;border-radius:50%;background:currentColor}
+main{max-width:1440px;margin:0 auto;padding:32px 24px 64px}
+.view{display:none}.view.on{display:block}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:20px}
+.banner{position:relative;overflow:hidden;border-radius:20px;padding:30px 32px;margin-bottom:20px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#3b37a8 0%,rgba(59,55,168,0) 55%),linear-gradient(135deg,#10143a 0%,#1b2060 100%)}
+.banner::after{content:"";position:absolute;right:-60px;bottom:-80px;width:280px;height:280px;border-radius:50%;border:40px solid rgba(214,180,106,.10)}
+.banner .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#d6b46a;margin:0 0 6px;font-weight:600}
+.banner h1{font-weight:700;letter-spacing:-0.01em;font-size:clamp(28px,3.8vw,42px);line-height:1.25;margin:0}
+.banner.hero p{margin:8px 0 0;color:#c9cdf5}
+.banner.hero .eyebrow{margin:0 0 6px;color:#d6b46a}
+.banner.hero h1{font-size:clamp(28px,3.8vw,42px);line-height:1.25}
+.banner.hero .asof{color:#aab0e6;position:relative;z-index:1}
+.banner .rule{background:#d6b46a}
+.hero h1{font-weight:700;letter-spacing:-0.01em;font-size:clamp(26px,3.6vw,40px);line-height:1.3;margin:0}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.rule{height:2px;width:72px;background:var(--gold);margin:14px 0 0}
+.asof{font-size:13px;color:var(--muted);text-align:right}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.stack>*+*{margin-top:20px}
+.matrix-wrap{overflow-x:auto;padding-bottom:4px}
+.matrix{display:grid;grid-template-columns:190px repeat(72,minmax(0,1fr));gap:3px}
+.matrix .rl{font-size:12px;color:var(--ink-2);display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.matrix .rl:hover{color:var(--primary)}
+.cell{aspect-ratio:1;border-radius:3px;background:var(--empty);border:0;padding:0}
+.cell.on{cursor:pointer;background:var(--primary)}
+.cell.on:hover{outline:2px solid var(--ink);outline-offset:1px}
+.regions{display:grid;grid-template-columns:190px repeat(72,minmax(0,1fr));gap:3px;margin-top:6px;font-size:12px;color:var(--muted)}
+.regions span{border-top:1px solid var(--line);padding-top:4px;white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:14px;align-items:center}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px;background:var(--primary)}
+.tip{min-height:24px;font-size:14px;color:var(--ink-2);margin-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.kpis{grid-template-columns:1fr}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.kpi p{margin:0}
+.kpi .l{font-size:13px;color:var(--muted)}
+.kpi .v{font-size:clamp(20px,2.3vw,26px);font-weight:600;margin-top:2px;white-space:nowrap}
+.kpi .s{font-size:13px;color:var(--muted)}
+.kpi.navy{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.kpi.navy .l,.kpi.navy .s{color:var(--navy-muted)}
+.kpi.pend .v{color:var(--pend)}
+h2{font-weight:600;font-size:19px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.two{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px}
+.hbar{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) 110px;gap:14px;align-items:center;padding:9px 0;border-top:1px solid var(--line);text-decoration:none}
+.hbar:hover .nm{color:var(--primary)}
+.hbar .nm{font-size:14px}
+.hbar .m{font-size:12px;color:var(--muted)}
+.track{position:relative;height:10px;border-radius:9999px;background:var(--surface-2);overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:9999px;background:var(--primary)}
+.track i.r1{background:var(--navy-muted);opacity:.9}
+.amt{text-align:right;font-size:14px}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:9999px;white-space:nowrap}
+.t-pend{background:var(--pend-soft);color:var(--pend)}
+.track i.s2{background:var(--navy-muted)}.track i.s3{background:var(--gold)}
+.lg{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}.lg b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.mch{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:170px;margin-top:8px}
+.mch .c{display:flex;flex-direction:column;justify-content:flex-end;height:100%;cursor:default}
+.mch .c i{display:block;border-radius:4px 4px 0 0;min-height:0}.mch .c i+i{border-radius:0}
+.mch .c.now{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.mlab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+.mlab b{display:block;font-weight:600;color:var(--ink-2,inherit)}
+.ilist{margin:4px 0 12px;padding-left:20px}.ilist li{margin:3px 0;font-size:14px;line-height:1.6}.ilist .q{color:var(--muted);white-space:nowrap}
+.t-ok{background:var(--ok-soft);color:var(--ok)}.t-bad{background:var(--bad-soft);color:var(--bad)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+th{text-align:left;font-weight:500;color:var(--muted);font-size:13px;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--line)}
+td.r,th.r{text-align:right}
+tfoot td{font-weight:600}
+tr.link{cursor:pointer}
+tr.link:hover{background:var(--surface-2)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.placeholder{border:1px dashed var(--line);border-radius:12px;padding:18px;color:var(--muted);font-size:14px;background:var(--surface-2)}
+.mapbox{min-height:260px;display:flex;align-items:center;justify-content:center;text-align:center}
+.crumb{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumb a{text-decoration:none;color:var(--primary)}
+.check{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
+.dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600}
+.dot.ok{background:var(--ok-soft);color:var(--ok)}.dot.bad{background:var(--bad-soft);color:var(--bad)}
+.check p{margin:0}.check .m{font-size:13px;color:var(--muted)}
+.note{font-size:12px;color:var(--muted);text-align:center;margin-top:28px}
+#loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;transition:opacity .25s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .ring{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--primary);animation:spin .8s linear infinite}
+#loader p{margin:0;color:var(--muted);font-size:14px;text-align:center;max-width:320px}
+#loader button{font:inherit;font-size:14px;padding:8px 18px;border-radius:9999px;border:0;background:var(--navy);color:#fff;cursor:pointer}
+@keyframes spin{to{transform:rotate(360deg)}}
+#gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:radial-gradient(90% 70% at 85% 0%,#3b37a8 0%,rgba(59,55,168,0) 60%),linear-gradient(135deg,#0c1033 0%,#1b2060 100%)}
+#gate[hidden]{display:none}
+.gcard{width:100%;max-width:380px;background:var(--surface);color:var(--ink);border-radius:20px;padding:32px 28px;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:10px}
+.gmark{width:46px;height:46px;border-radius:12px;background:linear-gradient(140deg,#14183f,#2b2f7a);display:grid;place-items:center;margin-bottom:6px}
+.gcard h1{font-size:20px;line-height:1.4;margin:0}
+.gsub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.gcard label{font-size:13px;color:var(--ink-2)}
+.gcard input[type=password]{font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.gcard input[type=password]:focus{outline:2px solid var(--primary);outline-offset:1px}
+.grem{display:flex;align-items:center;gap:8px}
+.gcard button{font:inherit;font-weight:600;margin-top:6px;padding:11px;border:0;border-radius:12px;background:var(--navy);color:#fff;cursor:pointer}
+.gcard button:disabled{opacity:.7;cursor:wait}
+.gmsg{min-height:20px;margin:0;font-size:13px;color:var(--bad)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:22px;align-items:start}
+.mapbox2{position:relative;height:560px;border-radius:14px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line);z-index:0}
+.mapbox2.sm{height:440px}
+.mapmsg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
+.leaflet-container{font-family:inherit;background:var(--surface-2)}
+.thmask{fill:var(--surface-2)} /* สีพื้นนอกประเทศไทยตามธีมสว่าง/มืด */
+.basetile{filter:grayscale(1) contrast(.85) brightness(1.08);opacity:.75}
+@media (prefers-color-scheme:dark){.basetile{filter:grayscale(1) invert(1) contrast(.8) brightness(.9);opacity:.6}}
+.leaflet-tooltip.pt{font-family:inherit;font-size:13px;border-radius:8px;border:0;box-shadow:0 6px 20px -6px rgba(13,37,61,.35);padding:6px 10px}
+.mlegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:10px;align-items:center}
+.mlegend b{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.pinfo h3{font-size:17px;margin:0 0 2px}
+.pinfo .m{font-size:13px;color:var(--muted)}
+.pinfo .big{font-size:26px;font-weight:600;margin:10px 0 2px}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px;text-decoration:none;cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;color:inherit;font-family:inherit}
+.prow:hover{color:var(--primary)}
+.prow .rk{color:var(--muted);margin-right:6px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:9999px;padding:3px;gap:2px;margin:0 0 12px}
+.seg button{font:inherit;font-size:13px;border:0;background:none;color:var(--ink-2);padding:6px 14px;border-radius:9999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.flagnote{font-size:12px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:6px 10px;margin-top:8px}
+.bgtext p{margin:0 0 10px;line-height:1.75}
+.royal{margin:12px 0;padding:12px 16px;border-left:3px solid #d6b46a;background:var(--surface-2);border-radius:0 10px 10px 0;font-size:14px;line-height:1.75}
+.royal b{display:block;font-size:12px;color:var(--gold);margin-bottom:4px}
+.objs{margin:6px 0 10px;padding-left:20px}.objs li{margin:4px 0;line-height:1.65}
+.h4{font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 4px}
+.attr{font-size:11px;color:var(--muted);margin:10px 0 0}
+.backlink{font-size:13px;color:var(--primary);background:none;border:0;padding:0;cursor:pointer;font-family:inherit;margin-bottom:8px}
+@media (max-width:860px){.mapgrid{grid-template-columns:1fr}.mapbox2{height:420px}.mapbox2.sm{height:360px}}
+.logout{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:9999px}
+.logout:hover{background:var(--surface-2);color:var(--ink)}
+.mlist{display:none}
+.mitem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);text-decoration:none}
+.mitem .nm{font-weight:500}.mitem .m{font-size:12px;color:var(--muted)}.mitem .amt{text-align:right}
+.regbar{grid-column:1/-1;display:flex;gap:3px;height:6px}
+.regbar span{border-radius:9999px;background:var(--primary)}
+@media (max-width:860px){.matrix-wrap,.legend,#tip{display:none}.mlist{display:block}}
+@media (max-width:980px){.seal span{display:none}.seal{padding:8px}}
+@media (max-width:640px){.brand span{display:none}.banner{padding:24px 20px;border-radius:16px}.seal span{display:none}}
+@media (max-width:800px){header.top{position:static}.two{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.asof{text-align:left}.hbar{grid-template-columns:1fr;gap:6px}.amt{text-align:left}main{padding:24px 16px 48px}.bar{padding:12px 16px}}
+@media (prefers-reduced-motion:no-preference){.cell.on{transition:transform .15s}.cell.on:hover{transform:scale(1.35)}}
+.dv-twin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.dv-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(13,37,61,.04),0 8px 24px -12px rgba(13,37,61,.10)}
+.dv-h{padding:16px 22px;color:#fff}.dv-h small{font-size:12px;opacity:.8;font-weight:600}.dv-h h2{margin:2px 0 0;font-size:20px;color:#fff}
+.dv-h.kpg{background:var(--navy)}.dv-h.kpt{background:#14532d}
+.dv-b{padding:18px 22px;display:flex;flex-direction:column;gap:14px}
+.dv-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dv-st span{display:block;font-size:12px;color:var(--muted)}.dv-st b{display:block;font-size:22px;line-height:1.3}.dv-st i{display:block;font-style:normal;font-size:12px;color:var(--ink-2)}
+.dv-3.sm{background:var(--surface-2);border-radius:12px;padding:12px}.dv-3.sm .dv-st b{font-size:18px}
+.dv-pl{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px}
+.dv-bar{position:relative;height:10px;background:var(--surface-2);border-radius:99px}.dv-bar.big{height:12px}
+.dv-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px}.dv-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--gold)}
+.dv-sub{font-size:13px;font-weight:600}
+.dv-ir{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;gap:8px;align-items:center;font-size:12px}
+.dv-ir span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dv-ir b{text-align:right}
+.dv-note{margin:0;font-size:12px;color:var(--muted)}
+.dv-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px}
+.dv-empty{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:var(--surface-2)}.dv-empty p{margin:6px 0 0;font-size:14px}.dv-cols{font-size:12px!important;color:var(--muted)}
+.dv-filt{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin:4px 0 10px}.dv-filt label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+.dv-filt input,.dv-filt select{font:inherit;font-size:14px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}.dv-filt input{min-width:260px}
+.dv-z{color:var(--muted)}.dv-tot td{font-weight:700;border-top:2px solid var(--line)}
+.dv-pager{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.dv-pager button{font:inherit;font-size:13px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}.dv-pager button:disabled{opacity:.4;cursor:default}
+.sec-head{margin:8px 0 -4px;font-size:15px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+@media (max-width:900px){.dv-twin{grid-template-columns:1fr}.dv-3{grid-template-columns:1fr 1fr}.dv-filt input{min-width:0;width:100%}}
+</style>
+<style id="bicss"></style>
+<style>
+.pm-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.pm-tools{display:flex;gap:8px;flex-wrap:wrap}
+.pm-btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:7px 13px;border-radius:9999px;cursor:pointer}
+.pm-btn:hover{background:var(--surface-2)}.pm-btn.pri{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.pm-chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px;align-items:center}
+.pm-chip{font:inherit;font-size:13px;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:5px 12px;border-radius:9999px;cursor:pointer}
+.pm-chip i{width:10px;height:10px;border-radius:50%;background:var(--c)}.pm-chip b{font-weight:600;color:var(--ink)}
+.pm-chip[aria-pressed=false]{opacity:.45;text-decoration:line-through}
+.pm-empty{font-size:13px;color:var(--muted)}
+.pm-wrap{position:relative}
+.pm-wrap.full{position:fixed;inset:0;z-index:1000;background:var(--surface);padding:12px}
+.pm-wrap.full .mapbox2.pm{height:calc(100vh - 24px)}
+body.pm-lock{overflow:hidden}
+.mapbox2.pm{height:600px}
+@media (max-width:860px){.mapbox2.pm{height:480px}}
+.mapbox2.placing,.mapbox2.placing .leaflet-interactive{cursor:crosshair!important}
+.pm-bar{position:absolute;z-index:500;left:50%;transform:translateX(-50%);top:10px;max-width:calc(100% - 20px);background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px -8px rgba(13,37,61,.35);border-radius:12px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pm-bar input{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;min-width:220px;flex:1;background:var(--surface);color:var(--ink)}
+.pm-bar[hidden]{display:none}
+.ptg{margin:6px 0 10px}.ptg summary{cursor:pointer;font-size:13px;color:var(--primary);width:max-content;list-style:none;padding:3px 10px;border:1px solid var(--line);border-radius:9999px}.ptg summary::-webkit-details-marker{display:none}.ptg summary::before{content:'▸ '}.ptg[open] summary::before{content:'▾ '}
+.ptg .bi-mtw{margin-top:8px;max-height:420px;overflow:auto}.ptg td .rg{display:block;font-size:11px;color:var(--muted)}
+.ptg .pbar i{display:block;height:8px;border-radius:9999px;background:var(--primary);opacity:.75}
+.thlabel{background:none;border:0}.thlabel span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:12px;font-weight:600;color:#fff;text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,.8);pointer-events:none}.thlabel.on span{font-size:14px;color:#ffe9a8}
+.pmx .pm-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.pm-btn svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
+.pm-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);height:640px}
+.pm-mapcol{position:relative;min-width:0}
+.mapbox2.pm{height:100%;border:0;border-radius:0}
+.mapbox2.pm.sat .leaflet-control-attribution{background:rgba(255,255,255,.75)}
+.pm-ctl{position:absolute;z-index:450;display:flex;gap:6px}
+.pm-ctl.tl{top:12px;left:12px;flex-direction:column}
+.pm-ctl.tr{top:12px;right:12px}
+.pm-ctl button{font:inherit;font-size:13px;display:grid;place-items:center;min-width:36px;height:36px;border:0;background:var(--surface);color:var(--ink);border-radius:10px;box-shadow:0 2px 10px rgba(13,37,61,.18);cursor:pointer;padding:0 10px}
+.pm-ctl button svg{width:18px;height:18px}
+.pm-ctl button:hover{background:var(--surface-2)}
+.pm-ctl.seg{gap:0;background:var(--surface);border-radius:10px;box-shadow:0 2px 10px rgba(13,37,61,.18);padding:3px}
+.pm-ctl.seg button{box-shadow:none;height:30px;border-radius:8px;padding:0 12px}
+.pm-ctl.seg button[aria-pressed=true]{background:var(--navy);color:var(--navy-ink)}
+.pm-legend{position:absolute;z-index:450;left:12px;bottom:12px;background:var(--surface);border-radius:12px;box-shadow:0 2px 12px rgba(13,37,61,.18);padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ink-2);max-width:calc(100% - 140px)}
+.pl-row{display:flex;align-items:center;gap:6px;padding:3px 4px;border-radius:6px}
+.pl-row b{margin-left:auto;padding-left:10px;color:var(--ink)}
+.pl-btn{font:inherit;font-size:12px;border:0;background:none;color:inherit;cursor:pointer;text-align:left;width:100%}
+.pl-btn:hover{background:var(--surface-2)}.pl-btn[aria-pressed=false]{opacity:.4}
+.pl-area{display:inline-block;width:14px;height:10px;border-radius:3px;background:rgba(106,85,238,.15);box-shadow:inset 0 0 0 2px #4a35e8}
+.pm-side{border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--surface)}
+.pm-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.pm-tabs button{font:inherit;font-size:14px;border:0;background:none;color:var(--muted);padding:13px 8px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.pm-tabs button[aria-selected=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--primary)}
+.pm-sbody{overflow:auto;flex:1;padding:10px 12px 14px}
+.pm-hint{font-size:12px;color:var(--muted);margin:2px 4px 8px}
+.pm-plist,.pm-cards{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.pm-plist button{font:inherit;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer}
+.pm-plist button:hover{border-color:var(--primary)}.pm-plist button.on{border-color:#a6802c;background:rgba(214,180,106,.12)}
+.pp-n{font-size:14px;font-weight:600;display:flex;flex-direction:column}.pp-n small,.pp-v small{font-size:11px;color:var(--muted);font-weight:400}
+.pp-v{font-size:13px;text-align:right;display:flex;flex-direction:column}
+.pp-c{min-width:24px;height:24px;border-radius:9999px;background:var(--primary-soft);color:var(--primary);font-size:12px;font-weight:600;display:grid;place-items:center}
+.pm-search input{font:inherit;font-size:13px;width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--surface);color:var(--ink);margin-bottom:10px}
+.pm-cards li{display:flex;align-items:stretch;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pc-main{font:inherit;flex:1;min-width:0;text-align:left;border:0;background:none;color:var(--ink);padding:9px 12px;cursor:pointer;display:flex;flex-direction:column;gap:1px}
+.pc-main:hover{background:var(--surface-2)}.pc-main b{font-size:14px}.pc-main small{font-size:12px;color:var(--muted)}
+.pc-t{font-size:11px;color:var(--c);font-weight:600}
+.pc-nav{display:grid;place-items:center;width:44px;color:var(--primary);border-left:1px solid var(--line)}.pc-nav svg{width:18px;height:18px}.pc-nav:hover{background:var(--primary-soft)}
+.pm-emptybox{text-align:center;padding:28px 16px;color:var(--muted)}.pm-emptybox>svg{width:36px;height:36px;color:var(--pend)}
+.pm-emptybox b{display:block;color:var(--ink);font-size:15px;margin:8px 0 4px}.pm-emptybox p{font-size:13px;margin:0 0 14px}.pm-emptybox .pm-mini{font-size:12px;margin:10px 0 0}
+.pm-wrap.full{position:fixed;inset:0;z-index:1000;background:var(--bg);padding:12px}
+.pm-wrap.full .pm-grid{height:calc(100vh - 24px)}
+.pm-bar{top:12px;left:60px;right:auto;transform:none;max-width:calc(100% - 200px)}
+@media (max-width:980px){.pm-grid{grid-template-columns:1fr;height:auto}.mapbox2.pm{height:480px}.pm-side{border-left:0;border-top:1px solid var(--line);max-height:420px}.pm-bar{left:12px;right:12px;max-width:none;top:56px}.pm-wrap.full .pm-grid{height:auto}.pm-wrap.full .mapbox2.pm{height:calc(100vh - 80px)}}
+
+.pm-bar button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+.pm-bar .ghost{background:none}.pm-bar .or{color:var(--muted)}
+.pinico{background:none;border:0}
+.pin{display:grid;place-items:center;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--c);box-shadow:0 0 0 2px #fff,0 4px 10px rgba(0,0,0,.35)}
+.pin svg{width:17px;height:17px;fill:#fff;transform:rotate(45deg)}
+.pin.big{width:40px;height:40px;outline:3px solid #d6b46a;outline-offset:2px}.pin.big svg{width:22px;height:22px}
+.pdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1.5px #fff}
+.pmpop .leaflet-popup-content{margin:12px 14px;font-family:inherit}
+.pp h4{margin:6px 0 2px;font-size:15px}.pp p{margin:2px 0;font-size:13px;color:#34475f}.pp .pp-d{color:#0d253d}.pp .pp-m{font-size:12px;color:#64748d}
+.pp-t{display:inline-block;font-size:11px;padding:2px 8px;border-radius:9999px;color:#fff;background:var(--c)}
+.pp-a{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.pp-a a,.pp-a button{font:inherit;font-size:12px;border:1px solid #e1e6ee;background:#fff;color:#14183f;border-radius:8px;padding:4px 9px;cursor:pointer;text-decoration:none}
+.pp-a .danger{color:#c92f57}.pp-by{font-size:11px!important;color:#8a96ab!important;margin-top:8px!important}
+.pm-list{margin-top:16px}.pm-lhead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.pm-lhead input{margin-left:auto;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:9999px;padding:6px 12px;min-width:220px;background:var(--surface);color:var(--ink)}
+.linkbtn{font:inherit;border:0;background:none;color:var(--primary);cursor:pointer;padding:0;text-align:left}
+.pm-modal{position:fixed;inset:0;z-index:1100;background:rgba(13,20,40,.45);display:grid;place-items:center;padding:16px}
+.pm-modal[hidden]{display:none}
+.pm-card{background:var(--surface);color:var(--ink);border-radius:16px;padding:20px 22px;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
+.pm-card h3{margin:0 0 6px;font-size:18px}
+.pm-card input,.pm-card select,.pm-card textarea{font:inherit;font-size:14px;width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface);color:var(--ink);margin-top:4px}
+.pf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px}.pf label{font-size:13px;color:var(--ink-2)}.pf label small{color:var(--muted)}.pf .w2{grid-column:1/-1}
+@media (max-width:560px){.pf{grid-template-columns:1fr 1fr}}
+.pf-warn{color:var(--warn);font-size:13px;margin:0}.pf-err{color:var(--bad);font-size:13px;margin:0}
+.pm-act{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.pm-act button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 16px;cursor:pointer}.pm-act .pri{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}.pm-act button:disabled{opacity:.6}
+.pm-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:var(--navy-ink);padding:10px 18px;border-radius:9999px;font-size:14px;z-index:1200;box-shadow:0 8px 24px -8px rgba(0,0,0,.4)}
+.leaflet-control-layers{font-family:inherit;font-size:13px;border-radius:10px!important}
+.pm-ovt{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center;margin-top:8px}
+</style>
+<style id="lux">
+:root{
+  --bg:#f6f4ee;--surface:#fffdf8;--surface-2:#f1eee4;--ink:#121a2c;--ink-2:#4a5266;--muted:#7b8193;--line:#e4dfd0;
+  --primary:#2b4ea2;--primary-soft:#dfe6f7;--gold:#b7791f;--gold-2:#d9b56a;--gold-soft:#f4ead3;
+  --navy:#0e1a33;--navy-ink:#ffffff;--ok:#1f7a4d;--ok-soft:#e2f2ea;--warn:#a86a00;
+  --serif:"Noto Serif Thai",Georgia,serif;--shadow:0 1px 2px rgba(14,26,51,.04),0 8px 28px rgba(14,26,51,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1120;--surface:#121a2d;--surface-2:#18223a;--ink:#eef0f5;--ink-2:#b9bfcd;--muted:#8790a6;--line:#232e48;
+  --primary:#5b7fe0;--primary-soft:#1d2a4d;--gold:#bb8228;--gold-soft:#2a2414;--navy:#0a1226;--ok:#4cc38a;--ok-soft:#12301f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);}}
+:root[data-theme="dark"]{
+  --bg:#0b1120;--surface:#121a2d;--surface-2:#18223a;--ink:#eef0f5;--ink-2:#b9bfcd;--muted:#8790a6;--line:#232e48;
+  --primary:#5b7fe0;--primary-soft:#1d2a4d;--gold:#bb8228;--gold-soft:#2a2414;--navy:#0a1226;--ok:#4cc38a;--ok-soft:#12301f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);}
+body{font-family:"IBM Plex Sans Thai",Tahoma,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,.dv-h h2,.kpi .v,.dv-st b{font-family:var(--serif)}
+/* shell */
+.shell{display:grid;grid-template-columns:268px minmax(0,1fr);min-height:100vh}
+.side{background:linear-gradient(180deg,#0e1a33 0%,#0a1428 100%);color:#e9ecf4;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:20px 14px;overflow:auto;z-index:6}
+.side .brand{margin:0;padding:2px 8px 18px;border-bottom:1px solid rgba(217,181,106,.22);gap:12px}
+.side .brand b{color:#fff;font-family:var(--serif);font-weight:600;font-size:14px;white-space:normal;line-height:1.35}
+.side .brand span{color:#9aa6c2;font-size:11.5px}
+.side .seal-logo{box-shadow:none}
+.sgrp{margin-top:16px}
+.sgrp h6{margin:0 10px 6px;font-size:10.5px;letter-spacing:.14em;color:#d9b56a;font-weight:600}
+.snav a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:11px;text-decoration:none;color:#c9d0e0;font-size:14px;transition:background .15s}
+.snav a svg{width:18px;height:18px;flex:none;opacity:.85;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.snav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.snav a[aria-current="page"]{background:linear-gradient(90deg,rgba(217,181,106,.22),rgba(217,181,106,.04));color:#fff;box-shadow:inset 2px 0 0 #d9b56a}
+.snav a .tg{margin-left:auto;font-size:10.5px;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.08);color:#aeb8cf}
+.side-foot{margin-top:auto;padding:14px 6px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:8px}
+.side-foot .seal{background:rgba(76,195,138,.14);color:#8fe2b5;justify-content:flex-start}
+.side-foot .seal.fail{background:rgba(240,113,143,.16);color:#ffb3c4}
+.side-foot .logout{color:#9aa6c2;font-size:12.5px;text-decoration:none;padding:4px 6px}
+.side-foot .logout:hover{color:#fff}
+.side-foot .thm{font:inherit;font-size:12.5px;color:#9aa6c2;background:none;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:6px 10px;cursor:pointer;text-align:left}
+.mtabs{display:none}
+main{max-width:1360px;padding:28px 36px 64px;margin:0}
+.panel,.dv-card,.kpi{border-radius:18px!important;box-shadow:var(--shadow);border-color:var(--line)!important}
+.banner.hero,.hero.banner{position:relative;overflow:hidden;border-radius:24px;padding:28px 32px;color:#eef1f8;background:radial-gradient(1200px 400px at 85% -10%,rgba(217,181,106,.28),transparent 60%),linear-gradient(135deg,#0e1a33 0%,#17295a 60%,#1d3270 100%)!important;box-shadow:0 18px 50px rgba(14,26,51,.22)}
+.banner.hero .eyebrow{color:#d9b56a!important;letter-spacing:.16em}
+.banner.hero h1{color:#fff;font-size:30px}
+.banner.hero p,.banner.hero .asof{color:#b9c3dc!important}
+.banner.hero .rule{background:linear-gradient(90deg,#d9b56a,transparent)!important}
+.page-h{margin:0 0 18px}.page-h .eyebrow{font-size:11.5px;letter-spacing:.16em;color:var(--gold);font-weight:600;margin:0}
+.page-h h1{font-size:28px;margin:4px 0 4px}.page-h p{margin:0;color:var(--ink-2);max-width:860px}
+/* executive */
+.xk{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;margin-top:22px;position:relative;z-index:1}
+.xk>div{padding:4px 22px;border-left:1px solid rgba(217,181,106,.25)}.xk>div:first-child{padding-left:0;border-left:0}
+.xk .k{font-size:12.5px;color:#aab6d3}.xk .v{font-family:var(--serif);font-weight:700;font-size:32px;line-height:1.2;color:#fff;margin-top:4px}
+.xk>div:first-child .v{font-size:42px;background:linear-gradient(180deg,#fff 30%,#f1d9a2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.xk .u{font-size:12px;color:#93a0c0}.xk .chip{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;margin-top:8px;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.08);color:#d8def0}
+.xk .sw{width:8px;height:8px;border-radius:2px;display:inline-block}
+.ins{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.ins:last-child{border-bottom:0}
+.ins i{font-style:normal;width:28px;height:28px;border-radius:9px;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;font-family:var(--serif);font-weight:700;flex:none}
+.ins p{margin:0;font-size:13.5px;color:var(--ink-2)}.ins b{color:var(--ink)}
+.xgrid{display:grid;grid-template-columns:7fr 5fr;gap:18px;margin-top:18px}
+/* budget flow */
+.flow{display:grid;grid-template-columns:1fr 36px 1fr 36px 1.15fr;align-items:stretch}
+.flow .col{display:flex;flex-direction:column;gap:10px}
+.flow .bx{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.flow .bx .k{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}.flow .bx .v{font-family:var(--serif);font-weight:700;font-size:20px}
+.flow .bx .s{font-size:12px;color:var(--muted);margin-bottom:6px}
+.flow .bx.hl{border-color:var(--gold-2);background:linear-gradient(180deg,var(--gold-soft),var(--surface))}
+.flow .ar{display:grid;place-items:center;color:var(--gold);font-size:18px}
+.sp2{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}.sp2 i{display:block;height:100%}
+.sw2{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.lg2{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-top:12px}.lg2 span{display:inline-flex;gap:7px;align-items:center}
+.btbl{width:100%;border-collapse:collapse;font-size:13.5px}.btbl th{font-size:12px;color:var(--muted);font-weight:600;text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+.btbl td{padding:9px 10px;border-bottom:1px solid var(--line)}.btbl .r{text-align:right}.btbl tr.t td{font-weight:700;background:var(--surface-2)}
+.fb{display:inline-flex;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px}.fb.a{background:color-mix(in srgb,var(--primary) 13%,transparent);color:var(--primary)}.fb.f{background:color-mix(in srgb,var(--gold) 15%,transparent);color:var(--gold)}
+@media (max-width:1100px){.xk{grid-template-columns:1fr 1fr}.xk>div:nth-child(3){padding-left:0;border-left:0}.xk>div{padding-top:12px}.xgrid{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}.side{display:none}
+  .mtabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:#0e1a33;position:sticky;top:0;z-index:30;scrollbar-width:none}
+  .mtabs a{white-space:nowrap;text-decoration:none;color:#c9d0e0;font-size:13px;padding:6px 12px;border-radius:99px}
+  .mtabs a[aria-current="page"]{background:rgba(217,181,106,.22);color:#fff}
+  main{padding:18px 16px 48px}.xk{grid-template-columns:1fr}.xk>div{border-left:0;padding:10px 0;border-top:1px solid rgba(217,181,106,.2)}.xk>div:first-child{border-top:0}
+  .flow{grid-template-columns:1fr}.flow .ar{transform:rotate(90deg);height:28px}
+}
+@media print{.side,.mtabs{display:none}.shell{display:block}}
+</style>
+</head>
+<body>
+<div id="gate" hidden><form id="gateForm" class="gcard" autocomplete="on">
+  <img class="gseal" src="https://alro.go.th/assets/themes/default/images/logo/logo-into.png" alt="ตราสำนักงานการปฏิรูปที่ดินเพื่อเกษตรกรรม" width="72" height="72" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="mark gmark" aria-hidden="true" hidden><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M12 21V11" stroke="#d6b46a" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13c-4.2 0-6.5-2.6-6.5-6.5C9.7 6.5 12 9 12 13Z" fill="#d6b46a"/><path d="M12 11c0-3.9 2.3-6.5 6.5-6.5 0 3.9-2.3 6.5-6.5 6.5Z" fill="#fff" fill-opacity=".9"/><path d="M5 21h14" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+  <h1>ฐานข้อมูลกองประสานงาน<br>โครงการพระราชดำริฯ</h1>
+  <p class="gsub">สำหรับบุคลากรภายในกองเท่านั้น</p>
+  <input type="text" name="username" value="alro-division" autocomplete="username" hidden>
+  <label for="gatePw">รหัสผ่านของกอง</label>
+  <input id="gatePw" type="password" autocomplete="current-password" required>
+  <label class="grem"><input id="gateRemember" type="checkbox" checked> จดจำในเครื่องนี้</label>
+  <button id="gateBtn" type="submit">เข้าสู่ระบบ</button>
+  <p id="gateMsg" class="gmsg" role="alert"></p>
+</form></div>
+<div id="loader" role="status"><div class="ring" id="ring"></div><p id="loadMsg">กำลังเตรียมข้อมูล</p></div>
+<div class="shell">
+<aside class="side" aria-label="เมนูหลัก">
+  <a class="brand" href="#overview"><img class="seal-logo" src="https://alro.go.th/assets/themes/default/images/logo/logo-into.png" alt="ตรา ส.ป.ก." width="44" height="44" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="mark" aria-hidden="true" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M12 21V11" stroke="#d6b46a" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13c-4.2 0-6.5-2.6-6.5-6.5C9.7 6.5 12 9 12 13Z" fill="#d6b46a"/><path d="M12 11c0-3.9 2.3-6.5 6.5-6.5 0 3.9-2.3 6.5-6.5 6.5Z" fill="#fff" fill-opacity=".9"/><path d="M5 21h14" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="txt"><b>ฐานข้อมูลกองประสานงานโครงการพระราชดำริฯ</b><span>สำนักงานการปฏิรูปที่ดินเพื่อเกษตรกรรม (ส.ป.ก.)</span></span></a>
+  <nav class="snav" aria-label="เมนูหลัก"><div class="sgrp"><h6>ผู้บริหาร</h6><a href="#overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/></svg>ภาพรวมผู้บริหาร</a></div><div class="sgrp"><h6>กผง. · งบประมาณ</h6><a href="#budget"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.5 6.5"/></svg>โครงสร้างงบประมาณ</a><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v4H4zM4 11h7v8H4zM13 11h7v8h-7z"/></svg>16 โครงการ<span class="tg">16</span></a><a href="#provinces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>แผนที่ · รายจังหวัด<span class="tg">72</span></a><a href="#monthly"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>แผนรายเดือน</a></div><div class="sgrp"><h6>กปต. · ผลถึงเกษตรกร</h6><a href="#farmers"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>ฐานรายชื่อเกษตรกร</a><a href="#model"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>เกษตรกรตัวอย่าง</a></div><div class="sgrp"><h6>ระบบ</h6><a href="#checks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>ความถูกต้องของข้อมูล</a></div></nav>
+  <div class="side-foot"><a class="seal" id="seal" href="#checks"><i></i><span id="sealText"></span></a><button type="button" class="thm" id="thm">โหมดมืด / สว่าง</button><a class="logout" id="logout" href="#" title="ออกจากระบบ">ออกจากระบบ</a></div>
+</aside>
+<div class="mainwrap"><nav class="mtabs" aria-label="เมนู"><a href="#overview">ภาพรวมผู้บริหาร</a><a href="#budget">โครงสร้างงบประมาณ</a><a href="#projects">16 โครงการ</a><a href="#provinces">แผนที่ · รายจังหวัด</a><a href="#monthly">แผนรายเดือน</a><a href="#farmers">ฐานรายชื่อเกษตรกร</a><a href="#model">เกษตรกรตัวอย่าง</a><a href="#checks">ความถูกต้องของข้อมูล</a></nav>
+<main>
+  <section class="view" id="v-overview">
+    <div class="banner hero">
+      <div><p class="eyebrow">ภาพรวมกอง · กผง. + กปต.</p><h1>เงินถึงพื้นที่ และผลถึงเกษตรกร</h1><p id="heroSub"></p><div class="rule"></div></div>
+      <div id="execKpi" class="xk" style="grid-column:1/-1"></div><div class="asof" hidden>งบ พ.ร.บ.: แผนจัดสรร กผง. (ครั้งที่ 1 และเต็มปี)<br>ผลเบิกจ่าย: รอนำเข้าจาก alrotracking</div>
+    </div>
+    <div class="stack">
+      <div id="divTwin"></div>
+      <div class="xgrid"><div class="panel" id="execRank"></div><div class="panel" id="execIns"></div></div>
+    </div>
+  </section>
+  <section class="view" id="v-budget">
+    <div class="page-h"><p class="eyebrow">กผง. · งบประมาณและแผน ปีงบประมาณ 2570</p><h1>โครงสร้างงบประมาณ</h1><p>เงินมาจากแหล่งใด ลงไปที่ใด และใช้ทำอะไร — คำนวณจากรายการย่อยทุกบรรทัดของแผนปฏิบัติงานฯ งปม. 70 · ยอดหลักไม่รวมส่วนกลาง (แสดงแยก)</p></div>
+    <div class="stack">
+      <div class="kpis" id="kpis"></div>
+      <div class="panel" id="budgetFlow"></div>
+      <div class="panel" id="srcPanel" hidden>
+        <h2>งบประมาณรวม 2 แหล่ง รายโครงการ</h2>
+        <p class="sub">ยอดรวมของแต่ละโครงการ = <b>งบ พ.ร.บ.</b> ที่โอนให้ ส.ป.ก.จังหวัด (แผน กผง.) + <b>เงินกองทุนปฏิรูปที่ดิน</b> (หนังสือ ว5816) · งบ พ.ร.บ. <b>ส่วนกลาง</b> แสดงแยกไว้และไม่นับรวมในยอด · ที่มา: ไฟล์ขั้นตอน ปี 70 ของ กปต. ยืนยันยอดกับแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70</p>
+        <div id="srcBars"></div>
+        <div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span>ส่วนกลาง: แสดงตัวเลขแยก ไม่รวมในแถบและยอดรวม</span></div>
+      </div>
+      <div class="two">
+        <div class="panel">
+          <h2>งบ พ.ร.บ. รายโครงการ</h2>
+          <p class="sub">ความยาวแถบคืองบเต็มปี ส่วนสีอ่อนคือที่จัดสรรแล้วในครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)</p>
+          <div id="pbars"></div>
+        </div>
+        <div class="panel">
+          <h2>เป้าหมายผลผลิต</h2>
+          <p class="sub">จากแผนจัดสรรงบ พ.ร.บ. เต็มปี</p>
+          <div id="targets"></div>
+        </div>
+      </div>
+      <div class="panel" id="divPanel" hidden></div>
+    </div>
+  </section>
+  <section class="view" id="v-provinces">
+    <div class="page-h"><p class="eyebrow">กผง. · งบประมาณ</p><h1>แผนที่และงบรายจังหวัด</h1><p>งบ พ.ร.บ. และเงินกองทุนฯ รายจังหวัด · ชี้หรือกดจังหวัดเพื่อดูรายละเอียด</p></div>
+    <div class="stack">
+      <div class="panel">
+        <h2>แผนที่งบประมาณรายจังหวัด</h2>
+        <p class="sub">สีเข้มคือยอดเงินในจังหวัดสูง ชี้เพื่อดูยอด กดจังหวัดเพื่อดูรายละเอียด</p>
+        <div class="seg" id="mSeg" role="group" aria-label="เลือกแหล่งเงิน"><button type="button" data-m="pb" aria-pressed="true">งบ พ.ร.บ.</button><button type="button" data-m="fund" aria-pressed="false">เงินกองทุนฯ</button><button type="button" data-m="all" aria-pressed="false">รวม 2 แหล่ง</button></div>
+        <div class="mapgrid">
+          <div><div class="mapbox2" id="ovMap" role="region" aria-label="แผนที่งบประมาณรายจังหวัด"><div class="mapmsg">กำลังโหลดแผนที่…</div></div><div class="mlegend" id="ovLegend"></div></div>
+          <div class="pinfo" id="provInfo" aria-live="polite"></div>
+        </div>
+        <p class="attr">เงินกองทุนฯ: หนังสือ กษ 1207/ว5816 ลว 27 ต.ค. 69 (แยกรายจังหวัด) · ขอบเขตจังหวัด: OpenGISData-Thailand (CC BY 4.0) · แผนที่ฐาน: © OpenStreetMap contributors</p>
+      </div>
+      <div class="panel">
+        <h2>พื้นที่ดำเนินการและงบ พ.ร.บ. ที่ได้รับจัดสรร</h2>
+        <p class="sub">แต่ละแถวคือโครงการ แต่ละช่องคือจังหวัด สีเข้มคืองบเต็มปีสูง ชี้ช่องเพื่อดูรายละเอียด กดชื่อโครงการเพื่อเปิดหน้าโครงการ (บนมือถือแสดงเป็นรายการ)</p>
+        <div class="matrix-wrap"><div class="matrix" id="matrix"></div><div class="regions" id="regions"></div></div>
+        <div class="mlist" id="mlist"></div>
+        <div class="tip" id="tip" aria-live="polite">&nbsp;</div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </section>
+  <section class="view" id="v-monthly">
+    <div class="page-h"><p class="eyebrow">กผง. · งบประมาณ</p><h1>แผนการใช้จ่ายรายเดือน</h1><p>ต.ค. 69 – ก.ย. 70 · ผลเบิกจ่ายจริงนำเข้าจาก alrotracking เมื่อมีไฟล์</p></div>
+    <div class="stack">
+      <div class="panel" id="mpPanel">
+        <h2 id="mpTitle">แผนการใช้จ่ายรายเดือน</h2>
+        <p class="sub" id="mpSub">ต.ค. 69 – ก.ย. 70 ตามแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · นับเฉพาะงบ พ.ร.บ. (จังหวัด) และเงินกองทุนปฏิรูปที่ดิน · ส่วนกลางแสดงแยก ไม่รวมในยอด · ตัวเลขใต้แท่งคือร้อยละสะสมตามแผน</p>
+        <div id="mpBox"></div>
+      </div>
+    </div>
+  </section>
+  <section class="view" id="v-farmers">
+    <div class="page-h"><p class="eyebrow">กปต. · ผลถึงเกษตรกร</p><h1>ฐานรายชื่อเกษตรกร</h1><p>รายชื่อเดียวใช้ได้ทุกโครงการ · แยกรายโครงการ รายปี · เลขบัตรประชาชนปิดบังเสมอ</p></div>
+    <div class="stack">
+      <div class="panel" id="farmerPanel"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-projects">
+    <div class="hero"><div><h1>ทะเบียนโครงการ</h1><p><span id="pcount">16</span> โครงการ ปีงบประมาณ 2570 เลือกโครงการเพื่อเปิดหน้าโครงการ</p><div class="rule"></div></div></div>
+    <div class="panel tbl-wrap">
+      <table><thead><tr><th>รหัส</th><th>โครงการ</th><th class="r">จังหวัด</th><th class="r">งบเต็มปี (บาท)</th><th class="r">ครั้งที่ 1 (บาท)</th><th class="r">เป้าหมาย</th><th>ผลเบิกจ่าย</th></tr></thead><tbody id="ptable"></tbody><tfoot id="pfoot"></tfoot></table>
+    </div>
+  </section>
+
+  <section class="view" id="v-project"></section>
+
+  <section class="view" id="v-checks">
+    <div class="hero"><div><h1>ความถูกต้องของข้อมูล</h1><p>ระบบตรวจทุกครั้งที่อัปเดตข้อมูลจากชีต (ทุกชั่วโมง) และตรวจซ้ำทุกคืน หากพบข้อไม่ผ่านจะส่งอีเมลแจ้งผู้ดูแล</p><div class="rule"></div></div><div class="asof" id="checkTime"></div></div>
+    <div class="panel" id="checks"></div>
+  </section>
+
+  <p class="note" id="foot"></p>
+</main></div></div>
+<script>
+/* โครงการนี้ได้เงินอะไรบ้าง — line-item panel.
+   Usage: itemsPanelHtml(BI, pid) returns HTML; call itemsPanelBind(container, BI, pid) after inserting.
+   BI = {projects:[{id,name,short,items:[node]}], invest:[...], source}
+   node = {r,t,a,q,u,f:'prb'|'fund'|'central',m:[12],n?,pv?,b?,c?:[node],k?:category} */
+(function (g) {
+  var CAT = [
+    ["train", "ฝึกอบรมเกษตรกร", "หลักสูตร ค่าวิทยากร อาหาร ที่พัก ศึกษาดูงาน"],
+    ["agri", "วัสดุการเกษตร / ปัจจัยการผลิต", "แจกเกษตรกรเป้าหมาย เกษตรกรตัวอย่าง แปลงสาธิต โรงเรียน"],
+    ["staff", "ค่าจ้างเหมา", "บุคลากร คนงาน ยาม รถขนส่ง"],
+    ["travel", "ค่าเดินทาง ติดตาม ประสานงาน", "เบี้ยเลี้ยง ค่าที่พัก ค่าพาหนะ"],
+    ["admin", "วัสดุสำนักงาน เชื้อเพลิง ประชาสัมพันธ์", "ใช้บริหารงานโครงการในจังหวัด"],
+    ["mgmt", "ค่าบริหารโครงการ", "เหมาจ่ายรายโรงเรียน / จังหวัด"],
+    ["invest", "งบลงทุน (ครุภัณฑ์ / สิ่งก่อสร้าง)", "แยกจากงบดำเนินงาน"]
+  ];
+  var FUND = { prb: "งบ พ.ร.บ.", fund: "เงินกองทุนฯ", central: "ส่วนกลาง", invest: "งบลงทุน" };
+  var MON = ["ต.ค.", "พ.ย.", "ธ.ค.", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย."];
+  var SINGLE = { 1: "ลำพูน", 2: "อุบลราชธานี", 3: "สกลนคร", 4: "เชียงใหม่", 6: "น่าน", 7: "พะเยา", 10: "นครศรีธรรมราช", 11: "น่าน", 14: "กาญจนบุรี" };
+  function fmt(n) { return Number(n).toLocaleString("th-TH", { maximumFractionDigits: 0 }); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
+  function provOf(n, inh, pid) { return n.pv || inh || ""; }
+  function cleanLabel(t) { return String(t).replace(/^\d+(\.\d+)*\.?\)?\s*/, "").replace(/\s*\((เงินกองทุน|เงินพรบ\.?)\)\s*/g, " ").trim(); }
+
+  /* filter tree by province / category / fund; returns copy with recomputed sums, or null */
+  function filt(n, f, pid, inh) {
+    var pv = provOf(n, inh, pid);
+    if (n.c) {
+      var kids = n.c.map(function (c) { return filt(c, f, pid, n.pv || n.b || inh); }).filter(Boolean);
+      if (!kids.length) return null;
+      var m = [0,0,0,0,0,0,0,0,0,0,0,0];
+      kids.forEach(function (k) { k.m.forEach(function (v, i) { m[i] += v; }); });
+      return { r: n.r, t: n.t, n: n.n, q: n.q, u: n.u, f: n.f, pv: n.pv, a: kids.reduce(function (s, k) { return s + k.a; }, 0), m: m, c: kids, full: n.a };
+    }
+    if (f.prov && pv !== f.prov) return null;
+    if (f.cat && n.k !== f.cat) return null;
+    if (f.fund && n.f !== f.fund) return null;
+    return { r: n.r, t: n.t, n: n.n, q: n.q, u: n.u, f: n.f, k: n.k, pv: n.pv, a: n.a, m: n.m, prov: pv };
+  }
+  function leaves(n) { return n.c ? [].concat.apply([], n.c.map(leaves)) : [n]; }
+  function provinces(p) {
+    var s = {};
+    (function w(n, inh) { if (n.c) n.c.forEach(function (c) { w(c, inh); }); else if (n.f !== "central") { var v = provOf(n, inh, p.id); if (v) s[v] = (s[v] || 0) + n.a; } })({ c: p.items });
+    return Object.keys(s).sort(function (a, b) { return s[b] - s[a]; }).map(function (k) { return [k, s[k]]; });
+  }
+  function strip(m) {
+    var mx = Math.max.apply(null, m) || 1;
+    return '<span class="bi-ms" aria-label="เดือนที่ตั้งจ่าย">' + m.map(function (v, i) {
+      return '<i class="' + (v ? "on" : "") + '" style="opacity:' + (v ? (0.35 + 0.65 * v / mx).toFixed(2) : 1) + '" title="' + MON[i] + (v ? " " + fmt(v) + " บาท" : " ไม่มีการตั้งจ่าย") + '"></i>';
+    }).join("") + "</span>";
+  }
+  function badge(f) { return '<span class="bi-f bi-' + f + '">' + FUND[f] + "</span>"; }
+  function qty(n) { var q = (n.q || "") + (n.u ? " " + n.u : ""); return q.trim() && q.trim() !== "0" && q.trim() !== "0 0" ? esc(q.trim()) : ""; }
+  function fundsOf(n) { var s = {}; leaves(n).forEach(function (l) { s[l.f] = 1; }); return Object.keys(s); }
+
+  function rowHtml(n, depth) {
+    var isProvList = n.c && n.c.length > 3 && n.c.every(function (c) { return !c.c && c.pv; }) && new Set(n.c.map(function (c) { return c.pv; })).size === n.c.length;
+    var fs = fundsOf(n), b = fs.length === 1 ? badge(fs[0]) : '<span class="bi-f bi-mix">หลายแหล่ง</span>';
+    var lab = esc(cleanLabel(n.t)) + (n.n ? '<span class="bi-note">' + esc(n.n) + "</span>" : "");
+    var partial = n.full != null && Math.abs(n.full - n.a) > 0.5;
+    var cells = '<span class="bi-q num">' + qty(n) + "</span>" + b + '<span class="bi-a num">' + fmt(n.a) + (partial ? '<small>จาก ' + fmt(n.full) + "</small>" : "") + "</span>" + strip(n.m);
+    if (!n.c) return '<div class="bi-row lf" style="--d:' + depth + '" title="แถว ' + n.r + ' ในไฟล์ต้นทาง"><span class="bi-t">' + lab + "</span>" + cells + "</div>";
+    if (isProvList) {
+      return '<details class="bi-grp" style="--d:' + depth + '"><summary class="bi-row" title="แถว ' + n.r + '"><span class="bi-t">' + lab + ' <span class="bi-cnt">' + n.c.length + " จังหวัด</span></span>" + cells + '</summary><div class="bi-pv">' +
+        n.c.map(function (c) { return '<div title="แถว ' + c.r + '"><span>' + esc(c.pv) + '</span><b class="num">' + fmt(c.a) + "</b>" + (qty(c) ? "<small>" + qty(c) + "</small>" : "") + "</div>"; }).join("") + "</div></details>";
+    }
+    return '<details class="bi-grp" open style="--d:' + depth + '"><summary class="bi-row hd" title="แถว ' + n.r + '"><span class="bi-t">' + lab + "</span>" + cells + "</summary>" +
+      n.c.map(function (c) { return rowHtml(c, depth + 1); }).join("") + "</details>";
+  }
+
+  function body(BI, pid, f) {
+    var p = BI.projects.find(function (x) { return x.id === pid; });
+    var isCen = function (n) { return leaves(n).every(function (l) { return l.f === "central"; }); };
+    var prov = p.items.filter(function (n) { return !isCen(n); }).map(function (n) { return filt(n, f, pid); }).filter(Boolean);
+    var cen = p.items.filter(isCen);
+    var L = [].concat.apply([], prov.map(leaves));
+    var tot = { prb: 0, fund: 0, invest: 0 }; L.forEach(function (l) { tot[l.f] = (tot[l.f] || 0) + l.a; });
+    var invT = tot.invest;
+    var h = '<div class="bi-tree" role="list">' +
+      '<div class="bi-row bi-head"><span class="bi-t">รายการ</span><span class="bi-q">ปริมาณ</span><span>แหล่งเงิน</span><span class="bi-a">บาท</span><span class="bi-ms-h">ต.ค. → ก.ย.</span></div>' +
+      (prov.length ? prov.map(function (n) { return rowHtml(n, 0); }).join("") : '<p class="sub" style="padding:12px 0">ไม่มีรายการตามตัวกรองนี้</p>') +
+      '<div class="bi-row bi-sum"><span class="bi-t">รวม' + (f.prov || f.cat || f.fund ? "ตามตัวกรอง" : "ที่ตั้งจ่ายจังหวัด") + '</span><span class="bi-q"></span><span class="bi-split num">พ.ร.บ. ' + fmt(tot.prb) + " · กองทุน " + fmt(tot.fund) + (invT ? " · ลงทุน " + fmt(invT) : "") + '</span><span class="bi-a num">' + fmt(tot.prb + tot.fund + invT) + '</span><span class="bi-ms-h"></span></div></div>';
+    if (cen.length && !f.prov && !f.cat && (!f.fund || f.fund === "central")) {
+      var cT = cen.reduce(function (s, n) { return s + n.a; }, 0);
+      h += '<div class="bi-cen"><p class="bi-ch">ส่วนกลาง (แสดงแยก ไม่รวมในยอดโครงการ) <b class="num">' + fmt(cT) + ' บาท</b></p>' +
+        leaves({ c: cen }).map(function (n) { return '<div class="bi-row lf" style="--d:0" title="แถว ' + n.r + '"><span class="bi-t">' + esc(cleanLabel(n.t)) + '</span><span class="bi-q"></span>' + badge("central") + '<span class="bi-a num">' + fmt(n.a) + "</span>" + strip(n.m) + "</div>"; }).join("") + "</div>";
+    }
+    return h;
+  }
+
+  function bodyNum(BI, pid, f) {
+    var p = BI.projects.find(function (x) { return x.id === pid; });
+    var isCen = function (n) { return leaves(n).every(function (l) { return l.f === "central"; }); };
+    var prov = p.items.filter(function (n) { return !isCen(n); }).map(function (n) { return filt(n, f, pid); }).filter(Boolean);
+    var cen = p.items.filter(isCen);
+    var L = [].concat.apply([], prov.map(leaves)), tm = Z12(), ta = 0;
+    L.forEach(function (l) { addM(tm, l.m); ta += l.a; });
+    var rows = flat(prov, 0, []);
+    var foot = [{ t: "รวม" + (f.prov || f.cat || f.fund ? "ตามตัวกรอง" : "ที่ลงพื้นที่"), a: ta, m: tm, cls: "sum" }];
+    var h = rows.length ? mtable(rows, foot) : '<p class="sub" style="padding:12px 0">ไม่มีรายการตามตัวกรองนี้</p>';
+    if (cen.length && !f.prov && !f.cat && !f.fund) {
+      var cr = leaves({ c: cen }).map(function (n) { return { d: 0, t: cleanLabel(n.t), f: "central", a: n.a, m: n.m, r: n.r }; });
+      h += '<p class="bi-h4">ส่วนกลาง (แสดงแยก ไม่รวมในยอดโครงการ)</p>' + mtable(cr, [{ t: "รวมส่วนกลาง", f: "central", a: cr.reduce(function (s, x) { return s + x.a; }, 0), m: cr.reduce(function (m, x) { return addM(m, x.m); }, Z12()), cls: "cen" }]);
+    }
+    return h;
+  }
+  function catBars(BI, pid, f) {
+    var p = BI.projects.find(function (x) { return x.id === pid; });
+    var s = {};
+    var L = [].concat.apply([], p.items.map(function (n) { var x = filt(n, { prov: f.prov }, pid); return x ? leaves(x) : []; })).filter(function (l) { return l.f !== "central"; });
+    L.forEach(function (l) { s[l.k] = s[l.k] || { prb: 0, fund: 0, invest: 0, n: 0 }; s[l.k][l.f] += l.a; s[l.k].n++; });
+    var tot = 0, mx = 0;
+    CAT.forEach(function (c) { var v = s[c[0]]; if (v) { var t = v.prb + v.fund + (v.invest || 0); tot += t; mx = Math.max(mx, t); } });
+    return '<div class="bi-cats">' + CAT.filter(function (c) { return s[c[0]]; }).map(function (c) {
+      var v = s[c[0]], t = v.prb + v.fund + (v.invest || 0);
+      return '<button type="button" class="bi-cat' + (f.cat === c[0] ? " on" : "") + '" data-cat="' + c[0] + '" aria-pressed="' + (f.cat === c[0]) + '">' +
+        '<span class="bi-cn">' + c[1] + '<small>' + c[2] + '</small></span>' +
+        '<span class="bi-bar"><i class="p" style="width:' + (v.prb / mx * 100) + '%"></i><i class="g" style="width:' + (v.fund / mx * 100) + '%"></i><i class="v" style="width:' + ((v.invest || 0) / mx * 100) + '%"></i></span>' +
+        '<span class="bi-ca num">' + fmt(t) + '<small>ร้อยละ ' + (t / tot * 100).toFixed(1) + "</small></span></button>";
+    }).join("") + "</div>";
+  }
+
+  var Z12 = function () { return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; };
+  function addM(a, m) { (m || []).forEach(function (v, i) { a[i] += v || 0; }); return a; }
+  function mcells(m) { return m.map(function (v) { return '<td class="r num' + (v ? "" : " z") + '">' + (v ? fmt(v) : "–") + "</td>"; }).join(""); }
+  var MHEAD = '<th class="r">รวม</th>' + MON.map(function (x, i) { return '<th class="r">' + x + (i < 3 ? "69" : "70") + "</th>"; }).join("");
+  /* ตารางรายเดือน: rows = [{d,t,f,a,m,cls,r}] */
+  function mtable(rows, foot) {
+    return '<div class="bi-mtw"><table class="bi-mt"><thead><tr><th>รายการ</th><th>แหล่งเงิน</th>' + MHEAD + "</tr></thead><tbody>" +
+      rows.map(function (x) { return '<tr class="' + (x.cls || "") + '"' + (x.r ? ' title="แถว ' + x.r + ' ในไฟล์ต้นทาง"' : "") + '><td style="padding-left:' + (8 + x.d * 16) + 'px">' + esc(x.t) + (x.n ? '<span class="bi-note">' + esc(x.n) + "</span>" : "") + "</td><td>" + (x.f ? badge(x.f) : "") + '</td><td class="r num b">' + fmt(x.a) + "</td>" + mcells(x.m) + "</tr>"; }).join("") +
+      "</tbody>" + (foot && foot.length ? "<tfoot>" + foot.map(function (x) { return '<tr class="' + (x.cls || "") + '"><td>' + esc(x.t) + "</td><td>" + (x.f ? badge(x.f) : "") + '</td><td class="r num b">' + fmt(x.a) + "</td>" + mcells(x.m) + "</tr>"; }).join("") + "</tfoot>" : "") + "</table></div>";
+  }
+  function flat(nodes, d, out) {
+    nodes.forEach(function (n) {
+      var fs = fundsOf(n);
+      out.push({ d: d, t: cleanLabel(n.t) + (n.pv && n.c == null && n.t.indexOf(n.pv) < 0 && d > 0 && /^\d+\)|^[ก-๙]/.test(n.t) === false ? "" : ""), n: n.n, f: fs.length === 1 ? fs[0] : "", a: n.a, m: n.m, cls: n.c ? "hd" : "", r: n.r });
+      if (n.c) flat(n.c, d + 1, out);
+    });
+    return out;
+  }
+  /* การโอนเงินให้จังหวัดจริง ตามหนังสือแจ้งโอน (ไม่ใช่แผนรายเดือน) */
+  function trfHtml(pid, t) {
+    var T = window.__TRF && window.__TRF[pid]; if (!T) return "";
+    var tr = function (doc, f, mon, a, st, ok) { return "<tr><td>" + doc + "</td><td>" + badge(f) + "</td><td>" + mon + '</td><td class="r num b">' + (a == null ? "–" : fmt(a)) + '</td><td><span class="tag ' + (ok ? "t-ok" : "t-pend") + '">' + st + "</span></td></tr>"; };
+    var rest = T.prbAll - T.r1;
+    return '<p class="bi-h4">การโอนเงินให้ ส.ป.ก.จังหวัดจริง (ตามหนังสือแจ้งโอน)</p><div class="bi-mtw"><table class="bi-mt"><thead><tr><th>หนังสือ / ครั้งที่</th><th>แหล่งเงิน</th><th>เดือนที่โอน</th><th class="r">จำนวน (บาท)</th><th>สถานะตรวจ</th></tr></thead><tbody>' +
+      tr("แผนจัดสรรงบ พ.ร.บ. ครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)", "prb", "รอวันที่ในหนังสือแจ้งโอน", T.r1, "ยอดตรงกับเอกสาร กผง.", true) +
+      (rest > 0 ? tr("งบ พ.ร.บ. ส่วนที่เหลือ (ยังไม่จัดสรร)", "prb", "–", rest, "ยังไม่โอน", false) : "") +
+      (T.fund ? tr("กษ 1207/ว5816 ลว 27 ต.ค. 69 โอนขายบิลเงินกองทุนฯ", "fund", "ต.ค. 69", T.fund, "ยอดตามแผน รอเทียบสิ่งที่แนบหนังสือ", false) : "") +
+      '</tbody><tfoot><tr class="sum"><td>รวมโอนแล้วตามหนังสือ</td><td></td><td></td><td class="r num b">' + fmt(T.r1 + T.fund) + "</td><td></td></tr></tfoot></table></div>" +
+      '<p class="bi-src">ที่มา: แผนจัดสรรงงบประมาณ 70 พรบ. (รายจังหวัดครั้งที่1).pdf และหนังสือ กษ 1207/ว5816 ในโฟลเดอร์ แจ้งโอนจัดสรรปี 70 ครั้งที่ 1 · โอนครั้งถัดไปจะเพิ่มเมื่อมีหนังสือแจ้งโอน</p>';
+  }
+  /* เงินของโครงการไปทางไหน + เดือนไหน (ไม่ขึ้นกับตัวกรอง) */
+  function flowHtml(BI, pid) {
+    var p = BI.projects.find(function (x) { return x.id === pid; });
+    var L = leaves({ c: p.items }), ch = { prb: Z12(), fund: Z12(), central: Z12(), invest: Z12() }, t = { prb: 0, fund: 0, central: 0, invest: 0 }, spk = 0, kpr = 0;
+    L.forEach(function (l) { if (!ch[l.f]) return; addM(ch[l.f], l.m); t[l.f] += l.a; if (l.f === "central") { if (/ส\.ป\.ก/.test(l.t)) spk += l.a; else kpr += l.a; } });
+    var card = function (title, val, sub, cls) { return '<div class="bi-fl ' + (cls || "") + '"><p class="l">' + title + '</p><p class="v num">' + fmt(val) + ' <small>บาท</small></p><p class="s num">' + sub + "</p></div>"; };
+    var h = '<div class="bi-flow">' +
+      card("โอนให้ ส.ป.ก.จังหวัด", t.prb + t.fund, "งบ พ.ร.บ. " + fmt(t.prb) + " · เงินกองทุนฯ " + fmt(t.fund), "pv") +
+      (t.invest ? card("งบลงทุน (ครุภัณฑ์ / สิ่งก่อสร้าง)", t.invest, "งบ พ.ร.บ. งบลงทุน · ลงพื้นที่ จ." + esc(L.filter(function (l) { return l.f === "invest"; })[0].pv || ""), "iv") : "") +
+      card("ตั้งจ่ายส่วนกลาง (งบ พ.ร.บ.) · แยก ไม่รวม", t.central, "งบบริหาร ส.ป.ก. " + fmt(spk) + " · งบบริหารโครงการ กปร. " + fmt(kpr), "cn") + "</div>";
+    var rows = [];
+    if (t.prb) rows.push({ d: 0, t: "แผนใช้จ่ายในจังหวัด", f: "prb", a: t.prb, m: ch.prb });
+    if (t.fund) rows.push({ d: 0, t: "แผนใช้จ่ายในจังหวัด", f: "fund", a: t.fund, m: ch.fund });
+    if (t.invest) rows.push({ d: 0, t: "งบลงทุน", f: "invest", a: t.invest, m: ch.invest });
+    var tm = addM(addM(addM(Z12(), ch.prb), ch.fund), ch.invest);
+    var foot = [{ t: "รวมแผนใช้จ่ายในพื้นที่ (ไม่รวมส่วนกลาง)", a: t.prb + t.fund + t.invest, m: tm, cls: "sum" }, { t: "แผนตั้งจ่ายส่วนกลาง (แยก ไม่รวม)", f: "central", a: t.central, m: ch.central, cls: "cen" }];
+    return h + trfHtml(pid, t) + '<p class="bi-h4">แผนการใช้จ่ายรายเดือน (ตามแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · เป็นแผน ไม่ใช่ยอดโอนจริง)</p>' + mtable(rows, foot) +
+      '<p class="bi-src">ตัวเลขรายเดือนคัดจากไฟล์ต้นทางตามแถว (ชี้รายการเพื่อดูเลขแถว) · ระบบไม่ได้แบ่งเฉลี่ยเอง เช่น ค่าจ้างเหมารายเดือนไฟล์ต้นทางระบุไว้เดือนละเท่ากัน</p>';
+  }
+  function render(el, BI, pid, f) {
+    var p = BI.projects.find(function (x) { return x.id === pid; });
+    var pv = provinces(p);
+    var sel = pv.length > 1 ? '<label class="bi-sel">จังหวัด <select data-k="prov"><option value="">ทุกจังหวัด (' + pv.length + ")</option>" + pv.map(function (x) { return '<option value="' + esc(x[0]) + '"' + (f.prov === x[0] ? " selected" : "") + ">" + esc(x[0]) + " · " + fmt(x[1]) + "</option>"; }).join("") + "</select></label>" : '<span class="bi-one">จ.' + esc(pv[0] ? pv[0][0] : "") + "</span>";
+    var fsel = '<label class="bi-sel">แหล่งเงิน <select data-k="fund"><option value="">ทั้งหมด</option><option value="prb"' + (f.fund === "prb" ? " selected" : "") + '>งบ พ.ร.บ.</option><option value="fund"' + (f.fund === "fund" ? " selected" : "") + ">เงินกองทุนฯ</option></select></label>";
+    var vt = '<span class="bi-vt" role="group" aria-label="รูปแบบการแสดงรายเดือน"><button type="button" data-v=""' + (f.view ? "" : ' aria-pressed="true"') + '>แถบเดือน</button><button type="button" data-v="num"' + (f.view ? ' aria-pressed="true"' : "") + ">ตัวเลขรายเดือน</button></span>";
+    el.innerHTML = '<h2>โครงการนี้ได้เงินอะไรบ้าง</h2><p class="sub">ทุกรายการตามแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · แหล่งเงิน ช่องทางโอน และเดือนที่ตั้งจ่าย · ชี้รายการเพื่อดูเลขแถวในไฟล์ต้นทาง</p>' +
+      flowHtml(BI, pid) +
+      '<p class="bi-h4">รายการทั้งหมด</p><div class="bi-tools">' + sel + fsel + vt + (f.prov || f.cat || f.fund ? '<button type="button" class="bi-clear">ล้างตัวกรอง</button>' : "") + "</div>" +
+      catBars(BI, pid, f) +
+      '<div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ.</span><span><b style="background:var(--gold)"></b>เงินกองทุนฯ</span><span><b style="background:var(--ok)"></b>งบลงทุน</span><span><b style="background:var(--pend)"></b>ส่วนกลาง (แยก)</span></div>' +
+      (f.view ? bodyNum(BI, pid, f) : body(BI, pid, f)) +
+      '<p class="bi-src">ที่มา: ' + esc(BI.source) + " (Google Sheets ในโฟลเดอร์ 03_แผนงาน) · ยอดรายโครงการตรวจกับแผน กปต. ทุกครั้งที่สร้างข้อมูล (หน้าความถูกต้อง)</p>";
+    el.querySelectorAll("select").forEach(function (s) { s.addEventListener("change", function () { f[s.dataset.k] = s.value; render(el, BI, pid, f); }); });
+    el.querySelectorAll(".bi-cat").forEach(function (b) { b.addEventListener("click", function () { f.cat = f.cat === b.dataset.cat ? "" : b.dataset.cat; render(el, BI, pid, f); }); });
+    var c = el.querySelector(".bi-clear"); if (c) c.addEventListener("click", function () { render(el, BI, pid, { view: f.view }); });
+    el.querySelectorAll(".bi-vt button").forEach(function (b) { b.addEventListener("click", function () { f.view = b.dataset.v; render(el, BI, pid, f); }); });
+  }
+  g.itemsPanelRender = function (el, BI, pid) { render(el, BI, pid, {}); };
+  /* ภาพรวมทางเดินเงินทั้งกอง จาก D.itemsDiv (แถว 8–27 ของแผน) */
+  g.divPanelHtml = function (rows, cols) {
+    var ix = {}; cols.forEach(function (c, i) { ix[c] = i; });
+    var FK = { "พ.ร.บ.": "prb", "กองทุน": "fund", "ลงทุน": "invest" };
+    var all = {}, top = [], ctl = [];
+    rows.forEach(function (r) {
+      var n = { r: r[ix.row], t: r[ix.label], a: r[ix.amount], q: String(r[ix.qty] || ""), u: String(r[ix.unit] || ""), f: FK[r[ix.fund]] || "", ch: r[ix.cat], n: r[ix.note] || "", m: r[ix.m] };
+      all[r[ix.seq]] = n;
+      if (n.ch === "ยอดควบคุม") { ctl.push(n); return; }
+      if (r[ix.parent] === "" || r[ix.parent] == null) top.push(n); else { var par = all[r[ix.parent]]; (par.c = par.c || []).push(n); }
+    });
+    var byCh = function (ch) { return top.filter(function (n) { return n.ch === ch; })[0]; };
+    var sumF = function (n, f) { return n ? leaves(n).filter(function (l) { return l.f === f; }).reduce(function (s, l) { return s + l.a; }, 0) : 0; };
+    var pv = byCh("จังหวัด"), cn = byCh("ส่วนกลาง"), iv = byCh("ลงทุน"), all0 = ctl.filter(function (x) { return !x.f; })[0];
+    var card = function (title, val, sub, cls) { return '<div class="bi-fl ' + cls + '"><p class="l">' + title + '</p><p class="v num">' + fmt(val) + ' <small>บาท</small></p><p class="s num">' + sub + "</p></div>"; };
+    var h = '<h2>ทางเดินเงินทั้งกอง ปีงบประมาณ 2570</h2><p class="sub">ตามส่วนหัวของแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · แยกช่องทาง (โอนจังหวัด / ตั้งจ่ายส่วนกลาง / งบลงทุน) แหล่งเงิน และเดือน</p><div class="bi-flow">' +
+      (pv ? card("โอนให้ ส.ป.ก.จังหวัด", pv.a, "งบ พ.ร.บ. " + fmt(sumF(pv, "prb")) + " · เงินกองทุนฯ " + fmt(sumF(pv, "fund")), "pv") : "") +
+      (iv ? card("งบลงทุน (ครุภัณฑ์ / สิ่งก่อสร้าง)", iv.a, "แม่อาว และที่ราบเชิงเขา (ดูหน้าโครงการ)", "iv") : "") +
+      (cn ? card("ตั้งจ่ายส่วนกลาง · แยก ไม่รวม", cn.a, "งบ พ.ร.บ. " + fmt(sumF(cn, "prb")) + " · เงินกองทุนฯ " + fmt(sumF(cn, "fund")), "cn") : "") + "</div>";
+    var rows2 = flat([pv, iv].filter(Boolean), 0, []);
+    var tm = Z12(); [pv, iv].filter(Boolean).forEach(function (n) { addM(tm, n.m); });
+    h += '<p class="bi-h4">โอน / ตั้งจ่ายเดือนไหน เท่าไร (ลงพื้นที่)</p>' + mtable(rows2, [{ t: "รวมเงินที่ลงพื้นที่ (ไม่รวมส่วนกลาง)", a: (pv ? pv.a : 0) + (iv ? iv.a : 0), m: tm, cls: "sum" }]);
+    if (cn) h += '<p class="bi-h4">ตั้งจ่ายส่วนกลาง (แสดงแยก ไม่รวมในยอด)</p>' + mtable(flat(cn.c || [], 0, []), [{ t: "รวมส่วนกลาง", a: cn.a, m: cn.m, cls: "cen" }]) +
+      '<p class="bi-src">งบ พ.ร.บ. ส่วนกลาง ' + fmt(sumF(cn, "prb")) + " บาท คือยอดเดียวกับ \"ส่วนกลาง\" ในหน้าโครงการทั้ง 16 โครงการรวมกัน · เงินกองทุนฯ ส่วนกลาง " + fmt(sumF(cn, "fund")) + " บาท (จ้างเหมาบุคลากร 4 อัตรา และผลิตสื่อประชาสัมพันธ์) เป็นของกอง ไม่ผูกกับโครงการใด</p>";
+    var cp = ctl.filter(function (x) { return x.f === "prb"; })[0], cf = ctl.filter(function (x) { return x.f === "fund"; })[0];
+    h += '<p class="bi-src">ยอดควบคุมในไฟล์: จัดสรรงบ พ.ร.บ. ' + (cp ? fmt(cp.a) : "-") + " (ไม่รวมงบลงทุน) · จัดสรรเงินกองทุนฯ " + (cf ? fmt(cf.a) : "-") + (all0 ? " · ยอดรวมทุกส่วนตามไฟล์ " + fmt(all0.a) : "") + " · ตรวจตรงกันในหน้าความถูกต้อง</p>";
+    return h;
+  };
+  /* D.items (แถวแบน จาก Apps Script) → BI */
+  g.itemsBuild = function (rows, cols) {
+    var ix = {}; cols.forEach(function (c, i) { ix[c] = i; });
+    var FK = { "พ.ร.บ.": "prb", "กองทุน": "fund", "ส่วนกลาง": "central", "ลงทุน": "invest" };
+    var KK = { "ฝึกอบรม": "train", "วัสดุการเกษตร": "agri", "จ้างเหมา": "staff", "เดินทาง": "travel", "วัสดุบริหาร": "admin", "ค่าบริหาร": "mgmt", "ส่วนกลาง": "central", "ลงทุน": "invest" };
+    var P = {}, all = {};
+    rows.forEach(function (r) {
+      var pid = r[ix.pid], n = { r: r[ix.row], t: r[ix.label], a: r[ix.amount], q: String(r[ix.qty] || ""), u: String(r[ix.unit] || ""), f: FK[r[ix.fund]] || "", pv: r[ix.prov] || "", k: KK[r[ix.cat]] || "", n: r[ix.note] || "", m: r[ix.m] };
+      all[pid + "-" + r[ix.seq]] = n;
+      if (r[ix.parent] === "" || r[ix.parent] == null) { (P[pid] = P[pid] || []).push(n); }
+      else { var par = all[pid + "-" + r[ix.parent]]; (par.c = par.c || []).push(n); }
+    });
+    return { projects: Object.keys(P).map(function (k) { return { id: +k, items: P[k] }; }), invest: [], source: "แผนปฏิบัติงานและแผนการใช้จ่ายงปม.70-พรบ+กอง" };
+  };
+  g.itemsPanelCSS = [
+    ".bi-tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 14px}",
+    ".bi-sel{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}",
+    ".bi-sel select{font:inherit;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 10px;max-width:240px}",
+    ".bi-one{font-size:13px;padding:5px 12px;border-radius:9999px;background:var(--surface-2);color:var(--ink-2)}",
+    ".bi-clear{font:inherit;font-size:13px;border:0;background:none;color:var(--primary);cursor:pointer;padding:6px}",
+    ".bi-cats{display:grid;gap:6px;margin-bottom:6px}",
+    ".bi-cat{font:inherit;color:inherit;text-align:left;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 120px;gap:14px;align-items:center;background:none;border:1px solid transparent;border-top-color:var(--line);border-radius:10px;padding:9px 10px;cursor:pointer}",
+    ".bi-cat:hover{background:var(--surface-2)}.bi-cat.on{background:var(--primary-soft);border-color:var(--primary)}",
+    ".bi-cn{font-size:14px;font-weight:500;display:flex;flex-direction:column}.bi-cn small,.bi-ca small{font-size:12px;color:var(--muted);font-weight:400}",
+    ".bi-bar{display:flex;height:10px;border-radius:9999px;background:var(--surface-2);overflow:hidden}.bi-bar i{display:block;height:100%}.bi-bar .p{background:var(--primary)}.bi-bar .g{background:var(--gold)}.bi-bar .v{background:var(--ok)}",
+    ".bi-ca{text-align:right;font-size:15px;font-weight:600;display:flex;flex-direction:column}",
+    ".bi-tree{margin-top:18px;border-top:1px solid var(--line)}",
+    ".bi-row{display:grid;grid-template-columns:minmax(0,1fr) 120px 92px 110px 108px;gap:10px;align-items:center;padding:8px 6px 8px calc(6px + var(--d,0)*22px);border-bottom:1px solid var(--line);font-size:14px}",
+    "summary.bi-row{cursor:pointer;list-style:none}summary.bi-row::-webkit-details-marker{display:none}",
+    "summary.bi-row .bi-t::before{content:'▸';display:inline-block;width:14px;color:var(--muted);transition:transform .15s}details[open]>summary.bi-row .bi-t::before{transform:rotate(90deg)}",
+    ".bi-row.hd{font-weight:600;background:var(--surface-2)}",
+    ".bi-head{font-size:12px;color:var(--muted);font-weight:500;padding-left:6px}",
+    ".bi-q{font-size:13px;color:var(--muted);text-align:right}.bi-a{text-align:right;font-weight:500;display:flex;flex-direction:column}.bi-a small{font-size:11px;color:var(--muted);font-weight:400}",
+    ".bi-note{display:block;font-size:12px;color:var(--muted);font-weight:400}.bi-cnt{font-size:12px;color:var(--muted);font-weight:400}",
+    ".bi-f{font-size:11px;padding:2px 8px;border-radius:9999px;text-align:center;white-space:nowrap;justify-self:start}",
+    ".bi-prb{background:var(--primary-soft);color:var(--primary)}.bi-fund{background:var(--warn-soft);color:var(--gold)}.bi-central{background:var(--pend-soft);color:var(--pend)}.bi-invest{background:var(--ok-soft);color:var(--ok)}.bi-mix{background:var(--surface-2);color:var(--ink-2)}",
+    ".bi-ms{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}.bi-ms i{height:10px;border-radius:2px;background:var(--empty)}.bi-ms i.on{background:var(--navy)}",
+    ":root[data-theme='dark'] .bi-ms i.on{background:var(--navy-muted)}@media (prefers-color-scheme:dark){:root:not([data-theme='light']) .bi-ms i.on{background:var(--navy-muted)}}",
+    ".bi-ms-h{font-size:11px;color:var(--muted);text-align:center}",
+    ".bi-pv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 14px;padding:10px 6px 12px calc(28px + var(--d,0)*22px);border-bottom:1px solid var(--line);font-size:13px}",
+    ".bi-pv div{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}.bi-pv span{color:var(--ink-2)}.bi-pv b{font-weight:600;margin-left:auto}.bi-pv small{width:100%;color:var(--muted);font-size:11px;text-align:right}",
+    ".bi-sum{font-weight:700;background:var(--surface-2);border-bottom:2px solid var(--ink)}.bi-split{grid-column:span 2;font-size:12px;color:var(--muted);font-weight:500;text-align:right}",
+    ".bi-cen{margin-top:18px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}.bi-ch{margin:0 0 6px;font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}",
+    ".bi-src{font-size:12px;color:var(--muted);margin:14px 0 0}",
+    ".bi-h4{font-size:15px;font-weight:600;margin:20px 0 8px}",
+    ".bi-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:4px 0 6px}",
+    ".bi-fl{border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:12px 14px}.bi-fl p{margin:0}.bi-fl .l{font-size:13px;color:var(--muted)}.bi-fl .v{font-size:22px;font-weight:600}.bi-fl .v small{font-size:13px;font-weight:400;color:var(--muted)}.bi-fl .s{font-size:12px;color:var(--muted)}",
+    ".bi-fl.pv{border-left-color:var(--primary)}.bi-fl.iv{border-left-color:var(--ok)}.bi-fl.cn{border-left-color:var(--pend);border-style:dashed;border-left-style:solid}",
+    ".bi-vt{display:inline-flex;border:1px solid var(--line);border-radius:9999px;overflow:hidden}.bi-vt button{font:inherit;font-size:13px;border:0;background:none;color:var(--ink-2);padding:6px 12px;cursor:pointer}.bi-vt button[aria-pressed=true]{background:var(--navy);color:var(--navy-ink)}",
+    ".bi-mtw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;max-width:100%}",
+    ".bi-mt{border-collapse:collapse;width:100%;font-size:13px;min-width:1180px}.bi-mt th,.bi-mt td{padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:left}.bi-mt th{font-size:12px;color:var(--muted);font-weight:500;background:var(--surface-2);position:sticky;top:0}",
+    ".bi-mt td:first-child{white-space:normal;min-width:280px;max-width:420px}.bi-mt .r{text-align:right}.bi-mt .z{color:var(--muted);opacity:.5}.bi-mt .b{font-weight:600}",
+    ".bi-mt tr.hd td{background:var(--surface-2);font-weight:600}.bi-mt tr.sum td{font-weight:700;background:var(--surface-2);border-top:2px solid var(--ink)}.bi-mt tr.cen td{color:var(--muted)}",
+    ".bi-mt td:first-child,.bi-mt th:first-child{position:sticky;left:0;background:var(--surface);z-index:1}.bi-mt tr.hd td:first-child,.bi-mt tr.sum td:first-child,.bi-mt th:first-child{background:var(--surface-2)}",
+    "@media (max-width:760px){.bi-row{grid-template-columns:minmax(0,1fr) 84px 96px}.bi-q,.bi-ms,.bi-ms-h{display:none}.bi-split{grid-column:auto}.bi-cat{grid-template-columns:minmax(0,1fr) 104px}.bi-bar{grid-column:1/-1;grid-row:2}}"
+  ].join("\n");
+})(window);
+
+</script>
+<script>
+(function(){
+"use strict";
+var API="https://script.google.com/macros/s/AKfycby6qaRhicGEF4YXrmHcPCAOhjNS0eovDfIAoy1dUhW6MkEcfhNPFVkURqdl9K5RhR2h-A/exec";
+var KK="alro_key_v1",CK="alro_payload_v7",MAXAGE=30*60*1000;
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}return null;}
+function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k);if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v);}catch(e){}return null;}
+function savedKey(){return ls(KK)||ss(KK);}
+function cached(){try{var c=JSON.parse(ls(CK)||ss(CK));if(c&&Date.now()-c.t<MAXAGE)return c.d;}catch(e){}return null;}
+var gate=document.getElementById("gate"),gf=document.getElementById("gateForm"),gm=document.getElementById("gateMsg"),gb=document.getElementById("gateBtn");
+function showGate(msg){document.getElementById("loader").classList.add("done");gate.hidden=false;gm.textContent=msg||"";gb.disabled=false;gb.textContent="เข้าสู่ระบบ";document.getElementById("gatePw").focus();}
+function load(key,remember){
+  return fetch(API,{method:"POST",body:key}).then(function(r){if(!r.ok)throw new Error("net");return r.json();}).then(function(d){
+    if(d&&d.error){ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);showGate(key?"รหัสผ่านไม่ถูกต้อง หรือมีการเปลี่ยนรหัสผ่าน":"");return;}
+    var store=remember?ls:ss;store(KK,key);store(CK,JSON.stringify({t:Date.now(),d:d}));
+    gate.hidden=true;start(d);
+  });
+}
+gf.addEventListener("submit",function(e){e.preventDefault();var k=document.getElementById("gatePw").value;if(!k)return;gb.disabled=true;gb.textContent="กำลังตรวจสอบ…";gm.textContent="";
+  load(k,document.getElementById("gateRemember").checked).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่");});});
+document.getElementById("logout").addEventListener("click",function(e){e.preventDefault();e.stopPropagation();ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);location.hash="";location.reload();});
+var hit=savedKey()&&cached(),k0=savedKey();
+if(hit){start(hit);}else if(k0){load(k0,!!ls(KK)).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาลองใหม่");});}else{showGate("");}
+var started=false;
+function start(D){
+if(started)return;started=true;
+var INIT="";
+var DOC=D.doc;
+var P=D.projects,PV=D.provinces,RG=D.region,RN=D.regions;
+var BI=(D.items&&D.itemCols)?itemsBuild(D.items,D.itemCols):null;document.getElementById("bicss").textContent=itemsPanelCSS;
+(function(){var dp=document.getElementById("divPanel");if(dp&&D.itemsDiv&&D.itemsDiv.length&&D.itemCols){dp.innerHTML=divPanelHtml(D.itemsDiv,D.itemCols);dp.hidden=false;}})();
+function agriOf(f){if(!D.items)return null;var ix=D.itemCols,ci=ix.indexOf("cat"),fi=ix.indexOf("fund"),ai=ix.indexOf("amount");return D.items.reduce(function(a,r){return a+(r[ci]==="วัสดุการเกษตร"&&r[fi]===f?r[ai]:0);},0);}
+var rows=D.budget.map(function(b){return{pid:b[0],prov:b[1],mgmt:b[2],train:b[3],mat:b[4],r1:b[5],ppl:b[6],schT:b[7],schM:b[8],times:b[9],total:b[2]+b[3]+b[4]};});
+/* โครงการขยายผลธนาคารอาหารชุมชน (เกษตรวิชญา) เป็นกิจกรรมหนึ่งของโครงการที่ 4 ตามเอกสาร — รวมเข้าโครงการที่ 4 */
+window.__TRF={};(function(){D.budget.forEach(function(b){var p=b[0]===17?4:b[0],x=window.__TRF[p]=window.__TRF[p]||{r1:0,prbAll:0,fund:0};x.r1+=b[5];x.prbAll+=b[2]+b[3]+b[4];});(D.projBudget||[]).forEach(function(r){if(window.__TRF[r.pid])window.__TRF[r.pid].fund=r.fund||0;});})();
+var SUBACT={"ขยายผล":"กิจกรรมขยายผลตามแนวพระราชดำริ"};function actLabel(a){return SUBACT[a]||a;}
+/* ชีตระบุกิจกรรมย่อยในคอลัมน์ "กิจกรรม" (budget[10], projects[].subs) · รองรับข้อมูลรุ่นเก่าที่ยังมีรหัส 17 */
+(function(){D.budget.forEach(function(b,i){rows[i].act=b[10]?String(b[10]):"";if(b[0]===17){rows[i].pid=4;rows[i].act="ขยายผล";}});var leg=P.filter(function(p){return p.id===17;})[0];P=P.filter(function(p){return p.id!==17;});var p4=P.filter(function(p){return p.id===4;})[0];if(leg&&p4&&!(p4.subs&&p4.subs.length))p4.subs=[{act:"ขยายผล",name:leg.name,info:leg.info||{}}];var m={},out=[],F=["mgmt","train","mat","r1","ppl","schT","schM","times","total"];rows.forEach(function(r){var c=Object.assign({},r),k=r.pid+"|"+r.prov;if(m[k]){F.forEach(function(f){m[k][f]+=r[f];});m[k].parts.push(c);}else{r.parts=[c];m[k]=r;out.push(r);}});rows=out;})();
+var fmt=function(n,d){return Number(n).toLocaleString("th-TH",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});};
+var code=function(id){return "P"+String(id).padStart(2,"0");};
+function proj(id){return P.find(function(p){return p.id===id;});}
+function rowsOf(id){return rows.filter(function(r){return r.pid===id;});}
+function sum(list,k){return list.reduce(function(a,r){return a+r[k];},0);}
+function pname(p,prov){return p.id===17?p.name+" จ."+PV[prov]:p.name;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function tgt(list){var a=[],ppl=sum(list,"ppl"),st=sum(list,"schT"),sm=sum(list,"schM"),t=sum(list,"times");
+  if(ppl)a.push(fmt(ppl)+" ราย");if(st)a.push(fmt(st)+" โรงเรียน (อบรม)");if(sm)a.push(fmt(sm)+" โรงเรียน (วัสดุ)");if(t)a.push(fmt(t)+" ครั้ง");return a.join(" / ")||"-";}
+var BINS=[[0,20000,.35],[20000,50000,.55],[50000,150000,.78],[150000,1e12,1]];
+function binOf(v){for(var i=0;i<BINS.length;i++){if(v<BINS[i][1])return BINS[i];}return BINS[3];}
+
+function renderOverview(){
+  var provSet=new Set(rows.map(function(r){return r.prov;}));
+  document.getElementById("heroSub").textContent=P.length+" โครงการพระราชดำริ ใน "+provSet.size+" จาก "+PV.length+" จังหวัด";
+  var h="";
+  P.forEach(function(p){
+    h+='<a class="rl" href="#'+code(p.id).toLowerCase()+'" title="'+esc(p.name)+'">'+p.id+'. '+esc(p.short)+'</a>';
+    var map={};rowsOf(p.id).forEach(function(r){map[r.prov]=r;});
+    for(var c=0;c<PV.length;c++){
+      var r=map[c];
+      if(!r){h+='<span class="cell" aria-hidden="true"></span>';continue;}
+      h+='<button class="cell on" style="opacity:'+binOf(r.total)[2]+'" data-p="'+p.id+'" data-c="'+c+'" aria-label="'+esc(p.short)+' '+esc(PV[c])+' งบ '+fmt(r.total)+' บาท"></button>';
+    }
+  });
+  document.getElementById("matrix").innerHTML=h;
+  var rh='<span style="border:0"></span>',cnt={};RG.forEach(function(g){cnt[g]=(cnt[g]||0)+1;});
+  RN.forEach(function(n,i){rh+='<span style="grid-column:span '+cnt[i]+'">'+esc(n)+'</span>';});
+  document.getElementById("regions").innerHTML=rh;
+  document.getElementById("mlist").innerHTML=P.map(function(p){var l=rowsOf(p.id),byR=RN.map(function(){return 0;});l.forEach(function(r){byR[RG[r.prov]]++;});
+    return '<a class="mitem" href="#'+code(p.id).toLowerCase()+'"><div><div class="nm">'+p.id+'. '+esc(p.short)+'</div><div class="m">'+l.length+' จังหวัด | '+RN.map(function(n,i){return byR[i]?esc(n.replace("ภาคตะวันออกเฉียงเหนือ","อีสาน").replace("ภาค",""))+' '+byR[i]:"";}).filter(Boolean).join(" · ")+'</div></div><div class="amt num">'+fmt(sum(l,"total"))+'</div></a>';}).join("");
+  document.getElementById("legend").innerHTML='<span>งบ พ.ร.บ. เต็มปีต่อพื้นที่:</span>'+BINS.map(function(b,i){var lab=i===0?"ไม่ถึง 20,000":i===3?"150,000 ขึ้นไป":fmt(b[0])+" – "+fmt(b[1]-1);return '<span><b style="opacity:'+b[2]+'"></b>'+lab+'</span>';}).join("")+'<span><b style="background:var(--empty);opacity:1"></b>ไม่มีการดำเนินการ</span>';
+  var T=sum(rows,"total"),R1=sum(rows,"r1");
+  document.getElementById("kpis").innerHTML=
+    kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(rows,"mgmt"))+" | ฝึกอบรม "+fmt(sum(rows,"train"))+" | วัสดุการเกษตร (อพ.สธ.) "+fmt(sum(rows,"mat")),"navy")+
+    kpi("จัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)",fmt(R1)+" บาท","ร้อยละ "+fmt(R1/T*100,1)+" ของงบเต็มปี","")+
+    kpi("เงินกองทุนการปฏิรูปที่ดินฯ",fmt((D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund)+" บาท",(BI?"เป็นวัสดุการเกษตร "+fmt(agriOf("กองทุน"))+" · วัสดุการเกษตรรวม 2 แหล่ง "+fmt(agriOf("กองทุน")+agriOf("พ.ร.บ."))+" บาท":D.projBudget?"เงินนอกงบ พ.ร.บ. แยกรายจังหวัด (ว5816) และรายโครงการ (แผน กปต.)":"แยกราย 72 จังหวัดตามหนังสือ ว5816 (ไม่ได้แยกรายโครงการ)"),"")+
+    alroKpi(null);
+  var list=P.map(function(p){var l=rowsOf(p.id);return{p:p,t:sum(l,"total"),r1:sum(l,"r1"),n:l.length};}).sort(function(a,b){return b.t-a.t;});
+  var mx=list[0].t;
+  document.getElementById("pbars").innerHTML=list.map(function(x){
+    return '<a class="hbar" href="#'+code(x.p.id).toLowerCase()+'"><div><div class="nm">'+x.p.id+'. '+esc(x.p.short)+'</div><div class="m">'+x.n+' จังหวัด</div></div><div class="track"><i style="width:'+(x.t/mx*100).toFixed(1)+'%"></i><i class="r1" style="width:'+(x.r1/mx*100).toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.t)+'</div></a>';}).join("");
+  var tg=[["เกษตรกรเข้ารับการอบรม",sum(rows,"ppl"),"ราย"],["โรงเรียน (อบรม)",sum(rows,"schT"),"แห่ง"],["โรงเรียน (วัสดุการเกษตร)",sum(rows,"schM"),"แห่ง"],["คลินิกเกษตรเคลื่อนที่",sum(rows,"times"),"ครั้ง"]];
+  document.getElementById("targets").innerHTML=tg.map(function(t){return '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">'+t[0]+'</div><div class="amt num" style="font-weight:600">'+fmt(t[1])+' '+t[2]+'</div></div>';}).join("")+
+    '<div class="hbar" style="grid-template-columns:1fr auto"><div class="nm">เกษตรกรในโครงการ</div><div><span class="tag t-pend">รอข้อมูล</span></div></div>';
+  renderSources();
+  var mk=mpKprHtml(),mb=mk||mpHtml(null);if(mk){document.getElementById("mpTitle").textContent="แผนการใช้จ่ายรายเดือน (แผน กปร. ทั้งกอง)";document.getElementById("mpSub").textContent="ต.ค. 69 – ก.ย. 70 ตามส่วนหัวของแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 · ยอดงบ กปร. = โอนจังหวัด + ตั้งจ่ายส่วนกลาง (งบ พ.ร.บ. และเงินกองทุนฯ) · งบลงทุน (สวผ.) แสดงแยก · ตัวเลขใต้แท่งคือร้อยละสะสมตามแผน · แผนรายโครงการดูในหน้าโครงการ";}
+  if(mb){document.getElementById("mpBox").innerHTML=mb;document.getElementById("mpPanel").hidden=false;}
+}
+var MONS=["ต.ค.","พ.ย.","ธ.ค.","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย."];
+function curMonthIdx(){var d=new Date(),m=d.getMonth(),y=d.getFullYear()+543;var fy=m>=9?y+1:y;if(fy<2570)return -1;if(fy>2570)return 12;return (m+3)%12;}
+function mpHtml(pid){
+  var MP=D.monthPlan;if(!MP||!MP.length)return "";
+  var sel=function(lvl,src){var a=[0,0,0,0,0,0,0,0,0,0,0,0];MP.forEach(function(x){if((pid===null||x.pid===pid)&&x.lvl===lvl&&(!src||x.src===src))x.m.forEach(function(v,i){a[i]+=v||0;});});return a;};
+  var P=sel("จังหวัด","พ.ร.บ."),F=sel("จังหวัด","กองทุน"),C=sel("ส่วนกลาง");
+  var tot=P.map(function(v,i){return v+F[i];}),T=tot.reduce(function(a,b){return a+b;},0),TC=C.reduce(function(a,b){return a+b;},0);
+  if(!T&&!TC)return "";
+  var mx=Math.max.apply(null,tot)||1,cum=0,now=curMonthIdx(),cumNow=0;
+  var bars=tot.map(function(v,i){var hp=P[i]/mx*100,hf=F[i]/mx*100;return '<div class="c'+(i===now?' now':'')+'" title="'+MONS[i]+' · งบ พ.ร.บ. (จังหวัด) '+fmt(P[i])+' · เงินกองทุน '+fmt(F[i])+' · รวม '+fmt(v)+(C[i]?' · ส่วนกลาง (แยก) '+fmt(C[i]):'')+'"><i style="height:'+hf.toFixed(1)+'%;background:var(--gold)"></i><i style="height:'+hp.toFixed(1)+'%;background:var(--primary)"></i></div>';}).join("");
+  var labs=tot.map(function(v,i){cum+=v;if(i<=now)cumNow=cum;return '<div><b>'+MONS[i]+'</b>'+(T?fmt(cum/T*100,0)+'%':'-')+'</div>';}).join("");
+  var k='<div class="kpis" style="margin-bottom:12px">'+kpi("แผนทั้งปี (ไม่รวมส่วนกลาง)",fmt(T)+" บาท","งบ พ.ร.บ. "+fmt(P.reduce(function(a,b){return a+b;},0))+" | กองทุน "+fmt(F.reduce(function(a,b){return a+b;},0)),"")+
+    kpi("แผนสะสมถึงเดือนนี้",now<0?"ยังไม่เริ่มปีงบ":fmt(cumNow)+" บาท",now<0?"":"ร้อยละ "+fmt(T?cumNow/T*100:0,1)+" ของแผนทั้งปี (ถึง "+MONS[Math.min(now,11)]+")","")+
+    alroKpi(null)+
+    kpi("ส่วนกลาง (แยก ไม่รวม)",fmt(TC)+" บาท","แผนรายเดือนของ ส.ป.ก. ส่วนกลาง","")+'</div>';
+  return k+'<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:var(--primary)"></b>งบ พ.ร.บ. (จังหวัด)</span><span><b style="background:var(--gold)"></b>เงินกองทุนปฏิรูปที่ดิน</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>';
+}
+/* หน้ารวม: แผนรายเดือนของ กปร. ทั้งกอง (ส่วนหัวของแผน: ตั้งจ่ายจังหวัด + ตั้งจ่ายส่วนกลาง; งบลงทุน สวผ. แยก) */
+function mpKprHtml(){
+  var R=D.itemsDiv,C=D.itemCols;if(!R||!R.length||!C)return "";
+  var ix={};C.forEach(function(c,i){ix[c]=i;});
+  var kids={};R.forEach(function(r){if(r[ix.parent]!==""&&r[ix.parent]!=null)kids[r[ix.parent]]=1;});
+  var z=function(){return [0,0,0,0,0,0,0,0,0,0,0,0];};
+  var S={pP:z(),pF:z(),cP:z(),cF:z(),iv:z()};
+  R.forEach(function(r){if(kids[r[ix.seq]]||r[ix.cat]==="ยอดควบคุม")return;var ch=r[ix.cat],f=r[ix.fund],k=ch==="ลงทุน"?"iv":(ch==="จังหวัด"?"p":"c")+(f==="กองทุน"?"F":"P");if(!S[k])return;r[ix.m].forEach(function(v,i){S[k][i]+=v||0;});});
+  var sum=function(a){return a.reduce(function(x,y){return x+y;},0);};
+  var tot=S.pP.map(function(v,i){return v+S.pF[i]+S.cP[i]+S.cF[i];}),T=sum(tot);if(!T)return "";
+  var mx=Math.max.apply(null,tot)||1,cum=0,now=curMonthIdx(),cumNow=0;
+  var seg=function(a,i,col){return '<i style="height:'+(a[i]/mx*100).toFixed(1)+'%;background:'+col+'"></i>';};
+  var bars=tot.map(function(v,i){return '<div class="c'+(i===now?' now':'')+'" title="'+MONS[i]+' · รวม '+fmt(v)+' · โอนจังหวัด พ.ร.บ. '+fmt(S.pP[i])+' · โอนจังหวัด กองทุน '+fmt(S.pF[i])+' · ส่วนกลาง พ.ร.บ. '+fmt(S.cP[i])+' · ส่วนกลาง กองทุน '+fmt(S.cF[i])+(S.iv[i]?' · งบลงทุน (สวผ. แยก) '+fmt(S.iv[i]):'')+'">'+seg(S.cF,i,"var(--pend)")+seg(S.cP,i,"var(--navy-muted)")+seg(S.pF,i,"var(--gold)")+seg(S.pP,i,"var(--primary)")+'</div>';}).join("");
+  var labs=tot.map(function(v,i){cum+=v;if(i<=now)cumNow=cum;return '<div><b>'+MONS[i]+'</b>'+fmt(cum/T*100,0)+'%</div>';}).join("");
+  var P=sum(S.pP)+sum(S.cP),F=sum(S.pF)+sum(S.cF),IV=sum(S.iv);
+  var k='<div class="kpis" style="margin-bottom:12px">'+kpi("แผนทั้งปี (งบ กปร.)",fmt(T)+" บาท","งบ พ.ร.บ. "+fmt(P)+" | กองทุน "+fmt(F)+" · โอนจังหวัด "+fmt(sum(S.pP)+sum(S.pF))+" | ส่วนกลาง "+fmt(sum(S.cP)+sum(S.cF)),"navy")+
+    kpi("แผนสะสมถึงเดือนนี้",now<0?"ยังไม่เริ่มปีงบ":fmt(cumNow)+" บาท",now<0?"":"ร้อยละ "+fmt(cumNow/T*100,1)+" ของแผนทั้งปี (ถึง "+MONS[Math.min(now,11)]+")","")+
+    alroKpi(null)+
+    kpi("งบลงทุน (สวผ.) แยก",fmt(IV)+" บาท","ไม่รวมในแผน กปร. · ครุภัณฑ์ / สิ่งก่อสร้าง","")+'</div>';
+  var tb='<div class="bi-mtw" style="margin-top:14px"><table class="bi-mt"><thead><tr><th>ช่องทาง / แหล่งเงิน</th><th class="r">รวม</th>'+MONS.map(function(m,i){return '<th class="r">'+m+(i<3?"69":"70")+'</th>';}).join("")+'</tr></thead><tbody>'+
+    [["โอนให้จังหวัด · งบ พ.ร.บ.",S.pP],["โอนให้จังหวัด · เงินกองทุนฯ",S.pF],["ตั้งจ่ายส่วนกลาง · งบ พ.ร.บ.",S.cP],["ตั้งจ่ายส่วนกลาง · เงินกองทุนฯ",S.cF]].map(function(x){return '<tr><td>'+x[0]+'</td><td class="r num b">'+fmt(sum(x[1]))+'</td>'+x[1].map(function(v){return '<td class="r num'+(v?'':' z')+'">'+(v?fmt(v):'–')+'</td>';}).join("")+'</tr>';}).join("")+
+    '</tbody><tfoot><tr class="sum"><td>รวมแผน กปร.</td><td class="r num b">'+fmt(T)+'</td>'+tot.map(function(v){return '<td class="r num">'+fmt(v)+'</td>';}).join("")+'</tr>'+
+    (IV?'<tr class="cen"><td>งบลงทุน (สวผ.) แยก ไม่รวม</td><td class="r num b">'+fmt(IV)+'</td>'+S.iv.map(function(v){return '<td class="r num'+(v?'':' z')+'">'+(v?fmt(v):'–')+'</td>';}).join("")+'</tr>':'')+'</tfoot></table></div>';
+  return k+'<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:var(--primary)"></b>โอนจังหวัด · งบ พ.ร.บ.</span><span><b style="background:var(--gold)"></b>โอนจังหวัด · เงินกองทุนฯ</span><span><b style="background:var(--navy-muted)"></b>ส่วนกลาง · งบ พ.ร.บ.</span><span><b style="background:var(--pend)"></b>ส่วนกลาง · เงินกองทุนฯ</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>'+tb;
+}
+/* ผลการเบิกจ่ายจาก alrotracking (D.alro จาก Apps Script: ไฟล์ในโฟลเดอร์ 01_ผลการเบิกจ่าย_alrotracking) */
+function alroP(id){var L=D.alro&&D.alro.latest;if(!L)return null;var f=function(x){return L.projects.filter(function(q){return q.pid===x;})[0];};return f(id)||(id===17?f(4):null);}
+function alroSum(m,i){return (m.prb?m.prb[i]:0)+(m.fund?m.fund[i]:0);}
+function alroKpi(id){var L=D.alro&&D.alro.latest;
+  if(!L)return kpi("ผลเบิกจ่าย","รอข้อมูล","รอไฟล์ alrotracking ปี "+(D.alro&&D.alro.fy||2570),"pend");
+  if(id==null){var pl=0,sp=0;L.projects.forEach(function(q){pl+=alroSum(q.m,0);sp+=alroSum(q.m,1);});return kpi("ผลเบิกจ่าย",fmt(sp)+" บาท","ร้อยละ "+fmt(pl?sp/pl*100:0,1)+" ของแผน "+fmt(pl)+" · ณ "+thDate(L.date),"");}
+  var q=alroP(id);if(!q)return kpi("ผลเบิกจ่าย","ไม่พบในไฟล์","ไฟล์ alrotracking ณ "+thDate(L.date),"pend");
+  var pl=alroSum(q.m,0),sp=alroSum(q.m,1);return kpi("ผลเบิกจ่าย",fmt(sp)+" บาท","ร้อยละ "+fmt(pl?sp/pl*100:0,1)+" ของแผน · ณ "+thDate(L.date),"");}
+function thDate(d){if(!d)return "-";var x=d.split("-");return (+x[2])+" "+MONS[((+x[1])+2)%12]+" "+String(+x[0]+543).slice(2);}
+function alroPanel(id){
+  var A=D.alro,pid=id===17?4:id,head='<div class="panel"><h2>ผลการเบิกจ่ายรายเดือนของโครงการ</h2>';
+  if(!A||!A.latest){
+    var fl=(A&&A.files||[]).map(function(f){return esc(f.name)+" (ปี "+f.fy+")";});
+    return head+'<p class="sub">จากไฟล์ส่งออกของ alrotracking</p><div class="kpis"><div class="kpi pend" style="grid-column:1/-1"><p class="l">สถานะข้อมูล</p><p class="v">รอไฟล์ alrotracking ปี '+(A&&A.fy||2570)+'</p><p class="s">วางไฟล์ส่งออก (.xlsx) ในโฟลเดอร์ Drive "01_ผลการเบิกจ่าย_alrotracking" ระบบอ่านเองภายใน 1 ชั่วโมง · ส่งออกเป็นระยะ (เช่น สิ้นเดือน) เพื่อให้เห็นผลรายเดือน'+(fl.length?'<br>ไฟล์ที่พบในโฟลเดอร์ (ไม่ใช่ปีนี้ จึงไม่นำมาแสดง): '+fl.join(", "):'')+(A&&A.error?'<br>อ่านโฟลเดอร์ไม่ได้: '+esc(A.error):'')+'</p></div></div></div>';
+  }
+  var q=alroP(id);if(!q)return head+'<p class="sub">ไม่พบโครงการนี้ในไฟล์ alrotracking ณ '+thDate(A.latest.date)+'</p></div>';
+  var pl=alroSum(q.m,0),sp=alroSum(q.m,1),pc=function(a,b){return b?fmt(a/b*100,1):"0.0";};
+  var k='<div class="kpis" style="margin-bottom:12px">'+
+    kpi("เบิกจ่ายแล้ว (พ.ร.บ. + กองทุน)",fmt(sp)+" บาท","ร้อยละ "+pc(sp,pl)+" ของแผนในระบบ "+fmt(pl),"navy")+
+    kpi("งบ พ.ร.บ.",q.m.prb?fmt(q.m.prb[1])+" บาท":"-",q.m.prb?"ร้อยละ "+pc(q.m.prb[1],q.m.prb[0])+" ของ "+fmt(q.m.prb[0]):"ไม่มีในไฟล์","")+
+    kpi("เงินกองทุนฯ",q.m.fund?fmt(q.m.fund[1])+" บาท":"-",q.m.fund?"ร้อยละ "+pc(q.m.fund[1],q.m.fund[0])+" ของ "+fmt(q.m.fund[0]):"ไม่มีในไฟล์","")+
+    kpi("ข้อมูล ณ",thDate(A.latest.date),esc(A.latest.file||""),"")+'</div>';
+  // รายเดือน: ยอดสะสม ณ ไฟล์ล่าสุดของแต่ละเดือน
+  var cum=[null,null,null,null,null,null,null,null,null,null,null,null];
+  (A.series||[]).forEach(function(x){var r=x.byPid.filter(function(b){return b[0]===(alroP(id)||{}).pid;})[0];if(!r)return;var mo=((+x.date.split("-")[1])+2)%12;cum[mo]=r[1]+r[2];});
+  var last=0,inc=cum.map(function(v){if(v==null)return null;var d=v-last;last=v;return d;});
+  var plan=[0,0,0,0,0,0,0,0,0,0,0,0];
+  if(D.items&&D.itemCols){var ix={};D.itemCols.forEach(function(c,i){ix[c]=i;});var kid={};D.items.forEach(function(r){if(r[ix.parent]!==""&&r[ix.parent]!=null)kid[r[ix.pid]+"-"+r[ix.parent]]=1;});
+    D.items.forEach(function(r){if(r[ix.pid]!==pid||kid[pid+"-"+r[ix.seq]])return;if(r[ix.fund]!=="พ.ร.บ."&&r[ix.fund]!=="กองทุน")return;r[ix.m].forEach(function(v,i){plan[i]+=v||0;});});}
+  var mx=Math.max.apply(null,plan.concat(inc.map(function(v){return v||0;})))||1,now=curMonthIdx(),pc2=0,sc=0;
+  var bars=plan.map(function(p,i){var a=inc[i];return '<div class="c'+(i===now?' now':'')+'" title="'+MONS[i]+' · แผน (ไฟล์แผนปฏิบัติงาน) '+fmt(p)+' · เบิกจ่าย '+(a==null?'ยังไม่มีไฟล์':fmt(a))+'" style="flex-direction:row;align-items:flex-end;gap:2px"><i style="flex:1;height:'+(p/mx*100).toFixed(1)+'%;background:none;outline:1.5px dashed var(--pend);outline-offset:-1.5px;border-radius:3px 3px 0 0"></i><i style="flex:1;height:'+((a||0)/mx*100).toFixed(1)+'%;background:var(--ok);border-radius:3px 3px 0 0"></i></div>';}).join("");
+  var labs=plan.map(function(p,i){pc2+=p;return '<div><b>'+MONS[i]+'</b>'+(cum[i]==null?'–':fmt(pl?cum[i]/pl*100:0,0)+'%')+'</div>';}).join("");
+  var pcum=0,tb='<div class="bi-mtw" style="margin-top:14px"><table class="bi-mt" style="min-width:640px"><thead><tr><th>เดือน</th><th class="r">แผนตั้งจ่าย (แผนปฏิบัติงาน)</th><th class="r">แผนสะสม</th><th class="r">เบิกจ่ายในเดือน</th><th class="r">เบิกจ่ายสะสม</th><th class="r">ร้อยละสะสม (ของแผนในระบบ)</th></tr></thead><tbody>'+
+    plan.map(function(p,i){pcum+=p;return '<tr><td>'+MONS[i]+(i<3?"69":"70")+'</td><td class="r num">'+fmt(p)+'</td><td class="r num">'+fmt(pcum)+'</td><td class="r num'+(inc[i]==null?' z':'')+'">'+(inc[i]==null?'–':fmt(inc[i]))+'</td><td class="r num'+(cum[i]==null?' z':'')+'">'+(cum[i]==null?'–':fmt(cum[i]))+'</td><td class="r num">'+(cum[i]==null?'–':pc(cum[i],pl))+'</td></tr>';}).join("")+'</tbody></table></div>';
+  var acts=q.acts.length?'<p class="bi-h4">ผลการดำเนินงาน (ขั้นตอนหลัก)</p><div class="bi-mtw"><table class="bi-mt" style="min-width:560px"><thead><tr><th>กิจกรรม</th><th class="r">แผนงาน</th><th class="r">ผลงาน</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+
+    q.acts.map(function(a){return '<tr'+(a.sum?' class="hd"':'')+'><td>'+esc(a.label)+'</td><td class="r num">'+fmt(a.plan)+' '+esc(a.unit)+'</td><td class="r num">'+fmt(a.done)+' '+esc(a.unit)+'</td><td class="r num">'+pc(a.done,a.plan)+'</td></tr>';}).join("")+'</tbody></table></div>':"";
+  var pv=q.prov.length>1?'<p class="bi-h4">แยกรายจังหวัด / หน่วยงาน</p><div class="bi-mtw"><table class="bi-mt" style="min-width:720px"><thead><tr><th>จังหวัด / หน่วยงาน</th><th class="r">แผน พ.ร.บ.</th><th class="r">เบิก พ.ร.บ.</th><th class="r">แผน กองทุน</th><th class="r">เบิก กองทุน</th><th class="r">ร้อยละรวม</th></tr></thead><tbody>'+
+    q.prov.map(function(r){var m=r.m,a=alroSum(m,0),b=alroSum(m,1);return '<tr'+(r.central?' class="cen"':'')+'><td>'+esc(r.prov)+'</td><td class="r num">'+(m.prb?fmt(m.prb[0]):'–')+'</td><td class="r num">'+(m.prb?fmt(m.prb[1]):'–')+'</td><td class="r num">'+(m.fund?fmt(m.fund[0]):'–')+'</td><td class="r num">'+(m.fund?fmt(m.fund[1]):'–')+'</td><td class="r num">'+pc(b,a)+'</td></tr>';}).join("")+'</tbody></table></div>':"";
+  var note=q.m.total&&Math.abs(q.m.total[1]-sp)>1?'<p class="bi-src">หมายเหตุ: ช่อง "รวมงบประมาณ" ในไฟล์ alrotracking = '+fmt(q.m.total[1])+' บาท ไม่เท่ากับ พ.ร.บ. + กองทุน ('+fmt(sp)+') เว็บแสดงยอดแยกแหล่งเงินตามไฟล์</p>':"";
+  return head+'<p class="sub">แท่งเส้นประ = แผนตั้งจ่ายรายเดือน (แผนปฏิบัติงาน ไม่รวมส่วนกลาง) · แท่งเขียว = เบิกจ่ายจริงในเดือน (จาก alrotracking) · ตัวเลขใต้แท่ง = ร้อยละเบิกจ่ายสะสม'+(id===17?' · ใช้ข้อมูลโครงการที่ 4 จนกว่า alrotracking จะแยกโครงการ':'')+'</p>'+k+
+    '<div class="mch">'+bars+'</div><div class="mlab">'+labs+'</div><div class="lg"><span><b style="background:none;outline:1.5px dashed var(--pend)"></b>แผนตั้งจ่าย</span><span><b style="background:var(--ok)"></b>เบิกจ่ายจริง</span><span><b style="background:none;outline:2px solid var(--gold)"></b>เดือนปัจจุบัน</span></div>'+tb+acts+pv+note+
+    '<p class="bi-src">ที่มา: '+esc(A.latest.file||"")+' (alrotracking) ณ '+thDate(A.latest.date)+' · รายเดือนคำนวณจากไฟล์ส่งออกที่วางในโฟลเดอร์ตามวันที่</p></div>';
+}
+function pbOf(id){return (D.projBudget||[]).find(function(r){return r.pid===id;});}
+function renderSources(){
+  var B=D.projBudget;if(!B||!B.length)return;
+  var L=B.map(function(r){var p=proj(r.pid);return{r:r,p:p,all:r.prbProv+r.fund};}).sort(function(a,b){return b.all-a.all;});
+  var mx=L[0].all,ta=0,tp=0,tc=0,tf=0;
+  var h=L.map(function(x){var r=x.r,c=r.prbAll-r.prbProv;ta+=x.all;tp+=r.prbProv;tc+=c;tf+=r.fund;
+    var w1=r.prbProv/mx*100,w3=r.fund/mx*100;
+    return '<a class="hbar" href="#'+code(r.pid).toLowerCase()+'" title="งบ พ.ร.บ. (จังหวัด) '+fmt(r.prbProv)+' · เงินกองทุนปฏิรูปที่ดิน '+fmt(r.fund)+' · ส่วนกลางแยกต่างหาก '+fmt(c)+'"><div><div class="nm">'+r.pid+'. '+esc(x.p?x.p.short:"")+(r.pid===4?' (รวมกิจกรรมขยายผล)':'')+'</div><div class="m">งบ พ.ร.บ. '+fmt(r.prbProv)+' · กองทุน '+fmt(r.fund)+' · <span title="ไม่รวมในยอด">ส่วนกลาง (แยก) '+fmt(c)+'</span></div></div><div class="track"><i style="width:'+w1.toFixed(1)+'%"></i><i class="s3" style="left:'+w1.toFixed(1)+'%;width:'+w3.toFixed(1)+'%"></i></div><div class="amt num">'+fmt(x.all)+'</div></a>';}).join("");
+  h+='<div class="hbar" style="font-weight:600"><div class="nm">รวม '+L.length+' แผนงาน</div><div class="m num">งบ พ.ร.บ. '+fmt(tp)+' · กองทุน '+fmt(tf)+'<br>ส่วนกลาง (แยก ไม่รวมในยอด) '+fmt(tc)+'</div><div class="amt num">'+fmt(ta)+'</div></div>';
+  document.getElementById("srcBars").innerHTML=h;document.getElementById("srcPanel").hidden=false;
+}
+// shared logic (will be embedded in site): indicator target -> per-province breakdown from plan items
+function provTargets(items,cols,pid,target,unit){
+  var ix={};cols.forEach(function(c,i){ix[c]=i;});
+  var num=function(q){var m=/^\s*([\d,]+(?:\.\d+)?)/.exec(String(q==null?"":q));return m?+m[1].replace(/,/g,""):NaN;};
+  var unitOf=function(r){var u=String(r[ix.unit]||"").trim();if(u)return u;var m=/^\s*[\d,.]+\s*(\S+)/.exec(String(r[ix.qty]||""));return m?m[1]:"";};
+  var R=items.filter(function(r){return r[ix.pid]===pid;}),kids={};
+  R.forEach(function(r){if(r[ix.parent]!==""&&r[ix.parent]!=null)(kids[r[ix.parent]]=kids[r[ix.parent]]||[]).push(r);});
+  var keys=Object.keys(kids);
+  for(var k=0;k<keys.length;k++){var c=kids[keys[k]];if(c.length<2)continue;
+    var pv={},ok=true,sum=0;
+    c.forEach(function(r){var p=String(r[ix.prov]||"");var q=num(r[ix.qty]);if(!p||pv[p]!=null||!(q>=0)||unitOf(r)!==unit){ok=false;return;}pv[p]=q;sum+=q;});
+    if(ok&&Object.keys(pv).length>1&&Math.abs(sum-target)<0.5)return pv;}
+  return null;
+}
+
+
+function alroActFor(id,x){var q=alroP(id);if(!q)return null;var A=q.acts.filter(function(a){return a.unit===x.unit&&a.pv;});if(!A.length)return null;
+  var par=function(s){var m=/\(([^)]*)\)\s*$/.exec(s||"");return m?m[1].replace(/\s+/g,"").slice(0,12):"";},px=par(x.item);
+  return A.filter(function(a){return px&&par(a.label)===px;})[0]||A.filter(function(a){return a.label===x.item;})[0]||A.filter(function(a){return Math.abs(a.plan-x.target)<.5;})[0]||(A.length===1?A[0]:null);}
+function provBreak(id,x){
+  if(!D.items||!D.itemCols)return "";var pid=id===17?4:id,pv=provTargets(D.items,D.itemCols,pid,x.target,x.unit);if(!pv)return "";
+  var act=alroActFor(id,x),L=Object.keys(pv).sort(function(a,b){return pv[b]-pv[a]||a.localeCompare(b,"th");}),done=0,mx=Math.max.apply(null,L.map(function(k){return pv[k];}))||1;
+  var rows=L.map(function(k){var d=act&&act.pv[k]?act.pv[k][1]:null;if(d!=null)done+=d;var i=PV.indexOf(k);
+    return '<tr><td>จ.'+esc(k)+'<small class="rg">'+(i>=0?esc(RN[RG[i]]||""):"")+'</small></td><td class="r num">'+fmt(pv[k])+'</td><td class="pbar"><i style="width:'+(pv[k]/mx*100).toFixed(1)+'%"></i></td><td class="r num'+(d==null?' z':'')+'">'+(d==null?'–':fmt(d))+'</td><td class="r num'+(d==null?' z':'')+'">'+(d==null?'–':fmt(pv[k]?d/pv[k]*100:0,1))+'</td></tr>';}).join("");
+  var T=x.target;
+  return '<details class="ptg"><summary>แจงรายจังหวัด ('+L.length+' จังหวัด)</summary><div class="bi-mtw"><table class="bi-mt" style="min-width:560px"><thead><tr><th>จังหวัด</th><th class="r">เป้าหมาย ('+esc(x.unit)+')</th><th style="width:22%"></th><th class="r">ผล (alrotracking)</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr class="sum"><td>รวม</td><td class="r num b">'+fmt(T)+'</td><td></td><td class="r num b">'+(act?fmt(done):'–')+'</td><td class="r num b">'+(act?fmt(T?done/T*100:0,1):'–')+'</td></tr></tfoot></table></div><p class="bi-src">เป้าหมายรายจังหวัดจากแผนปฏิบัติงานฯ ปี 70 (รวมได้เท่ากับเป้าหมายโครงการ) · ผลจากไฟล์ alrotracking '+(act?'ณ '+thDate(D.alro.latest.date):'— รอไฟล์ปี 2570')+'</p></details>';
+}
+function planHtml(id){
+  var pid=id===17?4:id,r=pbOf(pid),I=(D.indicators||[]).filter(function(x){return x.pid===pid;});
+  if(!r&&!I.length)return "";
+  var g=function(t){return I.filter(function(x){return x.type===t;});};
+  var li=function(l){return '<ul class="ilist">'+l.map(function(x){return '<li>'+esc(x.item.replace(/^หลักสูตร\s*/,""))+' <span class="q num">'+fmt(x.target)+' '+esc(x.unit)+'</span>'+provBreak(id,x)+'</li>';}).join("")+'</ul>';};
+  var h='<div class="panel"><h2>แผนงานและตัวชี้วัด</h2><p class="sub">จากไฟล์ขั้นตอน ปี 70 ของ กปต.'+(id===17?' (แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน)':pid===4?' (รวมกิจกรรมขยายผลตามแนวพระราชดำริ)':'')+'</p>';
+  if(r)h+='<div class="kpis" style="margin-bottom:14px">'+kpi("งบ พ.ร.บ. (จังหวัด)",fmt(r.prbProv)+" บาท","ส่วนกลางแยกต่างหาก "+fmt(r.prbAll-r.prbProv)+" บาท (ไม่รวม)","")+kpi("เงินกองทุนปฏิรูปที่ดิน",fmt(r.fund)+" บาท",r.fund?"อนุมัติตามหนังสือ ว5816":"โครงการนี้ไม่ได้รับเงินกองทุน","")+kpi("รวม 2 แหล่ง",fmt(r.prbProv+r.fund)+" บาท","งบ พ.ร.บ. (จังหวัด) + เงินกองทุน · ไม่รวมส่วนกลาง","navy")+'</div>';
+  [["เป้าหมายหลักโครงการ","เป้าหมายหลัก"],["หลักสูตรอบรม","หลักสูตรอบรม"],["สนับสนุนปัจจัย/วัสดุ","การสนับสนุน"],["เกษตรกรตัวอย่าง","เกษตรกรตัวอย่าง"]].forEach(function(t){var l=g(t[0]);if(l.length)h+='<div class="h4">'+t[1]+'</div>'+li(l);});
+  return h+'</div>';
+}
+function kpi(l,v,s,cls){return '<div class="kpi '+cls+'"><p class="l">'+l+'</p><p class="v num">'+v+'</p><p class="s num">'+s+'</p></div>';}
+function showTip(e){
+  var b=e.target.closest(".cell.on");if(!b)return;
+  var p=proj(+b.dataset.p),c=+b.dataset.c,r=rows.find(function(x){return x.pid===p.id&&x.prov===c;});
+  document.getElementById("tip").innerHTML='<b>'+esc(pname(p,c))+'</b> | '+esc(PV[c])+' ('+esc(RN[RG[c]])+') งบเต็มปี <span class="num">'+fmt(r.total)+'</span> บาท ครั้งที่ 1 <span class="num">'+fmt(r.r1)+'</span> บาท เป้าหมาย '+tgt([r]);
+}
+
+/* ---------- แผนที่ (Leaflet) ---------- */
+var LEAF_CSS="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",LEAF_JS="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+var GEO_URL="https://cdn.jsdelivr.net/gh/chingchai/OpenGISData-Thailand@625e85d/provinces.geojson";
+var DARK=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches;
+var RAMP=["#ddd7ff","#b9adff","#8f7dfb","#6a55ee","#4127c9"],NOAREA=DARK?"#1b2540":"#e8ecf3",LINE=DARK?"#0b1120":"#ffffff";
+var depP=null,ovMap=null,pjMap=null,ovLayer=null,geoData=null;
+function deps(){
+  if(depP)return depP;
+  depP=new Promise(function(res,rej){
+    var l=document.createElement("link");l.rel="stylesheet";l.href=LEAF_CSS;l.integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";l.crossOrigin="";document.head.appendChild(l);
+    var sc=document.createElement("script");sc.src=LEAF_JS;sc.integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";sc.crossOrigin="";sc.onload=res;sc.onerror=function(){rej(new Error("leaflet"));};document.head.appendChild(sc);
+  }).then(function(){return fetch(GEO_URL).then(function(r){if(!r.ok)throw new Error("geo");return r.json();});}).then(function(g){geoData=g;return g;});
+  depP.catch(function(){depP=null;});
+  return depP;
+}
+var PT=null;
+function provTotals(){
+  if(PT)return PT;
+  PT=PV.map(function(_,i){return{t:0,f:(D.fundProv&&D.fundProv[i])||0,flag:(D.fundFlag&&D.fundFlag[i])||"",list:[]};});
+  rows.forEach(function(r){if(r.prov<0)return;PT[r.prov].t+=r.total;PT[r.prov].list.push(r);});
+  return PT;
+}
+var METRIC="pb",MLAB={pb:"งบ พ.ร.บ.",fund:"เงินกองทุนฯ",all:"รวม 2 แหล่ง"},ovBr=null;
+function mval(x){return METRIC==="pb"?x.t:METRIC==="fund"?x.f:x.t+x.f;}
+function ovStyle(f){var T=provTotals(),i=idxOf(f),v=i>=0?mval(T[i]):0;return{fillColor:colorOf(v,ovBr),fillOpacity:i>=0?.88:.55,color:LINE,weight:.8,opacity:1};}
+function ovRefresh(){var T=provTotals();ovBr=breaks(T.map(mval));if(ovLayer)ovLayer.setStyle(ovStyle);document.getElementById("ovLegend").innerHTML=legendHtml(ovBr,"นอกพื้นที่ / ไม่มีการดำเนินการ",MLAB[METRIC]);showTop();}
+function breaks(vals){
+  var v=vals.filter(function(x){return x>0;}).sort(function(a,b){return a-b;});
+  var u=v.filter(function(x,k){return k===0||x!==v[k-1];});
+  if(u.length<=5)return{cat:true,t:u.slice(1),vals:u};
+  var nice=function(x){var p=Math.pow(10,Math.floor(Math.log10(x)));return Math.round(x/p*2)/2*p;};
+  var t=[];[.2,.4,.6,.8].forEach(function(f){var q=nice(v[Math.min(v.length-1,Math.floor(f*v.length))]);if(q>v[0]&&q<=v[v.length-1]&&(!t.length||q>t[t.length-1]))t.push(q);});
+  return{cat:false,t:t};
+}
+var PICK={1:[3],2:[1,4],3:[0,2,4],4:[0,1,3,4],5:[0,1,2,3,4]};
+function colorOf(v,br){if(!(v>0))return NOAREA;var cs=PICK[br.t.length+1],k=0;while(k<br.t.length&&v>=br.t[k])k++;return RAMP[cs[k]];}
+function legendHtml(br,extra,lab0){
+  var n=br.t.length+1,cs=PICK[n],h='';
+  for(var i=0;i<n;i++){var lab;
+    if(br.cat)lab=fmt(br.vals[i]);
+    else if(n===1)lab='ทุกพื้นที่';
+    else lab=i===0?'ไม่ถึง '+fmt(br.t[0]):i===n-1?fmt(br.t[n-2])+' ขึ้นไป':fmt(br.t[i-1])+' – '+fmt(br.t[i]-1);
+    h+='<span><b style="background:'+RAMP[cs[i]]+'"></b>'+lab+'</span>';}
+  return '<span>'+(lab0||'งบ')+' (บาท):</span>'+h+'<span><b style="background:'+NOAREA+';box-shadow:inset 0 0 0 1px var(--line)"></b>'+(extra||'ไม่มีการดำเนินการ')+'</span>';}
+function baseMap(el){
+  el.innerHTML="";
+  var m=L.map(el,{zoomControl:true,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false,attributionControl:true,minZoom:5,maxZoom:11,zoomSnap:.25});
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,className:"basetile",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(m);
+  m.attributionControl.setPrefix(false);
+  el.addEventListener("click",function(){m.scrollWheelZoom.enable();},{once:true});
+  return m;
+}
+function idxOf(f){return PV.indexOf(String(f.properties.pro_th||"").trim());}
+function mapFail(el){el.innerHTML='<div class="mapmsg">โหลดแผนที่ไม่ได้ในขณะนี้<br>ข้อมูลตัวเลขด้านอื่นยังใช้งานได้ตามปกติ</div>';}
+
+function renderOverviewMap(){
+  var el=document.getElementById("ovMap");if(!el)return;
+  if(ovMap){setTimeout(function(){ovMap.invalidateSize();ovPins();},0);return;}
+  deps().then(function(geo){
+    if(ovMap)return;
+    var T=provTotals();ovBr=breaks(T.map(mval));
+    ovMap=baseMap(el);
+    var sel=null;
+    ovLayer=L.geoJSON(geo,{style:ovStyle,onEachFeature:function(f,ly){
+      var i=idxOf(f),name=f.properties.pro_th;
+      ly.bindTooltip('<b>'+esc(name)+'</b><br>'+(i>=0&&(T[i].t||T[i].f)?'งบ พ.ร.บ. '+fmt(T[i].t)+' บาท · '+T[i].list.length+' โครงการ<br>เงินกองทุนฯ '+fmt(T[i].f)+' บาท':'ไม่มีการดำเนินการ'),{sticky:true,className:"pt",direction:"top"});
+      ly.on("mouseover",function(){if(ly!==sel)ly.setStyle({weight:2,color:DARK?"#e7edf6":"#14183f"});ly.bringToFront();});
+      ly.on("mouseout",function(){if(ly!==sel)ovLayer.resetStyle(ly);});
+      ly.on("click",function(){if(sel&&sel!==ly)ovLayer.resetStyle(sel);sel=ly;ly.setStyle({weight:2.5,color:"#d6b46a"});showProv(i,name);});
+    }}).addTo(ovMap);
+    ovMap.fitBounds(ovLayer.getBounds(),{padding:[8,8]}); lockToThailand(ovMap, ovLayer);
+    ovPins();
+    document.getElementById("ovLegend").innerHTML=legendHtml(ovBr,"นอกพื้นที่ / ไม่มีการดำเนินการ",MLAB[METRIC]);
+    showTop();
+  }).catch(function(){mapFail(el);});
+}
+var ovPinLayer=null;
+function ovPins(){
+  if(!ovMap)return;if(ovPinLayer){ovMap.removeLayer(ovPinLayer);ovPinLayer=null;}
+  var P=D.pins||[],box=document.getElementById("ovPinsBox");
+  if(!P.length){if(box)box.remove();return;}
+  ovPinLayer=L.layerGroup(P.map(function(p){var t=PIN_T[p[2]]||PIN_T["ศูนย์/แปลง"],pr=proj(p[1]);return L.circleMarker([p[8],p[9]],{radius:5,color:"#fff",weight:1.5,fillColor:t.c,fillOpacity:1}).bindTooltip('<b>'+esc(p[3])+'</b><br>'+esc(p[2])+(pr?' · '+esc(pr.short):''),{className:"pt",direction:"top"}).on("click",function(){navigate(code(p[1]).toLowerCase());});}));
+  if(!box){document.getElementById("ovLegend").insertAdjacentHTML("afterend",'<label class="pm-ovt" id="ovPinsBox"><input type="checkbox" id="ovPins" checked> <span></span></label>');box=document.getElementById("ovPinsBox");
+    document.getElementById("ovPins").addEventListener("change",function(){if(!ovPinLayer)return;if(this.checked)ovPinLayer.addTo(ovMap);else ovMap.removeLayer(ovPinLayer);});}
+  box.querySelector("span").textContent="แสดงหมุดพิกัดทุกโครงการ ("+P.length+" จุด) · กดหมุดเพื่อเปิดหน้าโครงการ";
+  if(document.getElementById("ovPins").checked)ovPinLayer.addTo(ovMap);
+}
+function showTop(){
+  var T=provTotals(),ord=T.map(function(x,i){return{i:i,t:mval(x)};}).filter(function(x){return x.t>0;}).sort(function(a,b){return b.t-a.t;}).slice(0,10);
+  document.getElementById("provInfo").innerHTML='<h3>10 จังหวัด'+MLAB[METRIC]+'สูงสุด</h3><p class="m">'+(METRIC==="pb"?'งบ พ.ร.บ. เต็มปีรวมทุกโครงการ':METRIC==="fund"?'เงินกองทุนฯ ตามหนังสือ ว5816':'งบ พ.ร.บ. + เงินกองทุนฯ')+' · กดเพื่อดูรายละเอียด</p><div style="margin-top:10px">'+
+    ord.map(function(x,k){return '<button type="button" class="prow" data-pi="'+x.i+'"><span><span class="rk">'+(k+1)+'.</span>'+esc(PV[x.i])+'</span><span class="num">'+fmt(x.t)+'</span></button>';}).join("")+'</div>';
+}
+function showProv(i,name){
+  var box=document.getElementById("provInfo");
+  if(i<0){box.innerHTML='<button type="button" class="backlink" data-top="1">‹ 10 จังหวัดงบสูงสุด</button><h3>'+esc(name)+'</h3><p class="m">ไม่อยู่ในพื้นที่ดำเนินการของกองในปีงบประมาณ 2570</p>';return;}
+  var x=provTotals()[i],l=x.list.slice().sort(function(a,b){return b.total-a.total;});
+  box.innerHTML='<button type="button" class="backlink" data-top="1">‹ 10 จังหวัดงบสูงสุด</button><h3>จ.'+esc(PV[i])+'</h3><p class="m">'+esc(RN[RG[i]])+' · '+l.length+' โครงการ</p><p class="big num">'+fmt(x.t+x.f)+' บาท</p><p class="m">งบ พ.ร.บ. '+fmt(x.t)+' (ครั้งที่ 1: '+fmt(sum(l,"r1"))+') · เงินกองทุนฯ '+fmt(x.f)+'</p><p class="m">เป้าหมาย '+tgt(l)+'</p>'+(x.flag?'<div class="flagnote">เงินกองทุนฯ จังหวัดนี้รอตรวจทานกับต้นฉบับ: '+esc(x.flag)+'</div>':'')+'<div class="h4">งบ พ.ร.บ. รายโครงการ</div><div>'+
+    l.map(function(r){var p=proj(r.pid);return '<a class="prow" href="#'+code(p.id).toLowerCase()+'"><span>'+p.id+'. '+esc(p.short)+'</span><span class="num">'+fmt(r.total)+'</span></a>';}).join("")+'</div>';
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-pi]");if(b){var i=+b.dataset.pi;if(ovLayer){ovLayer.eachLayer(function(ly){if(idxOf(ly.feature)===i){ly.fire("click");ovMap.flyToBounds(ly.getBounds(),{maxZoom:8,duration:.6});}});}else showProv(i,PV[i]);return;}
+  var sb=e.target.closest("#mSeg button");if(sb){METRIC=sb.dataset.m;document.querySelectorAll("#mSeg button").forEach(function(b){b.setAttribute("aria-pressed",b===sb?"true":"false");});ovRefresh();if(ovMap&&ovLayer)ovMap.flyToBounds(ovLayer.getBounds(),{duration:.4});return;}
+  if(e.target.closest("[data-top]")){showTop();if(ovMap&&ovLayer){ovLayer.eachLayer(function(ly){ovLayer.resetStyle(ly);});ovMap.flyToBounds(ovLayer.getBounds(),{duration:.6});}}
+});
+/* ===== แผนที่โครงการ + หมุดพิกัด (เกษตรกรตัวอย่าง / โรงเรียน / ศูนย์และแปลง) ===== */
+var PIN_T={"เกษตรกรตัวอย่าง":{c:"#1f8a5b",k:"f",ic:'<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-7 2-7 4.5V20h14v-1.5C19 16 16 14 12 14z"/>'},
+  "โรงเรียน":{c:"#2f6fdb",k:"s",ic:'<path d="M12 3 2 8l10 5 8-4v6h2V8L12 3zM6 12.2V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-3.8l-6 3-6-3z"/>'},
+  "ศูนย์/แปลง":{c:"#b7770f",k:"c",ic:'<path d="M5 21V4h9l1 2h5v10h-7l-1-2H7v7H5z"/>'}};
+var PIN_ORDER=["เกษตรกรตัวอย่าง","โรงเรียน","ศูนย์/แปลง"];
+var pinState={filter:{},q:"",mode:"",tmp:null,edit:null,markers:{},layer:null,pid:0,id:0,full:false};
+function pinsOf(pid){return (D.pins||[]).filter(function(p){return p[1]===pid||(pid===4&&p[1]===17)||(pid===17&&p[1]===4);}).map(function(p){return{id:p[0],pid:p[1],type:p[2],name:p[3],prov:p[4],amphoe:p[5],tambon:p[6],village:p[7],lat:p[8],lng:p[9],detail:p[10],link:p[11],by:p[12],at:p[13]};});}
+function pinIcon(t,big){var x=PIN_T[t]||PIN_T["ศูนย์/แปลง"],s=big?40:32;return L.divIcon({className:"pinico",html:'<span class="pin'+(big?' big':'')+'" style="--c:'+x.c+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+x.ic+'</svg></span>',iconSize:[s,s+8],iconAnchor:[s/2,s+6],popupAnchor:[0,-s]});}
+function pinWhere(p){return [p.village,p.tambon?"ต."+p.tambon:"",p.amphoe?"อ."+p.amphoe:"",p.prov?"จ."+p.prov:""].filter(Boolean).join(" ");}
+function editKey(){return ss("alro_edit")||"";}
+function inPoly(pt,ring){var x=pt[0],y=pt[1],ins=false;for(var i=0,j=ring.length-1;i<ring.length;j=i++){var xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))ins=!ins;}return ins;}
+function provAt(lat,lng){if(!geoData)return "";var pt=[lng,lat];for(var k=0;k<geoData.features.length;k++){var f=geoData.features[k],g=f.geometry,polys=g.type==="Polygon"?[g.coordinates]:g.type==="MultiPolygon"?g.coordinates:[];for(var q=0;q<polys.length;q++)if(inPoly(pt,polys[q][0]))return String(f.properties.pro_th||"").trim();}return "";}
+function parseLL(s){s=String(s||"").trim();var m=/@(-?\d+\.\d+),(-?\d+\.\d+)/.exec(s)||/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/.exec(s)||/[?&](?:q|ll|query)=(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/.exec(s)||/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{2,3}\.\d+)\s*$/.exec(s);return m?[+m[1],+m[2]]:null;}
+function provsOfProject(id){var s={};rowsOf(id).forEach(function(r){s[PV[r.prov]]=1;});if(id===4)rowsOf(17).forEach(function(r){s[PV[r.prov]]=1;});if(id===17)rowsOf(4).forEach(function(r){s[PV[r.prov]]=1;});return s;}
+
+var PM_IC={fit:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  full:'<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  exit:'<svg viewBox="0 0 24 24"><path d="M4 9h5V4M20 9h-5V4M4 15h5v5M20 15h-5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  nav:'<svg viewBox="0 0 24 24"><path d="M12 2 4 21l8-4 8 4z" fill="currentColor"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>'};
+function pinPanelHtml(id){
+  return '<div class="panel pmx"><div class="pm-head"><div><h2>แผนที่โครงการ</h2><p class="sub">พื้นที่ดำเนินการและหมุดพิกัดของโครงการ · เลือกจังหวัดหรือหมุดจากแถบด้านขวาเพื่อซูมไปยังตำแหน่ง</p></div>'+
+    '<button type="button" class="pm-btn pri" data-pm="add">'+PM_IC.pin+'ปักหมุด</button></div>'+
+    '<div class="pm-wrap" id="pmWrap"><div class="pm-grid"><div class="pm-mapcol">'+
+      '<div class="mapbox2 pm" id="pjMap" role="region" aria-label="แผนที่โครงการ"><div class="mapmsg">กำลังโหลดแผนที่…</div></div>'+
+      '<div class="pm-bar" id="pmBar" hidden></div>'+
+      '<div class="pm-ctl tl"><button type="button" data-pm="fit" title="ดูทั้งโครงการ" aria-label="ดูทั้งโครงการ">'+PM_IC.fit+'</button><button type="button" data-pm="full" title="เต็มจอ" aria-label="เต็มจอ">'+PM_IC.full+'</button></div>'+
+      '<div class="pm-ctl tr seg" role="group" aria-label="แผนที่ฐาน"><button type="button" data-bm="map" aria-pressed="true">แผนที่</button><button type="button" data-bm="sat" aria-pressed="false">ดาวเทียม</button></div>'+
+      '<div class="pm-legend" id="pjLegend"></div>'+
+    '</div><aside class="pm-side" aria-label="รายการพื้นที่และหมุด"><div class="pm-tabs" role="tablist"><button type="button" role="tab" data-pt="prov"></button><button type="button" role="tab" data-pt="pins"></button></div><div class="pm-sbody" id="pmSide"></div></aside></div></div>'+
+    '<div class="pm-modal" id="pmModal" hidden></div></div>';
+}
+function renderProjectMap(id){
+  var el=document.getElementById("pjMap");if(!el)return;
+  if(pjMap){pjMap.remove();pjMap=null;}
+  pinState.id=id;pinState.pid=id===17?4:id;pinState.mode="";pinState.tmp=null;pinState.markers={};pinState.provLayers={};pinState.selProv="";
+  pinState.tab=pinState.tab||"prov";if(pinsOf(pinState.pid).length&&!pinState.tabSet)pinState.tab="pins";
+  pinChips();pinRows();
+  deps().then(function(geo){
+    if(!document.body.contains(el))return;
+    el.innerHTML="";
+    pinState.base={map:L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),
+      sat:L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'ภาพ &copy; Esri, Maxar, Earthstar Geographics'})])};
+    pjMap=L.map(el,{zoomControl:false,scrollWheelZoom:false,tap:false,minZoom:5,maxZoom:18,zoomSnap:.25,zoomDelta:.5,wheelPxPerZoomLevel:90,layers:[pinState.base.map]});
+    pjMap.attributionControl.setPrefix(false);
+    L.control.zoom({position:"bottomright",zoomInTitle:"ซูมเข้า",zoomOutTitle:"ซูมออก"}).addTo(pjMap);
+    var sc=L.control.scale({imperial:false,position:"bottomright"});sc._updateMetric=function(mx){var m=this._getRoundNum(mx);this._updateScale(this._mScale,m<1000?fmt(m)+" ม.":fmt(m/1000)+" กม.",m/mx);};sc.addTo(pjMap);
+    el.addEventListener("click",function(){pjMap.scrollWheelZoom.enable();},{once:true});
+    var mine=provsOfProject(id),on=[];
+    var lay=L.geoJSON(geo,{style:function(f){return provStyle(!!mine[String(f.properties.pro_th||"").trim()],false);},
+      onEachFeature:function(f,ly){var nm=String(f.properties.pro_th||"").trim();if(!mine[nm])return;on.push(ly);pinState.provLayers[nm]=ly;
+        ly.bindTooltip('จ.'+esc(nm),{sticky:true,className:"pt",direction:"top"});ly.on("click",function(e){if(pinState.mode==="place")return;selectProv(nm,true);});}}).addTo(pjMap);
+    pinState.provAll=lay;
+    pinState.labels=L.layerGroup();lay.eachLayer(function(ly){var nm=String(ly.feature.properties.pro_th||"").trim();if(!nm)return;var c=ly.getBounds().getCenter();L.marker(c,{interactive:false,keyboard:false,icon:L.divIcon({className:"thlabel"+(mine[nm]?" on":""),html:'<span>'+esc(nm)+'</span>',iconSize:[0,0]})}).addTo(pinState.labels);});
+    var fg=L.featureGroup(on);
+    pinState.area=on.length?fg.getBounds():lay.getBounds();
+    lockToThailand(pjMap,lay,{fitTo:pinState.area,padding:[28,28],maxZoom:on.length>1?9:10});
+    pjMap.setMaxZoom(18);
+    pinState.layer=L.layerGroup().addTo(pjMap);
+    drawPins(!!pinsOf(pinState.pid).length);
+    pjMap.on("click",function(e){if(pinState.mode==="place")placeAt(e.latlng.lat,e.latlng.lng);});
+    setBase(pinState.baseKey||"map");
+  }).catch(function(){mapFail(el);});
+}
+function provStyle(inArea,sel){return !inArea?{fillOpacity:0,color:"#94a3b8",weight:.6,opacity:.55}:sel?{fillColor:"#d6b46a",fillOpacity:.22,color:"#a6802c",weight:3,opacity:1}:{fillColor:"#6a55ee",fillOpacity:.08,color:"#4a35e8",weight:2,opacity:.9,dashArray:null};}
+function setBase(k){if(!pjMap||!pinState.base)return;pinState.baseKey=k;if(pinState.labels){if(k==="sat")pinState.labels.addTo(pjMap);else pjMap.removeLayer(pinState.labels);}["map","sat"].forEach(function(x){if(x===k)pinState.base[x].addTo(pjMap);else pjMap.removeLayer(pinState.base[x]);});
+  document.querySelectorAll("[data-bm]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.bm===k));});document.getElementById("pjMap").classList.toggle("sat",k==="sat");}
+function selectProv(nm,zoom){
+  pinState.selProv=pinState.selProv===nm&&!zoom?"":nm;
+  Object.keys(pinState.provLayers).forEach(function(k){pinState.provLayers[k].setStyle(provStyle(true,k===pinState.selProv));});
+  var ly=pinState.provLayers[nm];if(ly&&zoom&&pjMap){pjMap.flyToBounds(ly.getBounds(),{padding:[30,30],maxZoom:11,duration:.6});ly.bringToFront();}
+  pinRows();
+}
+function pinChips(){
+  var all=pinsOf(pinState.pid),c=function(t){return all.filter(function(p){return p.type===t;}).length;},nprov=Object.keys(provsOfProject(pinState.id)).length;
+  var lg=document.getElementById("pjLegend");
+  if(lg)lg.innerHTML='<div class="pl-row"><i class="pl-area"></i>พื้นที่โครงการ <b class="num">'+nprov+'</b> จังหวัด</div>'+PIN_ORDER.map(function(t){var off=!!pinState.filter[t];return '<button type="button" class="pl-row pl-btn" data-pf="'+t+'" aria-pressed="'+(!off)+'" title="แสดง/ซ่อน '+t+'"><i class="pdot" style="background:'+PIN_T[t].c+'"></i>'+t+' <b class="num">'+c(t)+'</b></button>';}).join("");
+  document.querySelectorAll("[data-pt]").forEach(function(b){var k=b.dataset.pt;b.textContent=k==="prov"?"พื้นที่ ("+nprov+")":"หมุดพิกัด ("+all.length+")";b.setAttribute("aria-selected",String(k===pinState.tab));});
+}
+function pinRows(){
+  var el=document.getElementById("pmSide");if(!el)return;
+  if(pinState.tab==="prov"){
+    var l=rowsOf(pinState.id).slice().sort(function(a,b){return b.total-a.total;}),all=pinsOf(pinState.pid),cnt=function(nm){return all.filter(function(p){return p.prov===nm;}).length;};
+    var fund=function(i){return (D.fundProv&&D.fundProv[i])||0;};
+    el.innerHTML='<p class="pm-hint">กดชื่อจังหวัดเพื่อซูมไปยังพื้นที่</p><ul class="pm-plist">'+l.map(function(r){var nm=PV[r.prov],n=cnt(nm);
+      return '<li><button type="button" data-zp="'+esc(nm)+'" class="'+(pinState.selProv===nm?"on":"")+'"><span class="pp-n">จ.'+esc(nm)+'<small>'+esc(RN[RG[r.prov]]||"")+'</small></span><span class="pp-v num">'+fmt(r.total)+'<small>บาท (งบ พ.ร.บ.)</small></span>'+(n?'<span class="pp-c num" title="จำนวนหมุด">'+n+'</span>':'')+'</button></li>';}).join("")+'</ul>';
+    return;
+  }
+  var V=visiblePins().filter(function(p){return !pinState.selProv||p.prov===pinState.selProv;});
+  var total=pinsOf(pinState.pid).length;
+  el.innerHTML='<div class="pm-search"><input type="search" id="pmQ" placeholder="ค้นหาชื่อ หมู่บ้าน ตำบล อำเภอ" aria-label="ค้นหาหมุด" value="'+esc(pinState.q)+'"></div>'+
+    (pinState.selProv?'<p class="pm-hint">เฉพาะ จ.'+esc(pinState.selProv)+' · <button type="button" class="linkbtn" data-zp="">ดูทุกจังหวัด</button></p>':'')+
+    (V.length?'<ul class="pm-cards">'+V.map(function(p){var c=(PIN_T[p.type]||{}).c;return '<li style="--c:'+c+'"><button type="button" class="pc-main" data-pg="'+esc(p.id)+'"><span class="pc-t">'+esc(p.type)+'</span><b>'+esc(p.name)+'</b><small>'+esc(pinWhere(p)||"ไม่ระบุที่ตั้ง")+'</small></button><a class="pc-nav" href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'" target="_blank" rel="noopener" title="นำทางด้วย Google Maps" aria-label="นำทางไป '+esc(p.name)+'">'+PM_IC.nav+'</a></li>';}).join("")+'</ul>':
+      '<div class="pm-emptybox">'+PM_IC.pin+'<b>'+(total?'ไม่พบหมุดตามเงื่อนไข':'ยังไม่มีหมุดในโครงการนี้')+'</b><p>'+(total?'ลองเปลี่ยนคำค้นหรือเปิดประเภทหมุดในคำอธิบายแผนที่':'ปักหมุดเกษตรกรตัวอย่าง โรงเรียน หรือศูนย์/แปลง เพื่อให้ทุกคนในกองเห็นตำแหน่งและนำทางได้')+'</p>'+(total?'':'<button type="button" class="pm-btn pri" data-pm="add">'+PM_IC.pin+'ปักหมุดแรก</button><p class="pm-mini">หรือเพิ่มหลายจุดพร้อมกันในชีต "จุดพิกัดโครงการ70"</p>')+'</div>');
+  var q=document.getElementById("pmQ");if(q&&pinState.qFocus){q.focus();q.setSelectionRange(q.value.length,q.value.length);}
+}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-pt]");if(t){pinState.tab=t.dataset.pt;pinState.tabSet=true;pinChips();pinRows();return;}
+  var z=e.target.closest("[data-zp]");if(z){var nm=z.dataset.zp;if(!nm){selectProv("",false);pinState.selProv="";pinRows();if(pjMap&&pinState.area)pjMap.flyToBounds(pinState.area,{padding:[28,28],maxZoom:9,duration:.6});return;}selectProv(nm,true);return;}
+  var bm=e.target.closest("[data-bm]");if(bm){setBase(bm.dataset.bm);return;}
+});
+
+function visiblePins(){var f=pinState.filter,q=pinState.q.toLowerCase();return pinsOf(pinState.pid).filter(function(p){return !f[p.type]&&(!q||(p.name+" "+pinWhere(p)+" "+p.detail).toLowerCase().indexOf(q)>=0);});}
+function pinPopup(p){
+  var ed=!!editKey(),gm="https://www.google.com/maps/dir/?api=1&destination="+p.lat+","+p.lng;
+  return '<div class="pp"><span class="pp-t" style="--c:'+(PIN_T[p.type]||{}).c+'">'+esc(p.type)+'</span><h4>'+esc(p.name)+'</h4>'+(pinWhere(p)?'<p>'+esc(pinWhere(p))+'</p>':'')+(p.detail?'<p class="pp-d">'+esc(p.detail)+'</p>':'')+
+    '<p class="pp-m num">'+p.lat.toFixed(6)+', '+p.lng.toFixed(6)+'</p><div class="pp-a"><a href="'+gm+'" target="_blank" rel="noopener">นำทาง (Google Maps)</a>'+(p.link?'<a href="'+esc(p.link)+'" target="_blank" rel="noopener">รูป / เอกสาร</a>':'')+'</div>'+
+    '<div class="pp-a"><button type="button" data-pe="edit" data-id="'+esc(p.id)+'">แก้ไข</button><button type="button" data-pe="move" data-id="'+esc(p.id)+'">ย้ายตำแหน่ง</button><button type="button" data-pe="del" data-id="'+esc(p.id)+'" class="danger">ลบ</button></div>'+
+    '<p class="pp-by">บันทึกโดย '+esc(p.by||"-")+' · '+esc(p.at||"")+(ed?'':' · แก้ไขต้องใช้รหัสผู้แก้ไข')+'</p></div>';
+}
+function drawPins(fit){
+  if(!pjMap||!pinState.layer)return;
+  pinState.layer.clearLayers();pinState.markers={};
+  var V=visiblePins(),pts=[];
+  V.forEach(function(p){var mk=L.marker([p.lat,p.lng],{icon:pinIcon(p.type),title:p.name,riseOnHover:true,keyboard:true}).bindPopup(pinPopup(p),{maxWidth:300,className:"pmpop"}).bindTooltip(esc(p.name),{direction:"top",offset:[0,-34],className:"pt"});
+    mk.addTo(pinState.layer);pinState.markers[p.id]=mk;pts.push([p.lat,p.lng]);});
+  if(fit&&pts.length){var b=L.latLngBounds(pts);if(pinState.area)b.extend(pinState.area);pjMap.fitBounds(b,{padding:[24,24],maxZoom:14});}
+}
+function pmBar(html){var b=document.getElementById("pmBar");if(!b)return;b.hidden=!html;b.innerHTML=html||"";}
+function askEditor(then){
+  if(editKey()){then();return;}
+  pmModal('<h3>รหัสผู้แก้ไข</h3><p class="sub">ใช้เฉพาะการปัก แก้ไข หรือลบหมุด (แยกจากรหัสเข้าดูเว็บ) · จำไว้จนปิดเบราว์เซอร์</p><form id="pmKeyF"><input type="password" id="pmKey" autocomplete="current-password" required aria-label="รหัสผู้แก้ไข"><div class="pm-act"><button type="button" data-pmc="1">ยกเลิก</button><button type="submit" class="pri">ตกลง</button></div></form>');
+  document.getElementById("pmKey").focus();
+  document.getElementById("pmKeyF").addEventListener("submit",function(e){e.preventDefault();ss("alro_edit",document.getElementById("pmKey").value);pmModal("");then();});
+}
+function pmModal(html){var m=document.getElementById("pmModal");if(!m)return;m.hidden=!html;m.innerHTML=html?'<div class="pm-card" role="dialog" aria-modal="true">'+html+'</div>':"";}
+function startPlace(){
+  askEditor(function(){
+    pinState.mode="place";document.getElementById("pjMap").classList.add("placing");
+    pmBar('<b>เลือกตำแหน่งหมุด:</b> คลิกบนแผนที่ <span class="or">หรือ</span> <button type="button" data-pm="gps">ใช้ตำแหน่งของฉัน</button> <span class="or">หรือ</span> <input id="pmLL" placeholder="วางพิกัด เช่น 18.5163, 99.0587 หรือลิงก์ Google Maps" aria-label="พิกัดหรือลิงก์"><button type="button" data-pm="ll">ไปที่พิกัด</button> <button type="button" data-pm="cancel" class="ghost">ยกเลิก</button>');
+  });
+}
+function endPlace(){pinState.mode="";var e=document.getElementById("pjMap");if(e)e.classList.remove("placing");pmBar("");if(pinState.tmp&&pjMap){pjMap.removeLayer(pinState.tmp);pinState.tmp=null;}}
+function placeAt(lat,lng,existing){
+  if(pinState.tmp)pjMap.removeLayer(pinState.tmp);
+  var p=existing||{type:"เกษตรกรตัวอย่าง",pid:pinState.id,name:"",prov:"",amphoe:"",tambon:"",village:"",detail:"",link:""};
+  p=Object.assign({},p,{lat:lat,lng:lng});if(!existing||!p.prov)p.prov=provAt(lat,lng)||p.prov;
+  pinState.tmp=L.marker([lat,lng],{icon:pinIcon(p.type,true),draggable:true,zIndexOffset:1000}).addTo(pjMap);
+  pinState.tmp.on("dragend",function(){var ll=pinState.tmp.getLatLng();document.getElementById("pfLat").value=ll.lat.toFixed(6);document.getElementById("pfLng").value=ll.lng.toFixed(6);var pv=provAt(ll.lat,ll.lng);if(pv)document.getElementById("pfProv").value=pv;provWarn();});
+  pjMap.panTo([lat,lng]);pinState.mode="form";pmBar('<b>ลากหมุดสีใหญ่เพื่อปรับตำแหน่งได้</b> แล้วกรอกข้อมูลด้านล่างแผนที่');
+  pinForm(p);
+}
+function pinForm(p){
+  var mine=provsOfProject(pinState.id),opts=Object.keys(mine);if(p.prov&&!mine[p.prov])opts.push(p.prov);
+  pmModal('<h3>'+(p.id?'แก้ไขหมุด':'ปักหมุดใหม่')+'</h3><form id="pinF" class="pf">'+
+    '<label>ประเภท<select id="pfType">'+PIN_ORDER.map(function(t){return '<option'+(p.type===t?' selected':'')+'>'+t+'</option>';}).join("")+'</select></label>'+
+    '<label class="w2">ชื่อ <small>(เกษตรกร / โรงเรียน / ศูนย์)</small><input id="pfName" required maxlength="150" value="'+esc(p.name||"")+'"></label>'+
+    '<label>หมู่บ้าน<input id="pfVil" maxlength="100" value="'+esc(p.village||"")+'"></label><label>ตำบล<input id="pfTam" maxlength="60" value="'+esc(p.tambon||"")+'"></label><label>อำเภอ<input id="pfAmp" maxlength="60" value="'+esc(p.amphoe||"")+'"></label>'+
+    '<label>จังหวัด<select id="pfProv">'+opts.map(function(o){return '<option'+(p.prov===o?' selected':'')+'>'+esc(o)+'</option>';}).join("")+'</select></label>'+
+    '<label>ละติจูด<input id="pfLat" inputmode="decimal" required value="'+(+p.lat).toFixed(6)+'"></label><label>ลองจิจูด<input id="pfLng" inputmode="decimal" required value="'+(+p.lng).toFixed(6)+'"></label>'+
+    '<label class="w2">รายละเอียด <small>(กิจกรรม ผลผลิต เบอร์ติดต่อหน่วยงาน ฯลฯ)</small><textarea id="pfDet" maxlength="500" rows="2">'+esc(p.detail||"")+'</textarea></label>'+
+    '<label class="w2">ลิงก์รูป / เอกสาร <small>(เช่น โฟลเดอร์ Google Drive)</small><input id="pfLink" type="url" maxlength="400" value="'+esc(p.link||"")+'"></label>'+
+    '<label>ผู้บันทึก<input id="pfBy" maxlength="60" value="'+esc(ls("alro_by")||"")+'" required></label>'+
+    '<p class="pf-warn w2" id="pfWarn"></p><p class="pf-err w2" id="pfErr" role="alert"></p>'+
+    '<div class="pm-act w2"><button type="button" data-pmc="1">ยกเลิก</button><button type="submit" class="pri" id="pfSave">บันทึก</button></div></form>');
+  var f=document.getElementById("pinF");f.dataset.id=p.id||"";
+  ["pfLat","pfLng"].forEach(function(k){document.getElementById(k).addEventListener("change",function(){var la=+document.getElementById("pfLat").value,ln=+document.getElementById("pfLng").value;if(isFinite(la)&&isFinite(ln)&&pinState.tmp){pinState.tmp.setLatLng([la,ln]);pjMap.panTo([la,ln]);var pv=provAt(la,ln);if(pv)document.getElementById("pfProv").value=pv;provWarn();}});});
+  document.getElementById("pfProv").addEventListener("change",provWarn);
+  document.getElementById("pfType").addEventListener("change",function(){if(pinState.tmp)pinState.tmp.setIcon(pinIcon(this.value,true));});
+  provWarn();document.getElementById("pfName").focus();
+  f.addEventListener("submit",function(e){e.preventDefault();savePin(f);});
+}
+function provWarn(){var w=document.getElementById("pfWarn");if(!w)return;var la=+document.getElementById("pfLat").value,ln=+document.getElementById("pfLng").value,at=provAt(la,ln),mine=provsOfProject(pinState.id);
+  w.textContent=!at?"ตำแหน่งนี้อยู่นอกเขตจังหวัดของประเทศไทย ตรวจสอบพิกัดอีกครั้ง":!mine[at]?"ตำแหน่งนี้อยู่ใน จ."+at+" ซึ่งไม่อยู่ในพื้นที่ของโครงการนี้ (บันทึกได้ แต่ระบบตรวจจะแจ้งเตือน)":"";}
+function pinPost(op,pin){
+  return fetch(API,{method:"POST",body:JSON.stringify({key:savedKey(),editKey:editKey(),op:op,pin:pin})}).then(function(r){if(!r.ok)throw new Error("เชื่อมต่อไม่ได้");return r.json();}).then(function(d){
+    if(d.error){if(/รหัสผู้แก้ไข/.test(d.error))ss("alro_edit",null);throw new Error(d.error);}
+    D.pins=d.pins;ls(CK,null);ss(CK,null);return d;});
+}
+function savePin(f){
+  var g=function(k){return document.getElementById(k).value.trim();},err=document.getElementById("pfErr"),btn=document.getElementById("pfSave");
+  var pin={id:f.dataset.id||"",pid:pinState.id,type:g("pfType"),name:g("pfName"),village:g("pfVil"),tambon:g("pfTam"),amphoe:g("pfAmp"),prov:g("pfProv"),lat:+g("pfLat"),lng:+g("pfLng"),detail:g("pfDet"),link:g("pfLink"),by:g("pfBy")};
+  if(!(pin.lat>=5.4&&pin.lat<=20.6&&pin.lng>=97.2&&pin.lng<=105.8)){err.textContent="พิกัดอยู่นอกประเทศไทย";return;}
+  ls("alro_by",pin.by);btn.disabled=true;btn.textContent="กำลังบันทึก…";err.textContent="";
+  pinPost("save",pin).then(function(){pmModal("");endPlace();pinChips();pinRows();drawPins(false);var nw=pinsOf(pinState.pid).filter(function(p){return p.name===pin.name&&Math.abs(p.lat-pin.lat)<1e-6;})[0];if(nw&&pinState.markers[nw.id])pinState.markers[nw.id].openPopup();toast("บันทึกหมุดแล้ว");})
+    .catch(function(e){err.textContent=e.message;btn.disabled=false;btn.textContent="บันทึก";if(!editKey())askEditor(function(){pinForm(pin);});});
+}
+function toast(t){var x=document.createElement("div");x.className="pm-toast";x.textContent=t;document.body.appendChild(x);setTimeout(function(){x.remove();},2600);}
+function pinById(id){return pinsOf(pinState.pid).filter(function(p){return p.id===id;})[0];}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-pm]");
+  if(b){var a=b.dataset.pm;
+    if(a==="fit"&&pjMap){drawPins(true);if(!visiblePins().length&&pinState.area)pjMap.fitBounds(pinState.area,{padding:[20,20],maxZoom:9});}
+    else if(a==="full"){var w=document.getElementById("pmWrap");pinState.full=!pinState.full;w.classList.toggle("full",pinState.full);document.body.classList.toggle("pm-lock",pinState.full);b.innerHTML=pinState.full?PM_IC.exit:PM_IC.full;b.title=pinState.full?"ออกจากเต็มจอ":"เต็มจอ";setTimeout(function(){pjMap&&pjMap.invalidateSize();},50);}
+    else if(a==="add")startPlace();
+    else if(a==="cancel")endPlace();
+    else if(a==="gps"){if(!navigator.geolocation){toast("เบราว์เซอร์ไม่รองรับตำแหน่ง");return;}b.textContent="กำลังหาตำแหน่ง…";navigator.geolocation.getCurrentPosition(function(pos){placeAt(pos.coords.latitude,pos.coords.longitude);},function(){b.textContent="ใช้ตำแหน่งของฉัน";toast("ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง");},{enableHighAccuracy:true,timeout:15000});}
+    else if(a==="ll"){var ll=parseLL(document.getElementById("pmLL").value);if(!ll){toast("อ่านพิกัดไม่ได้ ใส่แบบ 18.5163, 99.0587 หรือวางลิงก์ Google Maps");return;}placeAt(ll[0],ll[1]);pjMap.setView(ll,15);}
+    return;}
+  if(e.target.closest("[data-pmc]")){pmModal("");endPlace();drawPins(false);return;}
+  var c=e.target.closest("[data-pf]");if(c){var t=c.dataset.pf;pinState.filter[t]=!pinState.filter[t];pinChips();pinRows();drawPins(false);return;}
+  var gq=e.target.closest("[data-pg]");if(gq){var mk=pinState.markers[gq.dataset.pg];if(mk&&pjMap){document.getElementById("pjMap").scrollIntoView({behavior:"smooth",block:"center"});pjMap.flyTo(mk.getLatLng(),15,{duration:.6});setTimeout(function(){mk.openPopup();},650);}return;}
+  var pe=e.target.closest("[data-pe]");if(pe){var p=pinById(pe.dataset.id);if(!p)return;pjMap.closePopup();
+    if(pe.dataset.pe==="edit")askEditor(function(){pinState.mode="form";placeAt(p.lat,p.lng,p);});
+    else if(pe.dataset.pe==="move")askEditor(function(){var mk=pinState.markers[p.id];if(mk)pinState.layer.removeLayer(mk);placeAt(p.lat,p.lng,p);pmBar('<b>ลากหมุดสีใหญ่ไปตำแหน่งใหม่</b> แล้วกด "บันทึก"');});
+    else if(pe.dataset.pe==="del")askEditor(function(){if(!confirm('ลบหมุด "'+p.name+'" ?\n(ระบบเก็บประวัติไว้ในชีต ย้อนคืนได้)'))return;pinPost("delete",{id:p.id,by:ls("alro_by")||""}).then(function(){pinChips();pinRows();drawPins(false);toast("ลบหมุดแล้ว");}).catch(function(er){toast(er.message);});});
+  }
+});
+document.addEventListener("input",function(e){if(e.target.id==="pmQ"){pinState.q=e.target.value;pinState.qFocus=true;pinRows();pinState.qFocus=false;drawPins(false);}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("pmModal")&&!document.getElementById("pmModal").hidden){pmModal("");endPlace();drawPins(false);}else if(pinState.full){var b=document.querySelector('[data-pm="full"]');b&&b.click();}}});
+
+function renderProjects(){
+  var pc=document.getElementById("pcount");if(pc)pc.textContent=P.length;
+  document.getElementById("ptable").innerHTML=P.map(function(p){var l=rowsOf(p.id);
+    return '<tr class="link" data-h="'+code(p.id).toLowerCase()+'"><td>'+code(p.id)+'</td><td>'+esc(p.name)+'</td><td class="r num">'+l.length+'</td><td class="r num">'+fmt(sum(l,"total"))+'</td><td class="r num">'+fmt(sum(l,"r1"))+'</td><td class="r num">'+tgt(l)+'</td><td><span class="tag t-pend">รอข้อมูล</span></td></tr>';}).join("");
+  document.getElementById("pfoot").innerHTML='<tr><td></td><td>รวม '+P.length+' โครงการ</td><td class="r num">'+rows.length+' พื้นที่</td><td class="r num">'+fmt(sum(rows,"total"))+'</td><td class="r num">'+fmt(sum(rows,"r1"))+'</td><td class="r num">'+tgt(rows)+'</td><td></td></tr>';
+}
+
+function bgHtml(p){
+  var x=p.info;if(!x)return '<p class="sub">ความเป็นมา พระราชดำริ และวัตถุประสงค์</p><div class="placeholder">ยังไม่มีข้อมูลในชีต ที่มาโครงการ_ปี70</div>';
+  var h=(x.full?'<p class="sub">'+esc(x.full)+'</p>':'<p class="sub">ความเป็นมา พระราชดำริ และวัตถุประสงค์</p>')+'<div class="bgtext"><p>'+esc(x.bg)+'</p></div>';
+  if(x.ri)h+='<div class="royal"><b>พระราชดำริ</b>'+esc(x.ri)+'</div>';
+  if(x.obj.length)h+='<div class="h4">วัตถุประสงค์</div><ol class="objs">'+x.obj.map(function(o){return '<li>'+esc(o)+'</li>';}).join("")+'</ol>';
+  if(x.area)h+='<div class="h4">พื้นที่ดำเนินการ</div><p style="margin:0 0 8px;font-size:14px">'+esc(x.area)+'</p>';
+  h+='<p class="attr">ที่มา: '+esc(x.src)+(x.conf&&x.conf!=="สูง"?' · ความเชื่อมั่น: '+esc(x.conf):'')+'</p>';
+  return h;
+}
+function subActHtml(p){if(!p.subs||!p.subs.length)return "";return p.subs.map(function(s){var x=s.info||{},pv={};rows.forEach(function(r){if(r.pid===p.id)(r.parts||[]).forEach(function(c){if(c.act===s.act)pv[PV[c.prov]]=1;});});var n=Object.keys(pv);
+  var h='<div class="h4" style="margin-top:18px">กิจกรรมย่อย: '+esc(actLabel(s.act))+'</div><p style="margin:0 0 6px;font-size:14px"><b>'+esc(s.name||'')+'</b> — ดำเนินการ '+n.length+' จังหวัด ('+esc(n.join(" "))+') · ชื่อในแต่ละจังหวัด: "'+esc(s.name)+' จ.&lt;ชื่อจังหวัด&gt;"</p>';
+  if(x.bg)h+='<div class="bgtext"><p>'+esc(x.bg)+'</p></div>';if(x.obj&&x.obj.length)h+='<div class="h4">วัตถุประสงค์ของกิจกรรม</div><ol class="objs">'+x.obj.map(function(o){return "<li>"+esc(o)+"</li>";}).join("")+'</ol>';if(x.area)h+='<div class="h4">พื้นที่ตามเอกสาร</div><p style="margin:0 0 8px;font-size:14px">'+esc(x.area)+'</p>';if(x.src)h+='<p class="attr">ที่มา: '+esc(x.src)+'</p>';return h;}).join("");}
+/* ผลการอบรมเกษตรกร ตัวชี้วัด กปร. ตัวที่ 6 ปี 2568 (ตามเอกสาร) — D.kpi6 จาก Apps Script: [จังหวัด,โครงการ,เป้า,ผล,%นำไปใช้,%รายได้เพิ่ม,เกษตรก่อน,เกษตรหลัง,รวมก่อน,รวมหลัง] */
+var K6KEY=["ภูฟ้า","ปิดทอง","ห้วยไฟ","แม่อาว","ฟาร์มตัวอย่าง","ทุ่งสมเด็จ","ห้วยเขย่ง","พัชรสุธา","ที่ดินพระราชทาน","ราบเชิงเขา","ปากพนัง","เกษตรวิชญา"];
+function k6Rows(p){var k=K6KEY.filter(function(x){return String(p.name).indexOf(x)>=0;})[0];if(!k||!D.kpi6)return [];return D.kpi6.filter(function(r){return String(r[1]).indexOf(k)>=0;});}
+function k6Html(p){var R=k6Rows(p);if(!R.length)return "";var t=0,a=0;
+  var tr=R.map(function(r){t+=+r[2]||0;a+=+r[3]||0;var ok=r[4]>=70&&r[5]>=10;
+    return '<tr><td>'+esc(r[0])+'</td><td class="r num">'+fmt(r[2])+' / '+fmt(r[3])+'</td><td class="r num">'+fmt(r[4],2)+'</td><td class="r num">'+fmt(r[5],2)+'</td><td class="r num">'+fmt(r[6])+' → '+fmt(r[7])+'</td><td class="r num">'+fmt(r[8])+' → '+fmt(r[9])+'</td><td><span class="tag '+(ok?'t-ok':'t-bad')+'">'+(ok?'ผ่าน':'ไม่ผ่าน')+'</span></td></tr>';}).join("");
+  return '<div class="panel tbl-wrap"><h2>ผลการอบรมเกษตรกร ปี 2568</h2><p class="sub">ตัวชี้วัด กปร. ตัวที่ 6 รอบที่ 2 (1 เม.ย. – 30 ก.ย. 2568) · เกณฑ์: นำความรู้ไปใช้ ≥ ร้อยละ 70 และรายได้เพิ่ม ≥ ร้อยละ 10 · อบรม '+fmt(a)+' ราย จากเป้า '+fmt(t)+' ราย</p>'+
+   '<table><thead><tr><th>จังหวัด</th><th class="r">เป้า / ผล (ราย)</th><th class="r">นำความรู้ไปใช้ (%)</th><th class="r">รายได้เพิ่ม (%)</th><th class="r">รายได้สุทธิภาคเกษตร/ปี (บาท)</th><th class="r">รายได้สุทธิรวม/ปี (บาท)</th><th>ผล</th></tr></thead><tbody>'+tr+'</tbody></table>'+
+   '<p class="attr">ที่มา: สรุปข้อมูลเกษตรกรที่เข้ารับการอบรม 12 โครงการ (ตัวชี้วัด กปร. ตัวที่ 6) · รายได้เป็นค่าเฉลี่ยต่อครัวเรือน ก่อน → หลังอบรม</p></div>';}
+function renderProject(id){
+  var p=proj(id),l=rowsOf(id),v=document.getElementById("v-project");
+  if(!p){v.innerHTML='<div class="panel">ไม่พบโครงการ</div>';return;}
+  var T=sum(l,"total"),R1=sum(l,"r1");
+  var HA=!!(p.subs&&p.subs.length),fl=HA?[].concat.apply([],l.map(function(r){return r.parts;})).sort(function(a,b){return (a.act?1:0)-(b.act?1:0);}):l;
+  var trs=fl.map(function(r){return '<tr><td>'+esc(PV[r.prov])+'</td><td>'+esc(RN[RG[r.prov]])+'</td>'+(HA?'<td>'+esc(r.act||'กิจกรรมหลัก')+'</td>':'')+'<td class="r num">'+fmt(r.mgmt)+'</td><td class="r num">'+fmt(r.train)+'</td><td class="r num">'+fmt(r.mat)+'</td><td class="r num">'+fmt(r.total)+'</td><td class="r num">'+fmt(r.r1)+'</td><td class="r num">'+tgt([r])+'</td></tr>';}).join("");
+  var prev=id>1?'<a href="#'+code(id-1).toLowerCase()+'">‹ โครงการก่อนหน้า</a>':'',next=id<P.length?'<a href="#'+code(id+1).toLowerCase()+'">โครงการถัดไป ›</a>':'';
+  v.innerHTML=
+   '<div class="crumb"><a href="#projects">ทะเบียนโครงการ</a> / '+code(id)+'</div>'+
+   '<div class="hero"><div><h1>'+esc(p.name)+(id===17?' จ.&lt;จังหวัด&gt;':'')+'</h1><p>'+l.length+' จังหวัด'+(p.subs&&p.subs.length?' (รวม'+p.subs.map(function(s){return actLabel(s.act);}).join(", ")+')':'')+' | ปีงบประมาณ 2570'+(p.alro?' | รหัสใน alrotracking ปี 69: '+p.alro:' | โครงการใหม่ปี 2570')+'</p><div class="rule"></div></div><div class="asof">'+prev+(prev&&next?' &nbsp;|&nbsp; ':'')+next+'</div></div>'+
+   '<div class="stack">'+
+   pinPanelHtml(id)+
+   '<div class="panel"><h2>ที่มาโครงการ</h2>'+bgHtml(p)+subActHtml(p)+'</div>'+
+   '<div class="kpis">'+kpi("งบ พ.ร.บ. เต็มปี",fmt(T)+" บาท","ค่าบริหาร "+fmt(sum(l,"mgmt"))+" | ฝึกอบรม "+fmt(sum(l,"train"))+(sum(l,"mat")?" | วัสดุ "+fmt(sum(l,"mat")):""),"")+
+     kpi("จัดสรรครั้งที่ 1",fmt(R1)+" บาท","ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของงบเต็มปี","")+
+     kpi("เป้าหมาย",tgt(l),"จากแผนจัดสรรงบ พ.ร.บ.","")+
+     alroKpi(id)+'</div>'+
+   '<div class="kpis">'+kpi("เกษตรกรในโครงการ","รอข้อมูล","ฐานข้อมูลเกษตรกร","pend")+(function(){var pid=id===17?4:id,n=(D.indicators||[]).filter(function(x){return x.pid===pid&&x.type==="เกษตรกรตัวอย่าง";}).reduce(function(a,x){return a+x.target;},0);return n?kpi("เกษตรกรตัวอย่าง","เป้า "+fmt(n)+" ราย","รายชื่อและพิกัดรอข้อมูล","pend"):kpi("เกษตรกรตัวอย่าง","รอข้อมูล","พร้อมพิกัดบนแผนที่","pend");})()+kpi("สินค้า/ผลิตภัณฑ์","รอข้อมูล","ของโครงการ","pend")+kpi("รายได้เกษตรกร","รอข้อมูล","จากฐาน จปฐ.","pend")+'</div>'+
+   k6Html(p)+
+   planHtml(id)+
+   (BI?'<section class="panel" id="biPanel"></section>':"")+
+   alroPanel(id)+
+   '<div class="panel tbl-wrap"><h2>งบ พ.ร.บ. รายจังหวัด</h2><p class="sub">'+(HA?'แยกตามหมวดค่าใช้จ่ายและกิจกรรม · ขยายผล = '+esc(p.subs.map(function(s){return s.name;}).join(", "))+' จ.&lt;ชื่อจังหวัด&gt;':'แยกตามหมวดค่าใช้จ่าย')+'</p><table><thead><tr><th>จังหวัด</th><th>ภาค</th>'+(HA?'<th>กิจกรรม</th>':'')+'<th class="r">ค่าบริหาร</th><th class="r">ฝึกอบรม</th><th class="r">วัสดุ (พ.ร.บ.)</th><th class="r">รวมเต็มปี</th><th class="r">ครั้งที่ 1</th><th class="r">เป้าหมาย</th></tr></thead><tbody>'+trs+'</tbody><tfoot><tr><td>รวม</td><td></td>'+(HA?'<td></td>':'')+'<td class="r num">'+fmt(sum(l,"mgmt"))+'</td><td class="r num">'+fmt(sum(l,"train"))+'</td><td class="r num">'+fmt(sum(l,"mat"))+'</td><td class="r num">'+fmt(T)+'</td><td class="r num">'+fmt(R1)+'</td><td class="r num">'+tgt(l)+'</td></tr></tfoot></table></div>'+
+   '</div>';
+  if(BI){var bp=document.getElementById("biPanel");if(bp){itemsPanelRender(bp,BI,id===17?4:id);if(id===17)bp.querySelector(".sub").insertAdjacentHTML("afterbegin","แผนรวมกับโครงการที่ 4 ธนาคารอาหารชุมชน (เลือกจังหวัดเพื่อดูส่วนขยายผล) · ");}}
+}
+
+function renderChecks(){
+  var res=D.checks.map(function(c){return [c.label,c.ok,c.detail];}),pass=res.filter(function(r){return r[1];}).length;
+  document.getElementById("checks").innerHTML=res.map(function(r){return '<div class="check"><div class="dot '+(r[1]?"ok":"bad")+'">'+(r[1]?"✓":"!")+'</div><div><p>'+r[0]+'</p><p class="m num">'+r[2]+'</p></div><span class="tag '+(r[1]?"t-ok":"t-bad")+'">'+(r[1]?"ผ่าน":"ไม่ผ่าน")+'</span></div>';}).join("");
+  document.getElementById("seal").classList.toggle("fail",pass!==res.length);
+  document.getElementById("sealText").textContent="ตรวจความถูกต้อง ผ่าน "+pass+"/"+res.length+" ข้อ";
+  document.getElementById("checkTime").textContent="ตรวจล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
+}
+
+var GS=(typeof google!=="undefined"&&google.script&&google.script.history)?google.script:null;
+function route(h){
+  h=(h||"overview").replace(/^#/,"");if(h==="p17"){h="p04";try{history.replaceState(null,"","#p04");}catch(e){}}var m=/^p(\d{2})$/.exec(h),view;
+  if(m&&proj(+m[1])){view="project";renderProject(+m[1]);}
+  else{if(h==="model"||h==="farmers"){var ft=h==="model"?"model":(FV.tab==="model"?"all":FV.tab);if(FV.tab!==ft){FV.tab=ft;FV.pid=0;FV.y=0;FV.page=0;renderFarmers();}}view=["overview","budget","provinces","monthly","farmers","model","projects","checks"].indexOf(h)>=0?h:"overview";}
+  var vv=view==="model"?"farmers":view;["overview","budget","provinces","monthly","farmers","projects","project","checks"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===vv);});
+  if(view==="provinces")setTimeout(renderOverviewMap,0);
+  if(view==="project")setTimeout(function(){renderProjectMap(+m[1]);},0);
+  var navKey=view==="project"?"projects":view;
+  document.querySelectorAll(".snav a,.mtabs a").forEach(function(a){if(a.getAttribute("href")==="#"+navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  window.scrollTo(0,0);
+}
+function navigate(h){if(GS){GS.history.push(null,{page:h},h);}else if(location.hash.slice(1)!==h){history.pushState(null,"","#"+h);}route(h);}
+document.addEventListener("click",function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();navigate(a.getAttribute("href").slice(1));});
+if(GS){GS.history.setChangeHandler(function(ev){route((ev.location&&(ev.location.hash||(ev.location.parameter&&ev.location.parameter.page)))||"overview");});}
+else{window.addEventListener("hashchange",function(){route(location.hash.slice(1));});}
+var mx=document.getElementById("matrix");
+mx.addEventListener("mouseover",showTip);mx.addEventListener("focusin",showTip);mx.addEventListener("click",showTip);
+document.getElementById("ptable").addEventListener("click",function(e){var tr=e.target.closest("tr");if(tr)navigate(tr.dataset.h);});
+/* ===== ภาพรวมกอง 2 กลุ่มงาน: กผง. (เงิน) + กปต. (ผลต่อเกษตรกร) · ฐานรายชื่อเกษตรกร =====
+   D.farmers: [รหัส, ชื่อ-สกุล, เลขบัตร(ปิดบัง), pid, ปีงบ, จังหวัด, อำเภอ, ตำบล, ประเภท, รายได้ก่อน, รายได้หลัง, เชื่อมจปฐ, lat, lng]
+   D.modelFarmers: [ปี, pid, จังหวัด, ชื่อ-สกุล, ที่อยู่, โทร, องค์ความรู้, ความพร้อม, ถ่ายทอดได้, ชื่อโครงการในชีต] */
+var FV={tab:"all",q:"",pid:0,y:0,page:0},FARMER_SHEET="https://docs.google.com/spreadsheets/d/1wSmbpbEiCenc3uBdTvwdz5XQ4WcrPzNKIF7vwFHfbAQ/edit";
+function pshort(id){var p=proj(id);return p?(p.short||p.name):"ไม่ระบุโครงการ";}
+function k6pid(r){var k=K6KEY.filter(function(x){return String(r[1]).indexOf(x)>=0;})[0];if(!k)return 0;var p=P.filter(function(p){return String(p.name).indexOf(k)>=0;})[0];return p?p.id:0;}
+function dvStat(l,v,s){return '<div class="dv-st"><span>'+l+'</span><b class="num">'+v+'</b><i>'+s+'</i></div>';}
+function dvHeat(v,max){if(!v)return '<td class="r num dv-z">–</td>';var a=Math.min(1,v/max);return '<td class="r num" style="background:rgba(31,138,91,'+(0.08+a*0.62).toFixed(2)+');color:'+(a>0.55?'#fff':'inherit')+'">'+fmt(v)+'</td>';}
+function renderDivision(){
+  var T=sum(rows,"total"),R1=sum(rows,"r1"),FD=(D.projBudget||[]).reduce(function(a,r){return a+(r.fund||0);},0);
+  var L=D.alro&&D.alro.latest,pl=0,sp=0;if(L)L.projects.forEach(function(q){pl+=alroSum(q.m,0);sp+=alroSum(q.m,1);});
+  var K=D.kpi6||[],KT=D.kpi6Total,kt=0,ka=0;K.forEach(function(r){kt+=r[2];ka+=r[3];});
+  var pass=K.filter(function(r){return r[4]>=70&&r[5]>=10;}).length;
+  var FA=D.farmers||[],MF=D.modelFarmers||[],u={};FA.forEach(function(f){u[f[0]||f[1]+"|"+f[2]]=1;});var nF=Object.keys(u).length;
+  var mfY={};MF.forEach(function(m){mfY[m[0]]=(mfY[m[0]]||0)+1;});var ys=Object.keys(mfY).sort(),lastY=ys[ys.length-1];
+  var top=K.slice().sort(function(a,b){return b[5]-a[5];}).slice(0,8),mx=Math.max.apply(null,top.map(function(r){return r[5];}).concat([20]));
+  var bars=top.map(function(r){return '<div class="dv-ir"><span>'+esc(r[0])+' · '+esc(r[1])+'</span><div class="dv-bar"><i style="width:'+(r[5]/mx*100).toFixed(1)+'%;background:var(--ok)"></i><u style="left:'+(10/mx*100).toFixed(1)+'%"></u></div><b class="num">'+fmt(r[5],2)+'%</b></div>';}).join("");
+  document.getElementById("divTwin").innerHTML='<div class="dv-twin">'+
+   '<article class="dv-card"><header class="dv-h kpg"><small>กลุ่มงบประมาณและแผนงาน</small><h2>กผง. · เงินไปถึงไหนแล้ว</h2></header><div class="dv-b">'+
+     '<div class="dv-3">'+dvStat("งบ พ.ร.บ. เต็มปี (จังหวัด)",fmt(T),"บาท")+dvStat("จัดสรรครั้งที่ 1",fmt(R1),"ร้อยละ "+fmt(T?R1/T*100:0,1)+" ของเต็มปี")+dvStat("เงินกองทุนฯ",FD?fmt(FD):"รอข้อมูล","บาท")+'</div>'+
+     (L?'<div class="dv-pl"><span>ผลเบิกจ่ายสะสม ณ '+thDate(L.date)+'</span><b class="num">'+fmt(sp)+' บาท · ร้อยละ '+fmt(pl?sp/pl*100:0,1)+' ของแผน</b></div><div class="dv-bar big"><i style="width:'+Math.min(100,pl?sp/pl*100:0).toFixed(1)+'%;background:var(--primary)"></i></div>':'<p><span class="tag t-pend">ผลเบิกจ่าย: รอไฟล์ alrotracking</span></p>')+
+     '<div class="dv-sub">งบ พ.ร.บ. สูงสุด 8 โครงการ · สีเข้ม = จัดสรรครั้งที่ 1 แล้ว</div>'+(function(){var a={};rows.forEach(function(r){var x=a[r.pid]=a[r.pid]||{t:0,r1:0};x.t+=r.total;x.r1+=r.r1;});var L2=Object.keys(a).map(function(k){return {id:+k,t:a[k].t,r1:a[k].r1};}).sort(function(x,y){return y.t-x.t;}).slice(0,8),m2=L2.length?L2[0].t:1;
+       return L2.map(function(x){return '<div class="dv-ir"><span>'+code(x.id)+' · '+esc(pshort(x.id))+'</span><div class="dv-bar"><i style="width:'+(x.t/m2*100).toFixed(1)+'%;background:var(--primary-soft)"></i><i style="width:'+(x.r1/m2*100).toFixed(1)+'%;background:var(--primary)"></i></div><b class="num">'+fmt(x.t/1e6,2)+' ล.</b></div>';}).join("");})()+
+     '<p class="dv-note">ยอดรวมไม่รวมส่วนกลาง (แสดงแยก) · แผนที่งบ ตารางรายจังหวัด และแผนรายเดือน อยู่ในเมนู “โครงสร้างงบประมาณ” “แผนที่ · รายจังหวัด” และ “แผนรายเดือน”</p></div></article>'+
+   '<article class="dv-card"><header class="dv-h kpt"><small>กลุ่มประสานงานและติดตาม</small><h2>กปต. · เกษตรกรได้อะไร</h2></header><div class="dv-b">'+
+     (K.length?'<div class="dv-3">'+dvStat("อบรมปี 2568 (จังหวัด)",fmt(ka)+" / "+fmt(kt),"ราย (ผล / เป้า)")+dvStat("นำความรู้ไปใช้",KT?fmt(KT[0],2)+"%":"-","ภาพรวมตามเอกสาร · เกณฑ์ ≥ 70%")+dvStat("รายได้เพิ่ม",KT?fmt(KT[1],2)+"%":"-","ภาพรวมตามเอกสาร · เกณฑ์ ≥ 10%")+'</div>'+
+       '<div class="dv-sub">รายได้เพิ่มสูงสุด 8 พื้นที่ · ผ่านเกณฑ์ '+pass+'/'+K.length+' พื้นที่ · เส้นทอง = เกณฑ์ 10%</div>'+bars:'<p><span class="tag t-pend">ผลการอบรม: รอข้อมูล</span></p>')+
+     '<div class="dv-3 sm">'+dvStat("เกษตรกรในฐานข้อมูล",nF?fmt(nF):"รอข้อมูล",nF?"ราย (ไม่นับซ้ำ)":"รอรายชื่อจากโครงการ")+dvStat("เกษตรกรตัวอย่าง",MF.length?fmt(MF.length):"รอข้อมูล",ys.length?"สะสม ปี "+ys[0]+"–"+lastY:"")+dvStat("ปีล่าสุด",lastY?fmt(mfY[lastY])+" ราย":"-","เกษตรกรตัวอย่าง ปี "+(lastY||"-"))+'</div>'+
+     '<p class="dv-note">ที่มา: ตัวชี้วัด กปร. ตัวที่ 6 ปี 2568 รอบ 2 · ชีตเกษตรกรตัวอย่างพระราชดำริ</p></div></article></div>';
+  renderFarmers();
+}
+function renderFarmers(){
+  var el=document.getElementById("farmerPanel"),FA=D.farmers||[],MF=D.modelFarmers||[],K=D.kpi6||[];
+  var tabs=[["all","รายชื่อทั้งหมด"],["matrix","รายโครงการ × ปี"],["model","เกษตรกรตัวอย่าง"]];
+  var h='<div class="dv-top"><div><p class="eyebrow" style="color:var(--ok)">กปต. · ฐานข้อมูลกลาง</p><h2 style="margin:0">ฐานรายชื่อเกษตรกร</h2><p class="sub" style="margin:4px 0 0">รายชื่อเดียวใช้ได้ทุกโครงการ · แยกรายโครงการ รายปี · แสดงชื่อ-สกุลเต็มสำหรับบุคลากรในกอง · เลขบัตรประชาชนปิดบังเสมอ</p></div>'+
+    '<div class="seg" role="group" aria-label="มุมมองฐานเกษตรกร">'+tabs.map(function(t){return '<button type="button" data-ftab="'+t[0]+'" aria-pressed="'+(FV.tab===t[0])+'">'+t[1]+'</button>';}).join("")+'</div></div>';
+  var pids=P.map(function(p){return p.id;}),pOpt=function(sel){return '<option value="0">ทุกโครงการ</option>'+P.map(function(p){return '<option value="'+p.id+'"'+(sel===p.id?' selected':'')+'>'+code(p.id)+' '+esc(pshort(p.id))+'</option>';}).join("");};
+  if(FV.tab==="all"){
+    if(!FA.length){
+      h+='<div class="dv-empty"><b>รอข้อมูลรายชื่อเกษตรกร</b><p>โครงสร้างฐานข้อมูลพร้อมแล้ว เมื่อกรอกรายชื่อใน <a href="'+FARMER_SHEET+'" target="_blank" rel="noopener">ชีต “ฐานรายชื่อเกษตรกร_กปต (ทุกโครงการ)”</a> รายชื่อจะขึ้นที่นี่อัตโนมัติ (ภายใน 6 ชั่วโมง หรือทันทีเมื่อสั่งรีเฟรช)</p><p class="dv-cols">คอลัมน์: รหัสเกษตรกร · คำนำหน้า · ชื่อ · สกุล · เลขบัตรประชาชน · รหัสโครงการ (1–16) · ปีงบประมาณ · จังหวัด · อำเภอ · ตำบล · หมู่บ้าน · ประเภท · รายได้ก่อน · รายได้หลัง · เชื่อม จปฐ · ละติจูด · ลองจิจูด · แหล่งข้อมูล</p></div>';
+      h+='<div class="tbl-wrap"><table><thead><tr><th>รหัส</th><th>โครงการ</th><th class="r">รายชื่อในฐาน</th><th class="r">อบรมปี 68 (กปร.6)</th><th class="r">เกษตรกรตัวอย่าง</th><th>สถานะ</th></tr></thead><tbody>'+
+        P.map(function(p){var k=K.filter(function(r){return k6pid(r)===p.id;}).reduce(function(a,r){return a+r[3];},0),m=MF.filter(function(x){return x[1]===p.id;}).length;
+          return '<tr><td>'+code(p.id)+'</td><td>'+esc(p.name)+'</td><td class="r num">0</td><td class="r num">'+(k?fmt(k):'–')+'</td><td class="r num">'+(m?fmt(m):'–')+'</td><td><span class="tag t-pend">รอข้อมูล</span></td></tr>';}).join("")+'</tbody></table></div>';
+    }else{
+      var q=FV.q.trim().toLowerCase(),f=FA.filter(function(r){return (!FV.pid||r[3]===FV.pid)&&(!FV.y||r[4]===FV.y)&&(!q||(r[1]+" "+r[5]+" "+r[6]+" "+r[7]+" "+pshort(r[3])+" "+r[0]).toLowerCase().indexOf(q)>=0);});
+      var yrs=[];FA.forEach(function(r){if(r[4]&&yrs.indexOf(r[4])<0)yrs.push(r[4]);});yrs.sort();
+      var PG=50,np=Math.max(1,Math.ceil(f.length/PG));if(FV.page>=np)FV.page=np-1;var pg=f.slice(FV.page*PG,FV.page*PG+PG);
+      h+='<div class="dv-filt"><label>ค้นหา <input type="search" id="fq" value="'+esc(FV.q)+'" placeholder="ชื่อ-สกุล · จังหวัด · อำเภอ · รหัส"></label><label>โครงการ <select id="fp">'+pOpt(FV.pid)+'</select></label><label>ปีงบประมาณ <select id="fy"><option value="0">ทุกปี</option>'+yrs.map(function(y){return '<option'+(FV.y===y?' selected':'')+'>'+y+'</option>';}).join("")+'</select></label></div>'+
+        '<p class="sub">พบ '+fmt(f.length)+' รายการ จาก '+fmt(FA.length)+' · หน้า '+(FV.page+1)+'/'+np+'</p>'+
+        '<div class="tbl-wrap"><table><thead><tr><th>รหัส</th><th>ชื่อ-สกุล</th><th>เลขบัตร</th><th>โครงการ</th><th class="r">ปี</th><th>ที่อยู่</th><th>ประเภท</th><th class="r">รายได้ก่อน → หลัง</th><th>จปฐ.</th></tr></thead><tbody>'+
+        pg.map(function(r){return '<tr><td class="num">'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td class="num" style="color:var(--muted)">'+esc(r[2])+'</td><td>'+code(r[3])+' '+esc(pshort(r[3]))+'</td><td class="r num">'+(r[4]||'-')+'</td><td>'+esc([r[7]?"ต."+r[7]:"",r[6]?"อ."+r[6]:"",r[5]?"จ."+r[5]:""].filter(Boolean).join(" "))+'</td><td>'+esc(r[8]||'-')+'</td><td class="r num">'+(r[9]!=null&&r[10]!=null?fmt(r[9])+' → '+fmt(r[10]):'-')+'</td><td>'+(r[11]?'<span class="tag t-ok">เชื่อมแล้ว</span>':'-')+'</td></tr>';}).join("")+'</tbody></table></div>'+
+        (np>1?'<div class="dv-pager"><button type="button" data-fpg="-1"'+(FV.page?'':' disabled')+'>‹ ก่อนหน้า</button><button type="button" data-fpg="1"'+(FV.page<np-1?'':' disabled')+'>ถัดไป ›</button></div>':'');
+    }
+  }else if(FV.tab==="matrix"){
+    var Y=[2566,2567,2568,2569,2570];FA.forEach(function(r){if(r[4]&&Y.indexOf(r[4])<0)Y.push(r[4]);});Y.sort();
+    var cnt={},mx=1;FA.forEach(function(r){var k=r[3]+"|"+r[4];cnt[k]=(cnt[k]||0)+1;if(cnt[k]>mx)mx=cnt[k];});
+    h+='<p class="sub">จำนวนรายชื่อเกษตรกรในฐาน แยกรายโครงการ × ปีงบประมาณ'+(FA.length?'':' · <span class="tag t-pend">รอข้อมูลรายชื่อ</span>')+' · คอลัมน์สุดท้ายคือผลอบรมปี 2568 ตามตัวชี้วัด กปร. 6 (ใช้อ้างอิง)</p>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>โครงการ</th>'+Y.map(function(y){return '<th class="r">'+y+'</th>';}).join("")+'<th class="r">รวม</th><th class="r">อบรม 68 (กปร.6)</th></tr></thead><tbody>'+
+      P.map(function(p){var t=0,c=Y.map(function(y){var v=cnt[p.id+"|"+y]||0;t+=v;return dvHeat(v,mx);}).join(""),k=K.filter(function(r){return k6pid(r)===p.id;}).reduce(function(a,r){return a+r[3];},0);
+        return '<tr><td>'+code(p.id)+' '+esc(pshort(p.id))+'</td>'+c+'<td class="r num"><b>'+(t?fmt(t):'–')+'</b></td><td class="r num" style="color:var(--muted)">'+(k?fmt(k):'–')+'</td></tr>';}).join("")+'</tbody></table></div>';
+  }else{
+    var MY=[];MF.forEach(function(m){if(MY.indexOf(m[0])<0)MY.push(m[0]);});MY.sort();
+    var mc={},mm=1;MF.forEach(function(m){var k=m[1]+"|"+m[0];mc[k]=(mc[k]||0)+1;if(mc[k]>mm)mm=mc[k];});
+    var mp=P.filter(function(p){return MF.some(function(m){return m[1]===p.id;});});var un=MF.filter(function(m){return !m[1];}).length;
+    h+=MF.length?'<p class="sub">เกษตรกรตัวอย่าง (ศูนย์ต้นแบบ/แปลงเรียนรู้) แยกรายโครงการ × ปี · ที่มา: ชีต “เกษตรกรตัวอย่างพระราชดำริ” แท็บรายปี'+(un?' · ไม่ระบุโครงการ '+un+' ราย':'')+'</p>'+
+      '<div class="tbl-wrap"><table><thead><tr><th>โครงการ</th>'+MY.map(function(y){return '<th class="r">'+y+'</th>';}).join("")+'<th class="r">รวม</th></tr></thead><tbody>'+
+      mp.map(function(p){var t=0,c=MY.map(function(y){var v=mc[p.id+"|"+y]||0;t+=v;return dvHeat(v,mm);}).join("");return '<tr><td>'+code(p.id)+' '+esc(pshort(p.id))+'</td>'+c+'<td class="r num"><b>'+fmt(t)+'</b></td></tr>';}).join("")+
+      '<tr class="dv-tot"><td>รวม</td>'+MY.map(function(y){return '<td class="r num">'+fmt(MF.filter(function(m){return m[0]===y;}).length)+'</td>';}).join("")+'<td class="r num">'+fmt(MF.length)+'</td></tr></tbody></table></div>':'<div class="dv-empty"><b>รอข้อมูลเกษตรกรตัวอย่าง</b></div>';
+    if(MF.length){var f2=MF.filter(function(m){return (!FV.pid||m[1]===FV.pid)&&(!FV.y||m[0]===FV.y);});
+      h+='<div class="dv-filt"><label>โครงการ <select id="fp">'+pOpt(FV.pid)+'</select></label><label>ปี <select id="fy"><option value="0">ทุกปี</option>'+MY.map(function(y){return '<option'+(FV.y===y?' selected':'')+'>'+y+'</option>';}).join("")+'</select></label><span class="sub" style="margin:0">'+fmt(f2.length)+' ราย</span></div>'+
+        '<div class="tbl-wrap"><table><thead><tr><th class="r">ปี</th><th>ชื่อ-สกุล</th><th>โครงการ</th><th>จังหวัด</th><th>องค์ความรู้</th><th>ความพร้อม</th><th>ถ่ายทอดได้</th><th>โทร</th><th>ที่อยู่ศูนย์/แปลง</th></tr></thead><tbody>'+
+        f2.map(function(m){return '<tr><td class="r num">'+m[0]+'</td><td>'+esc(m[3])+'</td><td>'+(m[1]?code(m[1])+' '+esc(pshort(m[1])):esc(m[9]||'-'))+'</td><td>'+esc(m[2])+'</td><td>'+esc(m[6])+'</td><td>'+esc(m[7])+'</td><td>'+esc(m[8])+'</td><td class="num">'+esc(m[5])+'</td><td>'+esc(m[4])+'</td></tr>';}).join("")+'</tbody></table></div>';}
+  }
+  el.innerHTML=h;
+}
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-ftab],[data-fpg]");if(!t||!document.getElementById("farmerPanel").contains(t))return;
+  if(t.dataset.ftab){FV.tab=t.dataset.ftab;FV.pid=0;FV.y=0;FV.page=0;}else FV.page+=+t.dataset.fpg;renderFarmers();});
+document.addEventListener("change",function(e){if(e.target.id==="fp"){FV.pid=+e.target.value;FV.page=0;renderFarmers();}else if(e.target.id==="fy"){FV.y=+e.target.value;FV.page=0;renderFarmers();}});
+var fqT;document.addEventListener("input",function(e){if(e.target.id!=="fq")return;clearTimeout(fqT);fqT=setTimeout(function(){FV.q=e.target.value;FV.page=0;renderFarmers();var i=document.getElementById("fq");if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250);});
+
+renderOverview();renderDivision();renderProjects();renderChecks();
+/* ===== ภาพรวมผู้บริหาร + โครงสร้างงบประมาณ (คำนวณจากรายการย่อย D.items ทุกบรรทัด) ===== */
+(function(){
+  if(!D.items||!D.itemCols)return;
+  var C=D.itemCols,ix=function(k){return C.indexOf(k);},I=D.items,iP=ix("pid"),iS=ix("seq"),iPa=ix("parent"),iA=ix("amount"),iF=ix("fund"),iC=ix("cat"),iM=ix("m");
+  var par={};I.forEach(function(r){if(r[iPa]!==""&&r[iPa]!=null)par[r[iP]+"|"+r[iPa]]=1;});
+  var L=I.filter(function(r){return !par[r[iP]+"|"+r[iS]];});
+  var CAT3=function(c){return c==="ฝึกอบรม"?"train":c==="วัสดุการเกษตร"?"input":"admin";};
+  var CN={train:"ค่าฝึกอบรม",input:"ปัจจัยการผลิต / วัสดุการเกษตร",admin:"ค่าบริหารโครงการ"};
+  var A=0,F=0,CEN=0,INV=0,cat={},byP={},mP=[0,0,0,0,0,0,0,0,0,0,0,0];
+  L.forEach(function(r){var a=+r[iA]||0,f=r[iF];
+    if(f==="ส่วนกลาง"){CEN+=a;return;} if(f==="ลงทุน"){INV+=a;return;}
+    var k=f==="กองทุน"?"f":"a";if(k==="a")A+=a;else F+=a;
+    var c=CAT3(r[iC]);cat[c]=cat[c]||{a:0,f:0};cat[c][k]+=a;
+    var p=byP[r[iP]]=byP[r[iP]]||{a:0,f:0};p[k]+=a;
+    (r[iM]||[]).forEach(function(v,i){mP[i]+=+v||0;});});
+  var PROV=A+F,pc=function(a,b){return b?fmt(a/b*100,1):"0.0";},mb=function(n){return fmt(n/1e6,2);};
+  var sw=function(c){return '<span class="sw2" style="background:'+c+'"></span>';};
+  var spl=function(a,f){var t=a+f||1;return '<div class="sp2"><i style="width:'+(a/t*100)+'%;background:var(--primary)" title="งบ พ.ร.บ. '+fmt(a)+'"></i>'+(f?'<i style="width:'+(f/t*100)+'%;background:var(--gold)" title="เงินกองทุนฯ '+fmt(f)+'"></i>':'')+'</div>';};
+  var LG='<div class="lg2"><span>'+sw("var(--primary)")+'งบ พ.ร.บ.</span><span>'+sw("var(--gold)")+'เงินกองทุนการปฏิรูปที่ดินฯ</span></div>';
+  // ---- hero KPI ----
+  var ek=document.getElementById("execKpi");
+  if(ek)ek.innerHTML='<div><div class="k">เงินลงพื้นที่ (ตั้งจ่ายจังหวัด)</div><div class="v num">'+fmt(PROV)+'</div><div class="u">บาท · '+mb(PROV)+' ล้านบาท</div></div>'+
+    '<div><div class="k">งบ พ.ร.บ. (จังหวัด)</div><div class="v num">'+mb(A)+'</div><div class="u">ล้านบาท</div><span class="chip"><span class="sw" style="background:#7d9bf0"></span>'+pc(A,PROV)+'% ของเงินลงพื้นที่</span></div>'+
+    '<div><div class="k">เงินกองทุนฯ (จังหวัด)</div><div class="v num">'+mb(F)+'</div><div class="u">ล้านบาท</div><span class="chip"><span class="sw" style="background:#d9a34a"></span>'+pc(F,PROV)+'% ของเงินลงพื้นที่</span></div>'+
+    '<div><div class="k">ตั้งจ่ายส่วนกลาง (แยก)</div><div class="v num">'+mb(CEN)+'</div><div class="u">ล้านบาท · ไม่รวมในยอดหลัก</div><span class="chip">งบลงทุน '+fmt(INV)+' บาท แยก</span></div>';
+  // ---- rank by project ----
+  var pr=Object.keys(byP).map(function(k){return{id:+k,a:byP[k].a,f:byP[k].f};}).sort(function(x,y){return (y.a+y.f)-(x.a+x.f);}),mx=pr.length?pr[0].a+pr[0].f:1;
+  var rk=document.getElementById("execRank");
+  if(rk)rk.innerHTML='<h2>เงินลงพื้นที่ รายโครงการ</h2><p class="sub">ตั้งจ่ายจังหวัด แยกแหล่งเงิน · ไม่รวมส่วนกลาง · กดเพื่อเปิดหน้าโครงการ</p>'+
+    pr.slice(0,10).map(function(x,i){return '<a class="dv-ir" style="text-decoration:none;display:grid" href="#'+code(x.id).toLowerCase()+'"><span>'+(i+1)+'. '+code(x.id)+' · '+esc(pshort(x.id))+'</span><div class="dv-bar"><i style="width:'+(x.a/mx*100).toFixed(1)+'%;background:var(--primary)"></i><i style="width:'+(x.f/mx*100).toFixed(1)+'%;background:var(--gold)"></i></div><b class="num">'+mb(x.a+x.f)+' ล.</b></a>';}).join("")+LG;
+  // ---- insights ----
+  var direct=(cat.train?cat.train.a+cat.train.f:0)+(cat.input?cat.input.a+cat.input.f:0);
+  var T=provTotals(),tv=PV.map(function(n,i){return{n:n,v:T[i].t+T[i].f};}).sort(function(x,y){return y.v-x.v;});
+  var q1=mP[0]+mP[1]+mP[2],h1=q1+mP[3]+mP[4]+mP[5];
+  var K=D.kpi6Total;
+  var ins=document.getElementById("execIns");
+  if(ins)ins.innerHTML='<h2>ข้อสรุปสำคัญ</h2><p class="sub">คำนวณอัตโนมัติจากข้อมูลในระบบ</p>'+
+    '<div class="ins"><i>1</i><p>เงินลงพื้นที่ <b>'+mb(PROV)+' ล้านบาท</b> มาจากงบ พ.ร.บ. <b>'+pc(A,PROV)+'%</b> และเงินกองทุนฯ <b>'+pc(F,PROV)+'%</b></p></div>'+
+    '<div class="ins"><i>2</i><p>เงินที่ถึงตัวเกษตรกรโดยตรง (ฝึกอบรม + ปัจจัยการผลิต) <b>'+mb(direct)+' ล้านบาท</b> หรือ <b>'+pc(direct,PROV)+'%</b> · ค่าบริหารโครงการ '+pc(PROV-direct,PROV)+'%</p></div>'+
+    (pr.length?'<div class="ins"><i>3</i><p>โครงการเงินลงพื้นที่สูงสุด <b>'+esc(pshort(pr[0].id))+'</b> '+mb(pr[0].a+pr[0].f)+' ล้านบาท · จังหวัดสูงสุด <b>'+esc(tv[0].n)+'</b> '+mb(tv[0].v)+' ล้านบาท</p></div>':'')+
+    '<div class="ins"><i>4</i><p>แผนใช้จ่ายลงจังหวัดกระจุกต้นปี: ไตรมาส 1 <b>'+pc(q1,PROV)+'%</b> · ครึ่งปีแรก <b>'+pc(h1,PROV)+'%</b> — ควรติดตามผลเบิกจ่ายรายเดือนตั้งแต่ไตรมาสแรก</p></div>'+
+    (K?'<div class="ins"><i>5</i><p>ผลถึงเกษตรกร (กปร. 6 ปี 2568): นำความรู้ไปใช้ <b>'+fmt(K[0],2)+'%</b> (เกณฑ์ ≥ 70%) · รายได้เพิ่ม <b>'+fmt(K[1],2)+'%</b> (เกณฑ์ ≥ 10%)</p></div>':'');
+  // ---- budget flow ----
+  var DV=D.itemsDiv||[],dv=function(t){var r=DV.filter(function(x){return String(x[ix("label")]).indexOf(t)>=0;})[0];return r?+r[ix("amount")]:0;};
+  var TA=dv("จัดสรรเงินพรบ"),TF=dv("จัดสรรเงินกองทุน");
+  var bf=document.getElementById("budgetFlow");
+  if(bf){var box=function(k,v,s,inner,cls){return '<div class="bx '+(cls||"")+'"><div class="k">'+k+'</div><div class="v num">'+fmt(v)+'</div><div class="s">'+s+'</div>'+(inner||"")+'</div>';};
+    var rows=[["admin","a"],["admin","f"],["train","a"],["input","a"],["input","f"]].filter(function(x){return cat[x[0]]&&cat[x[0]][x[1]];});
+    bf.innerHTML='<h2>เส้นทางเงิน: แหล่งเงิน → ผู้ตั้งจ่าย → หมวดรายจ่าย</h2><p class="sub">หน่วย: บาท · ทุกยอดรวมจากรายการย่อย '+fmt(L.length)+' บรรทัด</p>'+
+     '<div class="flow"><div class="col">'+
+       (TA?box(sw("var(--primary)")+"งบ พ.ร.บ.",TA,"จังหวัด "+fmt(A)+" · ส่วนกลาง "+fmt(TA-A)):"")+
+       (TF?box(sw("var(--gold)")+"เงินกองทุนการปฏิรูปที่ดินฯ",TF,"จังหวัด "+fmt(F)+" · ส่วนกลาง "+fmt(TF-F)):"")+
+       (INV?box("งบลงทุน (แยก)",INV,"ครุภัณฑ์ / สิ่งก่อสร้าง"):"")+
+     '</div><div class="ar">➜</div><div class="col">'+
+       box("ตั้งจ่ายจังหวัด (ยอดหลัก)",PROV,"โอนให้ ส.ป.ก.จังหวัด",spl(A,F),"hl")+
+       box("ตั้งจ่ายส่วนกลาง (แสดงแยก)",CEN,"ไม่รวมในยอดลงพื้นที่",TA&&TF?spl(TA-A,TF-F):"")+
+     '</div><div class="ar">➜</div><div class="col">'+
+       ["train","input","admin"].filter(function(k){return cat[k];}).map(function(k){var c=cat[k];return box(CN[k]+" (จังหวัด)",c.a+c.f,pc(c.a+c.f,PROV)+"% ของเงินลงพื้นที่",spl(c.a,c.f));}).join("")+
+     '</div></div>'+LG+
+     '<h2 style="margin-top:26px">งบตั้งจ่ายจังหวัด แยกหมวด × แหล่งเงิน</h2><div class="tbl-wrap"><table class="btbl"><thead><tr><th>หมวด</th><th>แหล่งเงิน</th><th class="r">บาท</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+
+     rows.map(function(x){var v=cat[x[0]][x[1]];return '<tr><td>'+CN[x[0]]+'</td><td>'+(x[1]==="a"?'<span class="fb a">พ.ร.บ.</span>':'<span class="fb f">กองทุนฯ</span>')+'</td><td class="r num">'+fmt(v)+'</td><td class="r num">'+pc(v,PROV)+'</td></tr>';}).join("")+
+     '<tr class="t"><td colspan="2">รวมตั้งจ่ายจังหวัด</td><td class="r num">'+fmt(PROV)+'</td><td class="r">100.0</td></tr></tbody></table></div>';}
+})();
+/* ปุ่มโหมดมืด/สว่าง */
+(function(){var b=document.getElementById("thm");if(!b)return;try{var t=localStorage.getItem("alro_theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  b.addEventListener("click",function(){var d=document.documentElement,dark=d.dataset.theme?d.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;d.dataset.theme=dark?"light":"dark";try{localStorage.setItem("alro_theme",d.dataset.theme);}catch(e){}});})();
+
+document.getElementById("foot").textContent="ข้อมูลจาก Google Sheets ในโฟลเดอร์ฐานข้อมูลกอง อัปเดตล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
+route(INIT||location.hash.slice(1)||"overview");
+requestAnimationFrame(function(){document.getElementById("loader").classList.add("done");});
+}
+})();
+
+/* จำกัดขอบเขตแผนที่ให้เหลือเฉพาะประเทศไทย: บังพื้นที่นอกไทย + ล็อกการลาก/ซูม
+   opts.fitTo: ขอบเขตที่ต้องการแสดงหลังล็อก (เช่น จังหวัดของโครงการ) ถ้าไม่ระบุจะแสดงทั้งประเทศ */
+function lockToThailand(map, provLayer, opts){
+  if(!map||!provLayer||!provLayer.getLayers().length) return;
+  opts=opts||{};
+  const holes=[];
+  const flat=a=>Array.isArray(a[0])&&Array.isArray(a[0][0])?a.forEach(flat):holes.push(Array.isArray(a[0])?a[0]:a);
+  provLayer.eachLayer(p=>{ if(p.getLatLngs) flat(p.getLatLngs()); });
+  if(!map.getPane('thMask')){ const p=map.createPane('thMask'); p.style.zIndex=350; p.style.pointerEvents='none'; }
+  if(map._thMask) map.removeLayer(map._thMask);
+  map._thMask=L.polygon([[[-90,-360],[90,-360],[90,360],[-90,360]],...holes],
+    {pane:'thMask',stroke:false,fillColor:'#eef2f8',fillOpacity:1,fillRule:'evenodd',interactive:false,className:'thmask'}).addTo(map);
+  const b=provLayer.getBounds();
+  map.setMaxBounds(b.pad(0.15)); map.options.maxBoundsViscosity=1;
+  map.setMinZoom(map.getBoundsZoom(b));
+  if(opts.fitTo&&opts.fitTo.isValid&&opts.fitTo.isValid()) map.fitBounds(opts.fitTo,{padding:opts.padding||[16,16],maxZoom:opts.maxZoom||8});
+  else map.fitBounds(b);
+}
+</script>
+</body>
+</html>
