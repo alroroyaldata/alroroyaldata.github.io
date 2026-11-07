@@ -808,16 +808,19 @@ var gate=document.getElementById("gate"),gf=document.getElementById("gateForm"),
 function showGate(msg){document.getElementById("loader").classList.add("done");gate.hidden=false;gm.textContent=msg||"";gb.disabled=false;gb.textContent="เข้าสู่ระบบ";document.getElementById("gatePw").focus();}
 function load(key,remember){
   return fetch(API,{method:"POST",body:key}).then(function(r){if(!r.ok)throw new Error("net");return r.json();}).then(function(d){
-    if(d&&d.error){ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);showGate(key?"รหัสผ่านไม่ถูกต้อง หรือมีการเปลี่ยนรหัสผ่าน":"");return;}
-    var store=remember?ls:ss;store(KK,key);store(CK,JSON.stringify({t:Date.now(),d:d}));
+    if(d&&d.error){ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);idbSet("null");showGate(key?"รหัสผ่านไม่ถูกต้อง หรือมีการเปลี่ยนรหัสผ่าน":"");return;}
+    var store=remember?ls:ss;store(KK,key);var js=JSON.stringify({t:Date.now(),d:d});store(CK,js);if(!(ls(CK)||ss(CK)))idbSet(js);
     gate.hidden=true;start(d);
   });
 }
 gf.addEventListener("submit",function(e){e.preventDefault();var k=document.getElementById("gatePw").value;if(!k)return;gb.disabled=true;gb.textContent="กำลังตรวจสอบ…";gm.textContent="";
   load(k,document.getElementById("gateRemember").checked).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่");});});
-document.getElementById("logout").addEventListener("click",function(e){e.preventDefault();e.stopPropagation();ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);location.hash="";location.reload();});
+document.getElementById("logout").addEventListener("click",function(e){e.preventDefault();e.stopPropagation();ls(KK,null);ss(KK,null);ls(CK,null);ss(CK,null);idbSet("null");location.hash="";setTimeout(function(){location.reload();},150);});
+function idbOpen(cb){try{var r=indexedDB.open("alro_db",1);r.onupgradeneeded=function(){r.result.createObjectStore("kv");};r.onsuccess=function(){cb(r.result);};r.onerror=function(){cb(null);};}catch(e){cb(null);}}
+function idbSet(v){idbOpen(function(db){if(!db)return;try{db.transaction("kv","readwrite").objectStore("kv").put(v,CK);}catch(e){}});}
+function idbGet(cb){idbOpen(function(db){if(!db)return cb(null);try{var q=db.transaction("kv").objectStore("kv").get(CK);q.onsuccess=function(){try{var c=JSON.parse(q.result||"null");cb(c&&Date.now()-c.t<MAXAGE?c.d:null);}catch(e){cb(null);}};q.onerror=function(){cb(null);};}catch(e){cb(null);}});}
 var hit=savedKey()&&cached(),k0=savedKey();
-if(hit){start(hit);}else if(k0){load(k0,!!ls(KK)).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาลองใหม่");});}else{showGate("");}
+if(hit){start(hit);}else if(k0){idbGet(function(c){if(c)start(c);else load(k0,!!ls(KK)).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาลองใหม่");});});}else{showGate("");}
 var started=false;
 function start(D){
 if(started)return;started=true;
