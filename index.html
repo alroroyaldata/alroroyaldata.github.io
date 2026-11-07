@@ -435,6 +435,7 @@ main{max-width:1480px;padding:28px 36px 64px;margin:0 auto}
     <div class="stack">
       <div id="divTwin"></div>
       <div class="xgrid"><div class="panel" id="execRank"></div><div class="panel" id="execIns"></div></div>
+      <div class="panel" id="execFarm"></div>
     </div>
   </section>
   <section class="view" id="v-budget">
@@ -1559,6 +1560,23 @@ renderOverview();renderDivision();renderProjects();renderChecks();
 /* ปุ่มโหมดมืด/สว่าง */
 (function(){var b=document.getElementById("thm");if(!b)return;try{var t=localStorage.getItem("alro_theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}
   b.addEventListener("click",function(){var d=document.documentElement,dark=d.dataset.theme?d.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;d.dataset.theme=dark?"light":"dark";try{localStorage.setItem("alro_theme",d.dataset.theme);}catch(e){}});})();
+/* ===== เกษตรกร 2 กลุ่ม รายโครงการ (ผู้บริหารต้องการเห็นฐานในพื้นที่โครงการ) ===== */
+(function(){
+  var el=document.getElementById("execFarm"),FA=D.farmers||[];if(!el||!FA.length)return;
+  var G={},T={t:{},a:{}};
+  FA.forEach(function(r){var g=String(r[8]).indexOf("พื้นที่โครงการ")>=0?"a":"t",p=r[3]||0,k=r[0]||(r[1]+"|"+r[5]);
+    var x=G[p]=G[p]||{t:{},a:{}};x[g][k]=1;T[g][k]=1;});
+  var n=function(o){return Object.keys(o).length;},rows=Object.keys(G).map(function(p){return{id:+p,t:n(G[p].t),a:n(G[p].a)};}).sort(function(x,y){return (y.a+y.t)-(x.a+x.t);});
+  var mx=Math.max.apply(null,rows.map(function(r){return Math.max(r.a,r.t);}).concat([1]));
+  var bar=function(v,c){return '<div class="sp2" style="height:8px;background:var(--surface-2)"><i style="width:'+(v/mx*100).toFixed(2)+'%;background:'+c+'"></i></div>';};
+  el.innerHTML='<h2>เกษตรกรในฐานข้อมูล แยก 2 กลุ่ม รายโครงการ</h2><p class="sub">ไม่นับซ้ำ (รหัสเกษตรกรเดียวกัน) · กดชื่อโครงการเพื่อเปิดหน้าโครงการ</p>'+
+   '<div class="xk" style="margin:14px 0 18px;grid-template-columns:repeat(3,1fr)"><div><div class="k" style="color:var(--muted)">เกษตรกรในพื้นที่โครงการ (จปฐ.)</div><div class="v num" style="color:var(--ink);background:none;-webkit-text-fill-color:currentColor;font-size:30px">'+fmt(n(T.a))+'</div><div class="u" style="color:var(--muted)">ราย · ฐาน จปฐ. / ผู้ได้รับจัดที่ดิน ปี 2568</div></div>'+
+   '<div style="border-left:1px solid var(--line)"><div class="k" style="color:var(--muted)">เกษตรกรเป้าหมาย (ติดตามผลสัมฤทธิ์)</div><div class="v num" style="color:var(--ink);font-size:30px">'+fmt(n(T.t))+'</div><div class="u" style="color:var(--muted)">ราย · ปี 2566–2569</div></div>'+
+   '<div style="border-left:1px solid var(--line)"><div class="k" style="color:var(--muted)">รวมทั้งฐาน (ไม่นับซ้ำ)</div><div class="v num" style="color:var(--ink);font-size:30px">'+fmt(n(Object.assign({},T.a,T.t)))+'</div><div class="u" style="color:var(--muted)">ราย</div></div></div>'+
+   '<div class="tbl-wrap"><table class="btbl"><thead><tr><th>โครงการ</th><th class="r">ในพื้นที่โครงการ (จปฐ.)</th><th style="width:22%"></th><th class="r">เป้าหมาย (ติดตามผล)</th><th style="width:22%"></th></tr></thead><tbody>'+
+   rows.map(function(r){return '<tr><td><a href="#'+code(r.id).toLowerCase()+'" style="text-decoration:none"><b>'+code(r.id)+'</b> '+esc(pshort(r.id))+'</a></td><td class="r num">'+(r.a?fmt(r.a):'–')+'</td><td>'+bar(r.a,"var(--primary)")+'</td><td class="r num">'+(r.t?fmt(r.t):'–')+'</td><td>'+bar(r.t,"var(--gold)")+'</td></tr>';}).join("")+
+   '</tbody></table></div>';
+})();
 
 document.getElementById("foot").textContent="ข้อมูลจาก Google Sheets ในโฟลเดอร์ฐานข้อมูลกอง อัปเดตล่าสุด "+new Date(D.builtAt).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"})+" น.";
 route(INIT||location.hash.slice(1)||"overview");
