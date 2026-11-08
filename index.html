@@ -221,6 +221,25 @@ tr.link:hover{background:var(--surface-2)}
 .dv-pager{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.dv-pager button{font:inherit;font-size:13px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}.dv-pager button:disabled{opacity:.4;cursor:default}
 .sec-head{margin:8px 0 -4px;font-size:15px;color:var(--muted);font-weight:600;letter-spacing:.02em}
 @media (max-width:900px){.dv-twin{grid-template-columns:1fr}.dv-3{grid-template-columns:1fr 1fr}.dv-filt input{min-width:0;width:100%}}
+.jq-ask{margin-top:14px}.jq-lab{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+.jq-row{display:flex;gap:10px}.jq-row input{flex:1;min-width:0;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink)}
+.jq-row input:focus{outline:2px solid var(--primary);outline-offset:1px}
+.jq-ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.jq-chip{font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer;text-align:left}
+.jq-chip:hover{border-color:var(--primary);color:var(--primary)}
+.jq-adv{margin-top:14px}.jq-adv summary{cursor:pointer;font-size:13.5px;color:var(--primary);font-weight:600}
+.jq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px 14px;margin-top:12px}.jq-grid label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.jq-grid select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.jq-grid .jq-ck{flex-direction:row;align-items:center;gap:8px;align-self:end;color:var(--ink-2)}
+.jq-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;font-size:12.5px;color:var(--muted)}
+#jqOut{margin-top:14px}.jq-head h2{margin:2px 0 6px;font-size:clamp(17px,2vw,21px)}.jq-head p{margin:0;color:var(--ink-2)}
+.jq-big{font-family:var(--num,inherit);font-size:clamp(30px,4vw,44px)!important;font-weight:700;color:var(--ink)!important;margin:6px 0!important}.jq-big small{font-size:15px;font-weight:500;color:var(--muted);margin-left:6px}
+.jq-h3{font-size:15px;margin:22px 0 8px}.jq-h3 span{font-weight:400;color:var(--muted);font-size:12.5px}
+.jq-bar{display:block;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}.jq-bar i{display:block;height:100%;background:var(--primary);border-radius:99px}
+.jq-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}.jq-cat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 8px}
+.jq-cat span{font-size:13px;color:var(--ink-2)}.jq-cat b{font-size:16px;text-align:right}.jq-cat i{grid-column:1/-1;font-style:normal;font-size:12px;color:var(--muted)}.jq-cat .jq-bar{grid-column:1/-1}
+.jq-note{margin-top:16px;padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--ink-2);font-size:13px}.jq-empty{color:var(--muted)}
+.jq-t td:first-child{white-space:nowrap}
+@media(max-width:640px){.jq-row{flex-direction:column}.jq-row button{width:100%}}
 </style>
 <style id="bicss"></style>
 <style>
@@ -451,10 +470,10 @@ main{max-width:1480px;padding:28px 36px 64px;margin:0 auto}
 <div class="shell">
 <aside class="side" aria-label="เมนูหลัก">
   <a class="brand" href="#overview"><img class="seal-logo" src="https://alro.go.th/assets/themes/default/images/logo/logo-into.png" alt="ตรา ส.ป.ก." width="44" height="44" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="mark" aria-hidden="true" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M12 21V11" stroke="#d6b46a" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13c-4.2 0-6.5-2.6-6.5-6.5C9.7 6.5 12 9 12 13Z" fill="#d6b46a"/><path d="M12 11c0-3.9 2.3-6.5 6.5-6.5 0 3.9-2.3 6.5-6.5 6.5Z" fill="#fff" fill-opacity=".9"/><path d="M5 21h14" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="txt"><b>ฐานข้อมูลกองประสานงานโครงการพระราชดำริฯ</b><span>สำนักงานการปฏิรูปที่ดินเพื่อเกษตรกรรม (ส.ป.ก.)</span></span></a>
-  <nav class="snav" aria-label="เมนูหลัก"><div class="sgrp"><h6>ผู้บริหาร</h6><a href="#overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/></svg>ภาพรวมผู้บริหาร</a></div><div class="sgrp"><h6>กผง. · งบประมาณ</h6><a href="#budget"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.5 6.5"/></svg>โครงสร้างงบประมาณ</a><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v4H4zM4 11h7v8H4zM13 11h7v8h-7z"/></svg>16 โครงการ<span class="tg">16</span></a><a href="#provinces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>แผนที่ · รายจังหวัด<span class="tg">72</span></a><a href="#monthly"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>แผนรายเดือน</a></div><div class="sgrp"><h6>กปต. · ผลถึงเกษตรกร</h6><a href="#farmers"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>ฐานรายชื่อเกษตรกร</a><a href="#model"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>เกษตรกรตัวอย่าง</a></div><div class="sgrp"><h6>ระบบ</h6><a href="#checks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>ความถูกต้องของข้อมูล</a></div></nav>
+  <nav class="snav" aria-label="เมนูหลัก"><div class="sgrp"><h6>ผู้บริหาร</h6><a href="#overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/></svg>ภาพรวมผู้บริหาร</a></div><div class="sgrp"><h6>กผง. · งบประมาณ</h6><a href="#budget"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.5 6.5"/></svg>โครงสร้างงบประมาณ</a><a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v4H4zM4 11h7v8H4zM13 11h7v8h-7z"/></svg>16 โครงการ<span class="tg">16</span></a><a href="#provinces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>แผนที่ · รายจังหวัด<span class="tg">72</span></a><a href="#monthly"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>แผนรายเดือน</a></div><div class="sgrp"><h6>กปต. · ผลถึงเกษตรกร</h6><a href="#farmers"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>ฐานรายชื่อเกษตรกร</a><a href="#model"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>เกษตรกรตัวอย่าง</a><a href="#jpt"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M8.5 11h5M11 8.5v5"/></svg>ถามข้อมูล จปฐ.<span class="tg">ใหม่</span></a></div><div class="sgrp"><h6>ระบบ</h6><a href="#checks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>ความถูกต้องของข้อมูล</a></div></nav>
   <div class="side-foot"><a class="seal" id="seal" href="#checks"><i></i><span id="sealText"></span></a><button type="button" class="thm" id="thm">โหมดมืด / สว่าง</button><a class="logout" id="logout" href="#" title="ออกจากระบบ">ออกจากระบบ</a></div>
 </aside>
-<div class="mainwrap"><nav class="mtabs" aria-label="เมนู"><a href="#overview">ภาพรวมผู้บริหาร</a><a href="#budget">โครงสร้างงบประมาณ</a><a href="#projects">16 โครงการ</a><a href="#provinces">แผนที่ · รายจังหวัด</a><a href="#monthly">แผนรายเดือน</a><a href="#farmers">ฐานรายชื่อเกษตรกร</a><a href="#model">เกษตรกรตัวอย่าง</a><a href="#checks">ความถูกต้องของข้อมูล</a></nav>
+<div class="mainwrap"><nav class="mtabs" aria-label="เมนู"><a href="#overview">ภาพรวมผู้บริหาร</a><a href="#budget">โครงสร้างงบประมาณ</a><a href="#projects">16 โครงการ</a><a href="#provinces">แผนที่ · รายจังหวัด</a><a href="#monthly">แผนรายเดือน</a><a href="#farmers">ฐานรายชื่อเกษตรกร</a><a href="#model">เกษตรกรตัวอย่าง</a><a href="#jpt">ถามข้อมูล จปฐ.</a><a href="#checks">ความถูกต้องของข้อมูล</a></nav>
 <main>
   <section class="view" id="v-overview">
     <div class="banner hero">
@@ -531,6 +550,10 @@ main{max-width:1480px;padding:28px 36px 64px;margin:0 auto}
     <div class="stack">
       <div class="panel" id="farmerPanel"></div>
     </div>
+  </section>
+  <section class="view" id="v-jpt">
+    <div class="page-h"><p class="eyebrow">กปต. · ฐาน จปฐ. ปี 2568</p><h1>ถามข้อมูล จปฐ.</h1><p>เกษตรกรในพื้นที่โครงการทั้งหมดของกอง · ถามเป็นภาษาพูด ได้คำตอบพร้อมตารางจำแนกรายโครงการ จังหวัด อำเภอ ตำบล · แยกจากฐานเกษตรกรที่เข้าฝึกอบรม</p></div>
+    <div class="stack"><div id="jptPanel"></div></div>
   </section>
 
   <section class="view" id="v-projects">
@@ -1496,12 +1519,140 @@ function renderChecks(){
 }
 
 var GS=(typeof google!=="undefined"&&google.script&&google.script.history)?google.script:null;
+/* ===== ถามข้อมูล จปฐ. — เกษตรกรในพื้นที่โครงการ (ข้อมูลปี 2568) =====
+   D.jpt = คิวบ์ยอดรวมระดับตำบล (คำนวณในเซิร์ฟเวอร์ ไม่มีข้อมูลรายบุคคล)
+   row: [pid, จังหวัด, อำเภอ, ตำบล, แปลง, ไร่, คน, สมาชิกครัวเรือน, ครัวเรือนที่มีข้อมูลรายได้, [รายได้7], [เพศ3], [อายุ6], ...มิติ] */
+var JQ={q:"",m:"pe",f:null,by:"pid",pid:0,pv:"",split:null,deep:true};
+function jptReady(){return D.jpt&&D.jpt.rows&&D.jpt.rows.length;}
+var JDN={"สภาพร่างการ":"สภาพร่างกาย","สถานะ":"สถานภาพสมรส","ประเภท":"ประเภทแปลง"};function jdn(n){return JDN[n]||n;}
+function jdim(k){var d=D.jpt.dims;for(var i=0;i<d.length;i++)if(d[i][0]===k)return{i:12+i,key:k,name:jdn(d[i][1]),cats:d[i][2]};return null;}
+function jattr(k){if(k==="sex")return{i:10,key:"sex",name:"เพศ",cats:D.jpt.sex};if(k==="age")return{i:11,key:"age",name:"ช่วงอายุ",cats:D.jpt.age};return jdim(k);}
+var JMEAS={pe:"เกษตรกร (คน)",pl:"แปลงที่ดิน",ar:"เนื้อที่ (ไร่)",mem:"สมาชิกครัวเรือน (คน)",inc:"รายได้เฉลี่ยต่อครัวเรือน (บาท/ปี)"};
+function jcatIx(a,re){var o=[];a.cats.forEach(function(c,i){if(re.test(c))o.push(i);});return o;}
+/* แปลงคำถามภาษาไทยเป็นเงื่อนไขค้นหา */
+function jparse(q){
+  var s=String(q||"").replace(/\s+/g," "),o={q:s,m:"pe",f:null,by:"pid",pid:0,pv:"",split:null,deep:/ละเอียด|จำแนก|แยก/.test(s),inc:5,note:""};
+  var occ=jdim("occ"),T=[
+    [/ปศุสัตว์|เลี้ยงสัตว์|วัว|โค(?!รง)|ควาย|กระบือ|หมู(?!่)|สุกร|ไก่|เป็ด|แพะ/,function(){o.f={a:"occ",ix:jcatIx(occ,/ปศุสัตว์/)};o.note="ฐาน จปฐ. บันทึกเฉพาะ \"อาชีพหลัก\" ของเกษตรกร ไม่มีชนิดและจำนวนสัตว์ ตัวเลขนี้คือผู้ที่มีอาชีพหลักเป็นปศุสัตว์";}],
+    [/ประมง|เลี้ยงปลา|กุ้ง/,function(){o.f={a:"occ",ix:jcatIx(occ,/ประมง/)};}],
+    [/ทำนา|ปลูกข้าว|ชาวนา/,function(){o.f={a:"occ",ix:jcatIx(occ,/ทำนา/)};}],
+    [/ทำสวน|ชาวสวน/,function(){o.f={a:"occ",ix:jcatIx(occ,/ทำสวน/)};}],
+    [/ทำไร่|พืชไร่/,function(){o.f={a:"occ",ix:jcatIx(occ,/ทำไร่/)};}],
+    [/รับจ้าง/,function(){o.f={a:"occ",ix:jcatIx(occ,/รับจ้าง/)};}],
+    [/ค้าขาย|แม่ค้า/,function(){o.f={a:"occ",ix:jcatIx(occ,/ค้าขาย/)};}],
+    [/ไม่มีอาชีพ|ว่างงาน/,function(){o.f={a:"occ",ix:jcatIx(occ,/ไม่มีอาชีพ/)};}],
+    [/ทำเกษตร|อาชีพเกษตร|เป็นเกษตรกร/,function(){o.f={a:"occ",ix:jcatIx(occ,/^เกษตร/)};}],
+    [/อาชีพ/,function(){o.split="occ";}],
+    [/พิการ/,function(){var a=jdim("hl");o.f={a:"hl",ix:jcatIx(a,/พิการ/)};}],
+    [/ป่วย|เรื้อรัง/,function(){var a=jdim("hl");o.f={a:"hl",ix:jcatIx(a,/ป่วย/)};}],
+    [/สุขภาพ|ร่างกาย/,function(){o.split="hl";}],
+    [/ผู้สูงอายุ|สูงอายุ|คนแก่|60 ?ปี/,function(){o.f={a:"age",ix:[3,4]};}],
+    [/อายุ|วัย/,function(){o.split="age";}],
+    [/ผู้หญิง|เพศหญิง/,function(){o.f={a:"sex",ix:[1]};}],
+    [/ผู้ชาย|เพศชาย/,function(){o.f={a:"sex",ix:[0]};}],
+    [/เพศ/,function(){o.split="sex";}],
+    [/การศึกษา|ปริญญา|ประถม|มัธยม/,function(){o.split="edu";}],
+    [/4-01|สถานะการจัด|จัดที่ดิน|เอกสารสิทธิ/,function(){o.split="st";}],
+    [/ใช้ประโยชน์|ที่อยู่อาศัย/,function(){o.split="use";}],
+    [/ศาสนา|มุสลิม|อิสลาม/,function(){o.split="rel";}],
+    [/สมรส|โสด|หม้าย|สถานภาพ/,function(){o.split="mar";}],
+    [/พึ่งพา|ช่วยเหลือตัวเอง/,function(){o.split="self";}]
+  ];
+  for(var i=0;i<T.length;i++)if(T[i][0].test(s)){T[i][1]();break;}
+  if(/รายได้|ออม|เงิน/.test(s)){o.m="inc";o.inc=/ออม/.test(s)?6:/ออนไลน์|โซเชียล/.test(s)?4:/เกษตร/.test(s)?3:/เสริม/.test(s)?1:/หลัก/.test(s)?0:5;if(o.f&&o.f.a!=="occ"){}}
+  else if(/เนื้อที่|กี่ไร่|พื้นที่ถือครอง|ถือครอง/.test(s))o.m="ar";
+  else if(/แปลง/.test(s))o.m="pl";
+  else if(/สมาชิกครัวเรือน|ประชากร|คนในครัวเรือน/.test(s))o.m="mem";
+  if(o.m!=="pe"&&o.f){o.note=(o.note?o.note+" · ":"")+"ตัวกรองตามคุณลักษณะใช้ได้กับการนับคนเท่านั้น จึงแสดงยอดของทุกคนในพื้นที่";o.f=null;}
+  if(/ตำบล/.test(s))o.by="tb";else if(/อำเภอ/.test(s))o.by="am";else if(/จังหวัด/.test(s))o.by="pv";
+  var pvs={};D.jpt.rows.forEach(function(r){pvs[r[1]]=1;});Object.keys(pvs).forEach(function(v){if(v&&s.indexOf(v)>=0)o.pv=v;});
+  var mp=/จังหวัด ?([ก-๙.]{4,})/.exec(s);if(mp&&!o.pv&&!/^(ละ|ไหน|ที่|ของ|ใด|อะไร)/.test(mp[1]))o.pv=mp[1];
+  P.forEach(function(p){var ks=[String(p.short||"").split(/[\s()]+/)[0],p.short].filter(function(k){return k&&k.length>=3&&!pvs[k]&&!/^(เกษตร|ส่งเสริม|อาชีพ|โรงเรียน|ระบบงานเกษตร|ศูนย์|ตัวอย่าง|ขยายผล|บ้าน)$/.test(k);});if(ks.some(function(k){return s.indexOf(k)>=0;}))o.pid=p.id;});
+  if(o.pv&&o.by==="pv")o.by="am";
+  return o;
+}
+function jval(r,o){
+  if(o.m==="pl")return r[4];if(o.m==="ar")return r[5];if(o.m==="mem")return r[7];
+  if(o.m==="inc")return r[9][o.inc];
+  if(!o.f)return r[6];var a=jattr(o.f.a),v=r[a.i];return o.f.ix.reduce(function(t,i){return t+(v[i]||0);},0);
+}
+function jrows(o){return D.jpt.rows.filter(function(r){return(!o.pid||r[0]===o.pid)&&(!o.pv||r[1]===o.pv);});}
+function jkey(r,by){return by==="pid"?String(r[0]):by==="pv"?r[1]:by==="am"?r[1]+"|"+r[2]:r[1]+"|"+r[2]+"|"+r[3];}
+function jlabel(k,by){if(by==="pid"){var p=proj(+k);return code(+k)+" "+(p?(p.short||p.name):"");}var a=k.split("|");return by==="pv"?"จ."+a[0]:by==="am"?"อ."+(a[1]||"ไม่ระบุ")+" จ."+a[0]:"ต."+(a[2]||"ไม่ระบุ")+" อ."+a[1]+" จ."+a[0];}
+function jgroup(rs,o,by){var g={},order=[];rs.forEach(function(r){var k=jkey(r,by);if(!g[k]){g[k]={k:k,v:0,pe:0,inN:0,rs:[]};order.push(k);}var x=g[k];x.v+=jval(r,o);x.pe+=r[6];x.inN+=r[8];x.rs.push(r);});
+  return order.map(function(k){var x=g[k];x.out=o.m==="inc"?(x.inN?x.v/x.inN:0):x.v;return x;}).sort(function(a,b){return b.out-a.out;});}
+function jfmt(v,o){return o.m==="ar"?fmt(v,1):fmt(Math.round(v));}
+function jsubject(o){var m=o.m==="inc"?D.jpt.inc[o.inc].replace("/ปี","")+" เฉลี่ยต่อครัวเรือน":JMEAS[o.m];if(o.f){var a=jattr(o.f.a);m="เกษตรกรที่"+a.name+" = "+o.f.ix.map(function(i){return a.cats[i];}).join(" / ");}return m;}
+function jscope(o){return(o.pid?code(o.pid)+" "+pshort(o.pid):"ทุกโครงการของกอง")+(o.pv?" · จ."+o.pv:"");}
+function jbar(v,max){var w=max?Math.max(1,Math.round(v/max*100)):0;return '<span class="jq-bar"><i style="width:'+w+'%"></i></span>';}
+function jtable(list,o,by,tot,showShare){var max=list.reduce(function(a,x){return Math.max(a,x.out);},0);
+  return '<div class="tbl-wrap"><table class="btbl jq-t"><thead><tr><th>'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+'</th><th class="r">'+(o.m==="inc"?"บาท/ครัวเรือน/ปี":o.f?"คน":JMEAS[o.m])+'</th>'+(showShare?'<th class="r">ร้อยละของคนในพื้นที่</th>':'')+'<th style="width:28%"></th></tr></thead><tbody>'+
+  list.map(function(x){return '<tr><td>'+esc(jlabel(x.k,by))+'</td><td class="r num">'+jfmt(x.out,o)+'</td>'+(showShare?'<td class="r num">'+(x.pe?fmt(x.out/x.pe*100,1):"0.0")+'</td>':'')+'<td>'+jbar(x.out,max)+'</td></tr>';}).join("")+
+  (tot!==null?'<tr class="t"><td>รวม</td><td class="r num">'+jfmt(tot,o)+'</td>'+(showShare?'<td></td>':'')+'<td></td></tr>':'')+'</tbody></table></div>';}
+function jsplit(rs,o,by){var a=jattr(o.split),g=jgroup(rs,{m:"pe"},by),tot=a.cats.map(function(_,i){return rs.reduce(function(t,r){return t+(r[a.i][i]||0);},0);});
+  var ord=tot.map(function(v,i){return i;}).filter(function(i){return tot[i]>0;}).sort(function(x,y){return tot[y]-tot[x];}),all=rs.reduce(function(t,r){return t+r[6];},0);
+  var sum='<div class="jq-cats">'+ord.map(function(i){return '<div class="jq-cat"><span>'+esc(a.cats[i])+'</span><b class="num">'+fmt(tot[i])+'</b><i>'+(all?fmt(tot[i]/all*100,1):0)+'%</i>'+jbar(tot[i],tot[ord[0]])+'</div>';}).join("")+'</div>';
+  var mx='<div class="tbl-wrap"><table class="btbl jq-t"><thead><tr><th>'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+'</th><th class="r">รวม (คน)</th>'+ord.map(function(i){return '<th class="r">'+esc(a.cats[i])+'</th>';}).join("")+'</tr></thead><tbody>'+
+    g.map(function(x){return '<tr><td>'+esc(jlabel(x.k,by))+'</td><td class="r num b">'+fmt(x.pe)+'</td>'+ord.map(function(i){var v=x.rs.reduce(function(t,r){return t+(r[a.i][i]||0);},0);return dvHeat(v,Math.max(1,x.pe));}).join("")+'</tr>';}).join("")+'</tbody></table></div>';
+  return{head:"จำแนก"+a.name+" — "+jscope(o),sum:sum,mx:mx,all:all,top:ord.slice(0,3).map(function(i){return a.cats[i]+" "+fmt(tot[i])+" คน ("+(all?fmt(tot[i]/all*100,1):0)+"%)";})};}
+function jcsv(o){var rs=jrows(o),by=o.by,lines=[];
+  if(o.split){var a=jattr(o.split);lines.push(["พื้นที่","รวม (คน)"].concat(a.cats).join(","));jgroup(rs,{m:"pe"},by).forEach(function(x){lines.push(['"'+jlabel(x.k,by)+'"',x.pe].concat(a.cats.map(function(_,i){return x.rs.reduce(function(t,r){return t+(r[a.i][i]||0);},0);})).join(","));});}
+  else{lines.push(["พื้นที่",jsubject(o)].join(","));jgroup(rs,o,"tb").forEach(function(x){lines.push(['"'+jlabel(x.k,"tb")+'"',Math.round(x.out*10)/10].join(","));});}
+  var b=new Blob(["﻿"+lines.join("\n")],{type:"text/csv"}),u=URL.createObjectURL(b),l=document.createElement("a");l.href=u;l.download="จปฐ_"+(o.split||o.m)+".csv";document.body.appendChild(l);l.click();setTimeout(function(){URL.revokeObjectURL(u);l.remove();},500);}
+function jptAnswer(o){
+  var rs=jrows(o);if(!rs.length)return '<p class="jq-empty">ไม่พบข้อมูลในขอบเขต '+esc(jscope(o))+'</p>';
+  var allPe=rs.reduce(function(t,r){return t+r[6];},0),h="";
+  if(o.split){var S=jsplit(rs,o,o.by);
+    h+='<div class="jq-head"><p class="eyebrow">คำตอบ</p><h2>'+esc(S.head)+'</h2><p>เกษตรกรในพื้นที่ '+fmt(S.all)+' คน · มากที่สุด: '+esc(S.top.join(" · "))+'</p></div>'+S.sum+'<h3 class="jq-h3">จำแนกราย'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[o.by]+'</h3>'+S.mx;}
+  else{var tot=rs.reduce(function(t,r){return t+jval(r,o);},0),inN=rs.reduce(function(t,r){return t+r[8];},0),out=o.m==="inc"?(inN?tot/inN:0):tot;
+    var unit=o.m==="inc"?" บาท/ครัวเรือน/ปี":o.m==="ar"?" ไร่":o.m==="pl"?" แปลง":" คน";
+    h+='<div class="jq-head"><p class="eyebrow">คำตอบ</p><h2>'+esc(jsubject(o))+' — '+esc(jscope(o))+'</h2><p class="jq-big num">'+jfmt(out,o)+'<small>'+unit+'</small></p><p>'+
+      (o.f?"คิดเป็นร้อยละ "+fmt(allPe?tot/allPe*100:0,2)+" ของเกษตรกรในพื้นที่ "+fmt(allPe)+" คน":o.m==="inc"?"คำนวณจาก "+fmt(inN)+" ครัวเรือนที่มีข้อมูลรายได้":"จากเกษตรกรในพื้นที่ "+fmt(allPe)+" คน")+'</p></div>';
+    var levels=o.deep?(o.pv?["am","tb"]:o.pid?["pv","am","tb"]:["pid","pv","am"]):[o.by];if(levels.indexOf(o.by)<0)levels.unshift(o.by);
+    levels.forEach(function(by,ix){var g=jgroup(rs,o,by).filter(function(x){return x.out>0||o.m==="inc";});
+      h+='<h3 class="jq-h3">ราย'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+' <span>('+g.length+' พื้นที่'+(g.length>40?" · แสดง 40 อันดับแรก ดาวน์โหลด CSV เพื่อดูทั้งหมด":"")+')</span></h3>'+jtable(g.slice(0,40),o,by,o.m==="inc"?null:(ix===0?tot:null),!!o.f);});}
+  if(o.note)h+='<p class="jq-note">หมายเหตุ: '+esc(o.note)+'</p>';
+  return h;
+}
+function renderJpt(){
+  var el=document.getElementById("jptPanel");if(!el)return;
+  if(!jptReady()){el.innerHTML='<p class="jq-empty">ยังไม่มีสรุปฐาน จปฐ. — ผู้ดูแลระบบรัน syncJpt ใน Apps Script แล้ว Deploy เวอร์ชันใหม่</p>';return;}
+  var R=D.jpt.rows,pe=0,pl=0,ar=0,inN=0,inc=0;R.forEach(function(r){pe+=r[6];pl+=r[4];ar+=r[5];inN+=r[8];inc+=r[9][5];});
+  var opt=function(v,t,s){return '<option value="'+esc(v)+'"'+(String(s)===String(v)?" selected":"")+'>'+esc(t)+'</option>';},pids={},pvs={};R.forEach(function(r){pids[r[0]]=1;pvs[r[1]]=1;});
+  var ex=["เกษตรกรในพื้นที่ทั้งหมดของกองทำปศุสัตว์เท่าไหร่ จำแนกโดยละเอียด","อาชีพของเกษตรกรรายจังหวัด","รายได้ภาคการเกษตรเฉลี่ยรายโครงการ","ผู้สูงอายุ 60 ปีขึ้นไปมีเท่าไหร่ จำแนกรายอำเภอ","สถานะการจัดที่ดินของโครงการพัชรสุธาคชานุรักษ์","การศึกษาของเกษตรกรจังหวัดสระแก้ว","เนื้อที่ถือครองรายโครงการ","ผู้พิการในพื้นที่โครงการ จำแนกรายตำบล"];
+  var attrs=[["","— ไม่กรอง —"]];D.jpt.dims.forEach(function(d){d[2].forEach(function(c,i){attrs.push([d[0]+":"+i,jdn(d[1])+" = "+c]);});});D.jpt.age.forEach(function(c,i){attrs.push(["age:"+i,"อายุ "+c]);});D.jpt.sex.forEach(function(c,i){attrs.push(["sex:"+i,"เพศ "+c]);});
+  var fv=JQ.f?JQ.f.a+":"+JQ.f.ix[0]:"";
+  el.innerHTML='<div class="kpis">'+[["เกษตรกรในพื้นที่ (คน)",fmt(pe),"นับไม่ซ้ำด้วยเลขบัตร"],["แปลงที่ดิน",fmt(pl),fmt(ar,0)+" ไร่"],["ครัวเรือนที่มีข้อมูลรายได้",fmt(inN),"ร้อยละ "+fmt(inN/pe*100,1)],["รายได้รวมเฉลี่ย",fmt(inN?inc/inN:0),"บาท/ครัวเรือน/ปี"]].map(function(k){return '<div class="kpi"><p class="l">'+k[0]+'</p><p class="v num">'+k[1]+'</p><p class="s">'+k[2]+'</p></div>';}).join("")+'</div>'+
+  '<div class="panel jq-ask"><form id="jqForm"><label for="jqIn" class="jq-lab">ถามเป็นภาษาพูดได้เลย</label><div class="jq-row"><input id="jqIn" type="search" autocomplete="off" placeholder="เช่น เกษตรกรในพื้นที่ทำปศุสัตว์เท่าไหร่ จำแนกโดยละเอียด" value="'+esc(JQ.q)+'"><button type="submit" class="pm-btn pri">หาคำตอบ</button></div></form>'+
+  '<div class="jq-ex">'+ex.map(function(x){return '<button type="button" class="jq-chip" data-q="'+esc(x)+'">'+esc(x)+'</button>';}).join("")+'</div>'+
+  '<details class="jq-adv"'+(JQ.adv?" open":"")+'><summary>กำหนดเงื่อนไขเอง</summary><div class="jq-grid">'+
+  '<label>วัดอะไร<select id="jqM">'+Object.keys(JMEAS).map(function(k){return opt(k,JMEAS[k],JQ.m);}).join("")+'</select></label>'+
+  '<label>รายได้ประเภท<select id="jqInc">'+D.jpt.inc.map(function(n,i){return opt(i,n,JQ.inc==null?5:JQ.inc);}).join("")+'</select></label>'+
+  '<label>กรองคน (นับคน)<select id="jqF">'+attrs.map(function(a){return opt(a[0],a[1],fv);}).join("")+'</select></label>'+
+  '<label>แจกแจงตาม<select id="jqS">'+opt("","— ไม่แจกแจง —",JQ.split||"")+D.jpt.dims.map(function(d){return opt(d[0],jdn(d[1]),JQ.split||"");}).join("")+opt("age","ช่วงอายุ",JQ.split||"")+opt("sex","เพศ",JQ.split||"")+'</select></label>'+
+  '<label>จำแนกราย<select id="jqBy">'+[["pid","โครงการ"],["pv","จังหวัด"],["am","อำเภอ"],["tb","ตำบล"]].map(function(a){return opt(a[0],a[1],JQ.by);}).join("")+'</select></label>'+
+  '<label>โครงการ<select id="jqP">'+opt(0,"ทุกโครงการ",JQ.pid)+Object.keys(pids).sort(function(a,b){return a-b;}).map(function(k){return opt(k,code(+k)+" "+pshort(+k),JQ.pid);}).join("")+'</select></label>'+
+  '<label>จังหวัด<select id="jqPv">'+opt("","ทุกจังหวัด",JQ.pv)+Object.keys(pvs).filter(String).sort(function(a,b){return a.localeCompare(b,"th");}).map(function(k){return opt(k,k,JQ.pv);}).join("")+'</select></label>'+
+  '<label class="jq-ck"><input type="checkbox" id="jqDeep"'+(JQ.deep?" checked":"")+'> แสดงโดยละเอียดหลายระดับ</label></div></details>'+
+  '<div class="jq-tools"><button type="button" class="pm-btn" id="jqCsv">ดาวน์โหลด CSV</button><span>ข้อมูล จปฐ. ปี '+D.jpt.asof+' · ประมวลผล '+esc(String(D.jpt.built||"").slice(0,10))+' · ไม่มีข้อมูลรายบุคคล</span></div></div>'+
+  '<div class="panel" id="jqOut">'+jptAnswer(JQ)+'</div>';
+  var run=function(q){var o=jparse(q);o.adv=JQ.adv;JQ=o;renderJpt();var out=document.getElementById("jqOut");if(out)out.scrollIntoView({behavior:"smooth",block:"start"});};
+  document.getElementById("jqForm").addEventListener("submit",function(e){e.preventDefault();run(document.getElementById("jqIn").value);});
+  el.querySelectorAll(".jq-chip").forEach(function(b){b.addEventListener("click",function(){run(b.dataset.q);});});
+  var adv=function(){var f=document.getElementById("jqF").value,s=document.getElementById("jqS").value;JQ={q:"",adv:true,m:document.getElementById("jqM").value,inc:+document.getElementById("jqInc").value,f:f?{a:f.split(":")[0],ix:[+f.split(":")[1]]}:null,split:s||null,by:document.getElementById("jqBy").value,pid:+document.getElementById("jqP").value,pv:document.getElementById("jqPv").value,deep:document.getElementById("jqDeep").checked,note:""};
+    if(JQ.m!=="pe"&&JQ.f){JQ.f=null;JQ.note="ตัวกรองตามคุณลักษณะใช้ได้กับการนับคนเท่านั้น";}if(JQ.split){JQ.m="pe";JQ.f=null;}renderJpt();};
+  el.querySelectorAll(".jq-grid select,.jq-grid input").forEach(function(x){x.addEventListener("change",adv);});
+  el.querySelector(".jq-adv").addEventListener("toggle",function(e){JQ.adv=e.target.open;});
+  document.getElementById("jqCsv").addEventListener("click",function(){jcsv(JQ);});
+}
+
 function route(h){
   h=(h||"overview").replace(/^#/,"");if(h==="p17"){h="p04";try{history.replaceState(null,"","#p04");}catch(e){}}var m=/^p(\d{2})$/.exec(h),view;
   if(m&&proj(+m[1])){view="project";renderProject(+m[1]);}
-  else{if(h==="model"||h==="farmers"){var ft=h==="model"?"model":(FV.tab==="model"?"all":FV.tab);if(FV.tab!==ft){FV.tab=ft;FV.pid=0;FV.y=0;FV.page=0;renderFarmers();}}view=["overview","budget","provinces","monthly","farmers","model","projects","checks"].indexOf(h)>=0?h:"overview";}
-  var vv=view==="model"?"farmers":view;var fh=document.querySelector("#v-farmers .page-h h1");if(fh)fh.textContent=view==="model"?"เกษตรกรตัวอย่าง":"ฐานรายชื่อเกษตรกร";["overview","budget","provinces","monthly","farmers","projects","project","checks"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===vv);});
+  else{if(h==="model"||h==="farmers"){var ft=h==="model"?"model":(FV.tab==="model"?"all":FV.tab);if(FV.tab!==ft){FV.tab=ft;FV.pid=0;FV.y=0;FV.page=0;renderFarmers();}}view=["overview","budget","provinces","monthly","farmers","model","projects","checks","jpt"].indexOf(h)>=0?h:"overview";}
+  var vv=view==="model"?"farmers":view;var fh=document.querySelector("#v-farmers .page-h h1");if(fh)fh.textContent=view==="model"?"เกษตรกรตัวอย่าง":"ฐานรายชื่อเกษตรกร";["overview","budget","provinces","monthly","farmers","projects","project","checks","jpt"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===vv);});
   if(view==="provinces")setTimeout(renderOverviewMap,0);
+  if(view==="jpt")renderJpt();
   if(view==="project")setTimeout(function(){renderProjectMap(+m[1]);},0);
   var navKey=view==="project"?"projects":view;
   document.querySelectorAll(".snav a,.mtabs a").forEach(function(a){if(a.getAttribute("href")==="#"+navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
