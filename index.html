@@ -238,7 +238,7 @@ tr.link:hover{background:var(--surface-2)}
 .jq-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}.jq-cat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 8px}
 .jq-cat span{font-size:13px;color:var(--ink-2)}.jq-cat b{font-size:16px;text-align:right}.jq-cat i{grid-column:1/-1;font-style:normal;font-size:12px;color:var(--muted)}.jq-cat .jq-bar{grid-column:1/-1}
 .jq-note{margin-top:16px;padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--ink-2);font-size:13px}.jq-empty{color:var(--muted)}
-.jq-t td:first-child{white-space:nowrap}
+.jq-t td:first-child{white-space:nowrap}.jq-alert{background:var(--bad-soft);margin:0 0 14px}.jq-warn{color:var(--bad);font-weight:600}
 @media(max-width:640px){.jq-row{flex-direction:column}.jq-row button{width:100%}}
 </style>
 <style id="bicss"></style>
@@ -1576,19 +1576,21 @@ function jval(r,o){
   if(o.m==="inc")return r[9][o.inc];
   if(!o.f)return r[6];var a=jattr(o.f.a),v=r[a.i];return o.f.ix.reduce(function(t,i){return t+(v[i]||0);},0);
 }
+function jz(r){var v=r[12+D.jpt.dims.length];return typeof v==="number"?v:0;}
+function jagri(o){return o.m==="inc"&&o.inc===3&&D.jpt.qa;}
 function jrows(o){return D.jpt.rows.filter(function(r){return(!o.pid||r[0]===o.pid)&&(!o.pv||r[1]===o.pv);});}
 function jkey(r,by){return by==="pid"?String(r[0]):by==="pv"?r[1]:by==="am"?r[1]+"|"+r[2]:r[1]+"|"+r[2]+"|"+r[3];}
 function jlabel(k,by){if(by==="pid"){var p=proj(+k);return code(+k)+" "+(p?(p.short||p.name):"");}var a=k.split("|");return by==="pv"?"จ."+a[0]:by==="am"?"อ."+(a[1]||"ไม่ระบุ")+" จ."+a[0]:"ต."+(a[2]||"ไม่ระบุ")+" อ."+a[1]+" จ."+a[0];}
-function jgroup(rs,o,by){var g={},order=[];rs.forEach(function(r){var k=jkey(r,by);if(!g[k]){g[k]={k:k,v:0,pe:0,inN:0,rs:[]};order.push(k);}var x=g[k];x.v+=jval(r,o);x.pe+=r[6];x.inN+=r[8];x.rs.push(r);});
+function jgroup(rs,o,by){var g={},order=[];rs.forEach(function(r){var k=jkey(r,by);if(!g[k]){g[k]={k:k,v:0,pe:0,inN:0,z:0,rs:[]};order.push(k);}var x=g[k];x.v+=jval(r,o);x.pe+=r[6];x.inN+=r[8];x.z+=jz(r);x.rs.push(r);});
   return order.map(function(k){var x=g[k];x.out=o.m==="inc"?(x.inN?x.v/x.inN:0):x.v;return x;}).sort(function(a,b){return b.out-a.out;});}
 function jfmt(v,o){return o.m==="ar"?fmt(v,1):fmt(Math.round(v));}
 function jsubject(o){var m=o.m==="inc"?D.jpt.inc[o.inc].replace("/ปี","")+" เฉลี่ยต่อครัวเรือน":JMEAS[o.m];if(o.f){var a=jattr(o.f.a);m="เกษตรกรที่"+a.name+" = "+o.f.ix.map(function(i){return a.cats[i];}).join(" / ");}return m;}
 function jscope(o){return(o.pid?code(o.pid)+" "+pshort(o.pid):"ทุกโครงการของกอง")+(o.pv?" · จ."+o.pv:"");}
 function jbar(v,max){var w=max?Math.max(1,Math.round(v/max*100)):0;return '<span class="jq-bar"><i style="width:'+w+'%"></i></span>';}
 function jtable(list,o,by,tot,showShare){var max=list.reduce(function(a,x){return Math.max(a,x.out);},0);
-  return '<div class="tbl-wrap"><table class="btbl jq-t"><thead><tr><th>'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+'</th><th class="r">'+(o.m==="inc"?"บาท/ครัวเรือน/ปี":o.f?"คน":JMEAS[o.m])+'</th>'+(showShare?'<th class="r">ร้อยละของคนในพื้นที่</th>':'')+'<th style="width:28%"></th></tr></thead><tbody>'+
-  list.map(function(x){return '<tr><td>'+esc(jlabel(x.k,by))+'</td><td class="r num">'+jfmt(x.out,o)+'</td>'+(showShare?'<td class="r num">'+(x.pe?fmt(x.out/x.pe*100,1):"0.0")+'</td>':'')+'<td>'+jbar(x.out,max)+'</td></tr>';}).join("")+
-  (tot!==null?'<tr class="t"><td>รวม</td><td class="r num">'+jfmt(tot,o)+'</td>'+(showShare?'<td></td>':'')+'<td></td></tr>':'')+'</tbody></table></div>';}
+  return '<div class="tbl-wrap"><table class="btbl jq-t"><thead><tr><th>'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+'</th><th class="r">'+(o.m==="inc"?"บาท/ครัวเรือน/ปี":o.f?"คน":JMEAS[o.m])+'</th>'+(jagri(o)?'<th class="r" title="ครัวเรือนที่มีข้อมูลรายได้แต่กรอกรายได้ภาคการเกษตรเป็น 0 หรือว่าง">กรอกเป็น 0</th>':'')+(showShare?'<th class="r">ร้อยละของคนในพื้นที่</th>':'')+'<th style="width:28%"></th></tr></thead><tbody>'+
+  list.map(function(x){return '<tr><td>'+esc(jlabel(x.k,by))+'</td><td class="r num">'+jfmt(x.out,o)+'</td>'+(jagri(o)?'<td class="r num'+(x.inN&&x.z/x.inN>.5?' jq-warn':'')+'">'+(x.inN?fmt(x.z/x.inN*100,0):0)+'%</td>':'')+(showShare?'<td class="r num">'+(x.pe?fmt(x.out/x.pe*100,1):"0.0")+'</td>':'')+'<td>'+jbar(x.out,max)+'</td></tr>';}).join("")+
+  (tot!==null?'<tr class="t"><td>รวม</td><td class="r num">'+jfmt(tot,o)+'</td>'+(jagri(o)?'<td></td>':'')+(showShare?'<td></td>':'')+'<td></td></tr>':'')+'</tbody></table></div>';}
 function jsplit(rs,o,by){var a=jattr(o.split),g=jgroup(rs,{m:"pe"},by),tot=a.cats.map(function(_,i){return rs.reduce(function(t,r){return t+(r[a.i][i]||0);},0);});
   var ord=tot.map(function(v,i){return i;}).filter(function(i){return tot[i]>0;}).sort(function(x,y){return tot[y]-tot[x];}),all=rs.reduce(function(t,r){return t+r[6];},0);
   var sum='<div class="jq-cats">'+ord.map(function(i){return '<div class="jq-cat"><span>'+esc(a.cats[i])+'</span><b class="num">'+fmt(tot[i])+'</b><i>'+(all?fmt(tot[i]/all*100,1):0)+'%</i>'+jbar(tot[i],tot[ord[0]])+'</div>';}).join("")+'</div>';
@@ -1611,6 +1613,7 @@ function jptAnswer(o){
     var levels=o.deep?(o.pv?["am","tb"]:o.pid?["pv","am","tb"]:["pid","pv","am"]):[o.by];if(levels.indexOf(o.by)<0)levels.unshift(o.by);
     levels.forEach(function(by,ix){var g=jgroup(rs,o,by).filter(function(x){return x.out>0||o.m==="inc";});
       h+='<h3 class="jq-h3">ราย'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+' <span>('+g.length+' พื้นที่'+(g.length>40?" · แสดง 40 อันดับแรก ดาวน์โหลด CSV เพื่อดูทั้งหมด":"")+')</span></h3>'+jtable(g.slice(0,40),o,by,o.m==="inc"?null:(ix===0?tot:null),!!o.f);});}
+  if(jagri(o)){var q=D.jpt.qa,zz=rs.reduce(function(t,r){return t+jz(r);},0),nn=rs.reduce(function(t,r){return t+r[8];},0);h='<p class="jq-note jq-alert"><b>ข้อควรระวังก่อนนำตัวเลขไปใช้:</b> ครัวเรือนในขอบเขตนี้ '+fmt(zz)+' จาก '+fmt(nn)+' ครัวเรือน (ร้อยละ '+fmt(nn?zz/nn*100:0,1)+') กรอกรายได้ภาคการเกษตรเป็น 0 หรือเว้นว่าง ทั้งที่เป็นเกษตรกรในพื้นที่ ส.ป.ก. ค่าเฉลี่ยจึงน่าจะต่ำกว่าความจริง ควรใช้เปรียบเทียบระหว่างพื้นที่เท่านั้น และควรตรวจการกรอกข้อมูลที่ต้นทาง (ทั้งกอง: '+fmt(q.agriZero)+' จาก '+fmt(q.incN)+' ครัวเรือน)</p>'+h;}
   if(o.note)h+='<p class="jq-note">หมายเหตุ: '+esc(o.note)+'</p>';
   return h;
 }
