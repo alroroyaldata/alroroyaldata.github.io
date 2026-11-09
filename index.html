@@ -877,6 +877,8 @@ var hit=savedKey()&&cached(),k0=savedKey();
 if(hit){start(hit);}else if(k0){idbGet(function(c){if(c)start(c);else load(k0,!!ls(KK)).catch(function(){showGate("เชื่อมต่อไม่ได้ กรุณาลองใหม่");});});}else{showGate("");}
 var started=false;
 function start(D){
+/* ชีตเกษตรกรตัวอย่างใช้ "ไม่มี" แทนปีที่ไม่มีผู้ได้รับคัดเลือก — ไม่นับเป็นราย */
+if(D&&D.modelFarmers)D.modelFarmers=D.modelFarmers.filter(function(m){return !/^(ไม่มี|-|–)?$/.test(String(m[3]==null?"":m[3]).trim());});
 if(started)return;started=true;
 var INIT="";
 var DOC=D.doc;
@@ -1497,7 +1499,8 @@ function enhanceProject(id){
     var rowsMF=MF.map(function(m){var n=nz(m[3]),pin=n?PN.filter(function(q){var k=nz(q.name);return k&&(k.indexOf(n)>=0||n.indexOf(k)>=0);})[0]:null;return{m:m,pin:pin};}).sort(function(a,b){return (b.m[0]-a.m[0])||String(a.m[2]).localeCompare(String(b.m[2]),"th");});
     var nP=rowsMF.filter(function(x){return x.pin;}).length,yrs={};rowsMF.forEach(function(x){yrs[x.m[0]]=(yrs[x.m[0]]||0)+1;});
     var gms=function(m){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent([m[4],m[2]?"จ."+m[2]:""].filter(Boolean).join(" "));};
-    mfHtml='<div class="panel mfp"><h2>เกษตรกรตัวอย่าง <span class="num" style="color:var(--muted);font-weight:500">'+fmt(MF.length)+' ราย</span></h2>'+
+    var nU=Object.keys(rowsMF.reduce(function(o,x){o[nz(x.m[3])]=1;return o;},{})).length;
+    mfHtml='<div class="panel mfp"><h2>เกษตรกรตัวอย่าง <span class="num" style="color:var(--muted);font-weight:500">'+fmt(nU)+' คน · '+fmt(MF.length)+' รายการรายปี</span></h2>'+
      '<p class="sub">ปักหมุดพิกัดแล้ว <b class="num">'+nP+'</b> จาก '+MF.length+' ราย · ผู้ที่มีหมุด กด “ดูบนแผนที่” หรือ “นำทาง” ไปยังจุดจริงได้ · ผู้ที่ยังไม่มีหมุด ปุ่ม Google Maps จะค้นหาจากที่อยู่ (ตำแหน่งอาจไม่ตรงแปลง)</p>'+
      '<div class="mfbar" title="ปักหมุดแล้ว '+nP+' / '+MF.length+'"><i style="width:'+(nP/MF.length*100).toFixed(1)+'%"></i></div>'+
      '<div class="mfy" role="group" aria-label="กรองปี"><button type="button" data-y="" aria-pressed="true">ทุกปี</button>'+Object.keys(yrs).sort().reverse().map(function(y){return '<button type="button" data-y="'+y+'">'+y+' <small>'+yrs[y]+'</small></button>';}).join("")+'</div>'+
