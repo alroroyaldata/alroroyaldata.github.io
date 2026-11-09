@@ -1885,7 +1885,7 @@ renderOverview();renderDivision();renderProjects();renderChecks();
       '<div><h3>เทียบให้เห็นภาพ</h3><div class="bq-u">'+
        '<div><b class="num">'+fmt(Math.round(per))+'</b><span>บาท ต่อจังหวัด (เฉลี่ย)</span><small>'+fmt(PROV)+' ÷ '+nPv+' จังหวัดที่ได้รับเงิน</small></div>'+
        '<div><b class="num">'+fmt(Math.round(PROV/nPj))+'</b><span>บาท ต่อโครงการ (เฉลี่ย)</span><small>'+fmt(PROV)+' ÷ '+nPj+' โครงการ</small></div>'+
-       (trQ?'<div><b class="num">'+fmt(Math.round(trA/trQ))+'</b><span>บาท ต่อผู้เข้าอบรม 1 ราย</span><small>ค่าอบรมเฉพาะรายการที่ระบุหน่วยเป็น “ราย” '+fmt(trA)+' ÷ '+fmt(trQ)+' ราย ('+TR.length+' บรรทัด'+(trA<trAll?' · ไม่รวมอบรมที่ระบุหน่วยอื่น '+fmt(trAll-trA)+' บาท':'')+')</small></div>':'')+
+       (trQ?'<div><b class="num">'+fmt(Math.round(trA/trQ))+'</b><span>บาท ต่อผู้เข้าอบรม 1 ราย <small>(เฉพาะหลักสูตรที่ระบุจำนวนคน)</small></span><small>'+fmt(trA)+' ÷ '+fmt(trQ)+' ราย จาก '+TR.length+' บรรทัด · ครอบคลุม '+pc(trA,trAll)+'% ของค่าฝึกอบรมทั้งหมด (ส่วนที่เหลือระบุหน่วยอื่น จึงหารต่อคนไม่ได้)</small></div>':'')+
        '<div><b class="num">'+M(p0.a+p0.f)+' ล้าน</b><span>'+esc(pshort(p0.id))+' ได้มากที่สุด</span><small>'+pc(p0.a+p0.f,PROV)+'% ของเงินลงพื้นที่ทั้งกอง</small></div>'+
       '</div></div></div>'+
      '<p class="bq-src">ที่มา: รายการย่อยทุกบรรทัดในแผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70 (ฉบับเต็มปี ที่ กผง. ยืนยัน) · ตัวเลขเปลี่ยนตามไฟล์อัตโนมัติ ไม่มีการพิมพ์ค่าเอง</p>';
