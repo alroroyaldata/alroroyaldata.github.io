@@ -1679,6 +1679,7 @@ function jptAnswer(o){
   if(o.split){var S=jsplit(rs,o,o.by);
     h+='<div class="jq-head"><p class="eyebrow">คำตอบ</p><h2>'+esc(S.head)+'</h2><p>เกษตรกรในพื้นที่ '+fmt(S.all)+' คน · มากที่สุด: '+esc(S.top.join(" · "))+'</p></div>'+S.sum+'<h3 class="jq-h3">จำแนกราย'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[o.by]+'</h3>'+S.mx;}
   else{var tot=rs.reduce(function(t,r){return t+jval(r,o);},0),inN=rs.reduce(function(t,r){return t+r[8];},0),out=o.m==="inc"?(inN?tot/inN:0):tot;
+    var whole=!o.pid&&!o.pv&&!o.f&&o.m==="pe"&&D.jpt.pu!=null,dup=whole?tot-D.jpt.pu:0;if(whole){out=D.jpt.pu;allPe=D.jpt.pu;}
     var unit=o.m==="inc"?" บาท/ครัวเรือน/ปี":o.m==="ar"?" ไร่":o.m==="pl"?" แปลง":" คน";
     h+='<div class="jq-head"><p class="eyebrow">คำตอบ</p><h2>'+esc(jsubject(o))+' — '+esc(jscope(o))+'</h2><p class="jq-big num">'+jfmt(out,o)+'<small>'+unit+'</small></p><p>'+
       (o.f?"คิดเป็นร้อยละ "+fmt(allPe?tot/allPe*100:0,2)+" ของเกษตรกรในพื้นที่ "+fmt(allPe)+" คน":o.m==="inc"?"คำนวณจาก "+fmt(inN)+" ครัวเรือนที่มีข้อมูลรายได้":"จากเกษตรกรในพื้นที่ "+fmt(allPe)+" คน")+'</p></div>';
@@ -1686,6 +1687,7 @@ function jptAnswer(o){
     levels.forEach(function(by,ix){var g=jgroup(rs,o,by).filter(function(x){return x.out>0||o.m==="inc";});
       h+='<h3 class="jq-h3">ราย'+({pid:"โครงการ",pv:"จังหวัด",am:"อำเภอ",tb:"ตำบล"})[by]+' <span>('+g.length+' พื้นที่'+(g.length>40?" · แสดง 40 อันดับแรก ดาวน์โหลด CSV เพื่อดูทั้งหมด":"")+')</span></h3>'+jtable(g.slice(0,40),o,by,o.m==="inc"?null:(ix===0?tot:null),!!o.f);});}
   if(jagri(o)){var q=D.jpt.qa,zz=rs.reduce(function(t,r){return t+jz(r);},0),nn=rs.reduce(function(t,r){return t+r[8];},0);h='<p class="jq-note jq-alert"><b>ข้อควรระวังก่อนนำตัวเลขไปใช้:</b> ครัวเรือนในขอบเขตนี้ '+fmt(zz)+' จาก '+fmt(nn)+' ครัวเรือน (ร้อยละ '+fmt(nn?zz/nn*100:0,1)+') กรอกรายได้ภาคการเกษตรเป็น 0 หรือเว้นว่าง ทั้งที่เป็นเกษตรกรในพื้นที่ ส.ป.ก. ค่าเฉลี่ยจึงน่าจะต่ำกว่าความจริง ควรใช้เปรียบเทียบระหว่างพื้นที่เท่านั้น และควรตรวจการกรอกข้อมูลที่ต้นทาง (ทั้งกอง: '+fmt(q.agriZero)+' จาก '+fmt(q.incN)+' ครัวเรือน)</p>'+h;}
+  if(typeof dup!=="undefined"&&dup>0)h+='<p class="jq-note">นับไม่ซ้ำทั้งกอง '+fmt(D.jpt.pu)+' คน · ตารางรายโครงการรวมได้ '+fmt(D.jpt.pu+dup)+' เพราะมี '+fmt(dup)+' คนอยู่ในพื้นที่มากกว่า 1 โครงการ (นับในทุกโครงการที่อยู่)</p>';
   if(o.note)h+='<p class="jq-note">หมายเหตุ: '+esc(o.note)+'</p>';
   return h;
 }
@@ -1697,7 +1699,7 @@ function renderJpt(){
   var ex=["เกษตรกรในพื้นที่ทั้งหมดของกองทำปศุสัตว์เท่าไหร่ จำแนกโดยละเอียด","อาชีพของเกษตรกรรายจังหวัด","รายได้ภาคการเกษตรเฉลี่ยรายโครงการ","ผู้สูงอายุ 60 ปีขึ้นไปมีเท่าไหร่ จำแนกรายอำเภอ","สถานะการจัดที่ดินของโครงการพัชรสุธาคชานุรักษ์","การศึกษาของเกษตรกรจังหวัดสระแก้ว","เนื้อที่ถือครองรายโครงการ","ผู้พิการในพื้นที่โครงการ จำแนกรายตำบล"];
   var attrs=[["","— ไม่กรอง —"]];D.jpt.dims.forEach(function(d){d[2].forEach(function(c,i){attrs.push([d[0]+":"+i,jdn(d[1])+" = "+c]);});});D.jpt.age.forEach(function(c,i){attrs.push(["age:"+i,"อายุ "+c]);});D.jpt.sex.forEach(function(c,i){attrs.push(["sex:"+i,"เพศ "+c]);});
   var fv=JQ.f?JQ.f.a+":"+JQ.f.ix[0]:"";
-  el.innerHTML='<div class="kpis">'+[["เกษตรกรในพื้นที่ (คน)",fmt(pe),"นับไม่ซ้ำด้วยเลขบัตร"],["แปลงที่ดิน",fmt(pl),fmt(ar,0)+" ไร่"],["ครัวเรือนที่มีข้อมูลรายได้",fmt(inN),"ร้อยละ "+fmt(inN/pe*100,1)],["รายได้รวมเฉลี่ย",fmt(inN?inc/inN:0),"บาท/ครัวเรือน/ปี"]].map(function(k){return '<div class="kpi"><p class="l">'+k[0]+'</p><p class="v num">'+k[1]+'</p><p class="s">'+k[2]+'</p></div>';}).join("")+'</div>'+
+  el.innerHTML='<div class="kpis">'+[["เกษตรกรในพื้นที่ (คน)",fmt(D.jpt.pu!=null?D.jpt.pu:pe),"คนไม่ซ้ำทั้งกอง · ตามเลขบัตร (ไม่มีเลขบัตรใช้ชื่อ-สกุล-จังหวัด)"],["แปลงที่ดิน",fmt(pl),fmt(ar,0)+" ไร่"],["ครัวเรือนที่มีข้อมูลรายได้",fmt(inN),"ร้อยละ "+fmt(inN/pe*100,1)],["รายได้รวมเฉลี่ย",fmt(inN?inc/inN:0),"บาท/ครัวเรือน/ปี"]].map(function(k){return '<div class="kpi"><p class="l">'+k[0]+'</p><p class="v num">'+k[1]+'</p><p class="s">'+k[2]+'</p></div>';}).join("")+'</div>'+
   '<div class="panel jq-ask"><form id="jqForm"><label for="jqIn" class="jq-lab">ถามเป็นภาษาพูดได้เลย</label><div class="jq-row"><input id="jqIn" type="search" autocomplete="off" placeholder="เช่น เกษตรกรในพื้นที่ทำปศุสัตว์เท่าไหร่ จำแนกโดยละเอียด" value="'+esc(JQ.q)+'"><button type="submit" class="pm-btn pri">หาคำตอบ</button></div></form>'+
   '<div class="jq-ex">'+ex.map(function(x){return '<button type="button" class="jq-chip" data-q="'+esc(x)+'">'+esc(x)+'</button>';}).join("")+'</div>'+
   '<details class="jq-adv"'+(JQ.adv?" open":"")+'><summary>กำหนดเงื่อนไขเอง</summary><div class="jq-grid">'+
@@ -1972,6 +1974,11 @@ renderOverview();renderDivision();renderProjects();renderChecks();
       ck("เงินกองทุนฯ รายจังหวัด (ชีตอ้างอิง) ตรงกับแผน ทุกจังหวัด",!dif.length,dif.length?dif.map(function(x){return "จ."+x.n+" ชีตอ้างอิง "+fmt(x.a)+" / แผน "+fmt(x.b);}).join(" · ")+" — ยึดแผนฉบับเต็มปีเป็นหลัก":"ตรงทั้ง "+PV.length+" จังหวัด",true);}
     var bq2=document.getElementById("budgetQuick");if(bq2&&!bq2.hidden){var cs=bq2.querySelectorAll(".bq-c i").length;ck("แผง “ทุก 100 บาท” รวมได้ 100 พอดี",cs===100,cs+" ช่อง");}
     var ph=(D.modelFarmers||[]).filter(function(m){return /^(ไม่มี|-|–)?$/.test(String(m[3]==null?"":m[3]).trim());}).length;
+    if(D.jpt&&D.jpt.rows&&(D.farmers||[]).length){var fu={},fp2={},jp2={};(D.farmers||[]).forEach(function(r){if(String(r[8]).indexOf("พื้นที่โครงการ")>=0){fu[r[0]]=1;(fp2[r[3]]=fp2[r[3]]||{})[r[0]]=1;}});D.jpt.rows.forEach(function(r){jp2[r[0]]=(jp2[r[0]]||0)+r[6];});
+      var nfu=Object.keys(fu).length,pdf=Object.keys(Object.assign({},fp2,jp2)).filter(function(k){return Object.keys(fp2[k]||{}).length!==(jp2[k]||0);});
+      ck("เกษตรกรในพื้นที่ (จปฐ.): ฐานรายชื่อ = ถามข้อมูล จปฐ. ทั้งกอง (คนไม่ซ้ำ)",D.jpt.pu!=null&&nfu===D.jpt.pu,"ฐานรายชื่อ "+fmt(nfu)+" · ถามข้อมูล จปฐ. "+(D.jpt.pu!=null?fmt(D.jpt.pu):"ยังไม่มียอดไม่ซ้ำ — รัน syncFarmersAll"));
+      ck("เกษตรกรในพื้นที่ (จปฐ.): ฐานรายชื่อ = ถามข้อมูล จปฐ. ครบทุกโครงการ",!pdf.length,pdf.length?"ไม่ตรง: "+pdf.map(function(k){return code(+k)+" "+fmt(Object.keys(fp2[k]||{}).length)+" / "+fmt(jp2[k]||0);}).join(" · "):Object.keys(jp2).length+" โครงการ");
+      var jb=(D.jpt.qa||{}).bad||{},jbn=Object.keys(jb).reduce(function(t,k){return t+jb[k];},0);ck("ฐาน จปฐ.: แถวที่ไม่มีทั้งเลขบัตรและชื่อ (ไม่นับเป็นคน)",!jbn,jbn?Object.keys(jb).map(function(k){return (+k?code(+k):"ไม่ระบุโครงการ")+" "+fmt(jb[k])+" แถว";}).join(" · ")+" — ควรให้ผู้กรอกเติมข้อมูล":"ไม่มี",true);}
     ck("เกษตรกรตัวอย่าง: ไม่นับแถวว่าง/“ไม่มี” เป็นราย",ph===0,(D.modelFarmers||[]).length+" รายการรายปีที่นับ");
     var pass=CK.filter(function(c){return c.ok;}).length,hard=CK.filter(function(c){return !c.ok&&!c.w;}).length,soft=CK.filter(function(c){return !c.ok&&c.w;}).length;
     var cw=document.getElementById("checksWeb");
