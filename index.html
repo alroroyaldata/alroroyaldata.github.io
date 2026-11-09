@@ -945,7 +945,7 @@ function renderOverview(){
       '<div class="f">'+fmt(R1)+' ÷ '+fmt(T)+' = <b>'+fmt(R1/T*100,1)+'%</b></div><div class="src">ตัวตั้ง: ยอดจัดสรรครั้งที่ 1 ทุกโครงการ × จังหวัด รวมกัน · ตัวหาร: งบ พ.ร.บ. เต็มปี (การ์ดแรก) · ส่วนต่าง '+fmt(T-R1)+' บาท ยังไม่อยู่ในการจัดสรรครั้งที่ 1</div>')+
     kpiW("เงินกองทุนการปฏิรูปที่ดินฯ",fmt((D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund)+" บาท",(BI?"เป็นวัสดุการเกษตร "+fmt(agriOf("กองทุน"))+" · วัสดุการเกษตรรวม 2 แหล่ง "+fmt(agriOf("กองทุน")+agriOf("พ.ร.บ."))+" บาท":D.projBudget?"เงินนอกงบ พ.ร.บ. แยกรายจังหวัด (ว5816) และรายโครงการ (แผน กปต.)":"แยกราย 72 จังหวัดตามหนังสือ ว5816 (ไม่ได้แยกรายโครงการ)"),"",
       (function(){var tf=(D.fundProv||[]).reduce(function(a,b){return a+b;},0)||DOC.fund,nf=(D.fundProv||[]).filter(function(v){return v>0;}).length,ag=BI?agriOf("กองทุน"):0;
-        return (ag?'<div class="f">= วัสดุการเกษตร '+fmt(ag)+'<br>+ บริหารโครงการ '+fmt(tf-ag)+'<br>= <b>'+fmt(tf)+'</b></div>':'')+'<div class="src">รวมยอดรายจังหวัด'+(nf?' '+nf+' จังหวัด':'')+' ตามหนังสือ ว5816 (เงินนอกงบ พ.ร.บ.) · เฉพาะส่วนที่ลงจังหวัด ไม่รวมส่วนกลาง</div>';})())+
+        return (ag?'<div class="f">= วัสดุการเกษตร '+fmt(ag)+'<br>+ บริหารโครงการ '+fmt(tf-ag)+'<br>= <b>'+fmt(tf)+'</b></div>':'')+'<div class="src">รวมยอดรายจังหวัด'+(nf?' '+nf+' จังหวัด':'')+' ตามแผนปฏิบัติงานฯ ฉบับเต็มปี (อ้างอิงหนังสือ ว5816) · เงินนอกงบ พ.ร.บ. · เฉพาะส่วนที่ลงจังหวัด ไม่รวมส่วนกลาง</div>';})())+
     alroKpi(null);
   var list=P.map(function(p){var l=rowsOf(p.id);return{p:p,t:sum(l,"total"),r1:sum(l,"r1"),n:l.length};}).sort(function(a,b){return b.t-a.t;});
   var mx=list[0].t;
@@ -1915,10 +1915,10 @@ renderOverview();renderDivision();renderProjects();renderChecks();
      '<div class="wy-lg">'+seg.map(function(x){return '<div><span class="sw2" style="background:'+x[2]+';opacity:'+x[3]+'"></span><em>'+x[0]+'</em><b>'+fmt(x[1])+'</b></div>';}).join("")+'<div><span></span><em>รวมทั้งแผน (ทุกส่วน)</em><b>'+fmt(G)+'</b></div></div>'+
      '<div class="wy-steps">'+
       '<div class="wy-st"><h3><i>1</i>งบ พ.ร.บ. ที่ลงจังหวัด</h3><div class="wy-eq">'+t(TA,"งบ พ.ร.บ. ทั้งหมด")+o("−")+t(cA,"ตั้งจ่ายส่วนกลาง")+o("=")+t(A,"ลงจังหวัด","r")+'</div><p>ยอดทั้งหมดคือยอดควบคุม “จัดสรรเงิน พ.ร.บ.” ในแผน (ไม่รวมงบลงทุน)</p></div>'+
-      '<div class="wy-st"><h3><i>2</i>เงินกองทุนฯ ที่ลงจังหวัด</h3><div class="wy-eq">'+t(TF,"เงินกองทุนฯ ทั้งหมด")+o("−")+t(cF,"ตั้งจ่ายส่วนกลาง")+o("=")+t(F,"ลงจังหวัด","r")+'</div><p>ยอดรายจังหวัดตามหนังสือ ว5816</p></div>'+
+      '<div class="wy-st"><h3><i>2</i>เงินกองทุนฯ ที่ลงจังหวัด</h3><div class="wy-eq">'+t(TF,"เงินกองทุนฯ ทั้งหมด")+o("−")+t(cF,"ตั้งจ่ายส่วนกลาง")+o("=")+t(F,"ลงจังหวัด","r")+'</div><p>ยอดรายจังหวัดตามแผนปฏิบัติงานฯ ฉบับเต็มปี (อ้างอิงหนังสือ ว5816)</p></div>'+
       '<div class="wy-st hl"><h3><i>3</i>เงินลงพื้นที่ = ยอดหลัก</h3><div class="wy-eq">'+t(A,"งบ พ.ร.บ.")+o("+")+t(F,"เงินกองทุนฯ")+o("=")+t(PROV,"เงินลงพื้นที่","r")+'</div><p>ใช้ทำอะไร: ฝึกอบรม '+fmt(tr)+' + ปัจจัยการผลิต '+fmt(ip)+' + บริหารโครงการ '+fmt(ad)+'</p></div>'+
      '</div>'+
-     '<div class="wy-src"><div><b>แผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70</b>รายการย่อย '+fmt(L.length)+' บรรทัด → ทุกยอดในหน้านี้ รายโครงการ หมวด และเดือน</div><div><b>หนังสือ ว5816</b>→ เงินกองทุนการปฏิรูปที่ดินฯ แยกรายจังหวัด</div><div><b>แผนจัดสรร กผง. ครั้งที่ 1</b>→ ยอดจัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)</div><div class="pd"><b>alrotracking</b>→ ผลเบิกจ่ายจริง (รอไฟล์ปี 2570)</div></div>'+
+     '<div class="wy-src"><div><b>แผนปฏิบัติงานและแผนการใช้จ่าย งปม. 70</b>รายการย่อย '+fmt(L.length)+' บรรทัด → ทุกยอดในหน้านี้ รายโครงการ หมวด และเดือน</div><div><b>หนังสือ ว5816</b>→ เอกสารอ้างอิงการโอนเงินกองทุนฯ รายจังหวัด (ระบบเทียบกับแผนให้อัตโนมัติ)</div><div><b>แผนจัดสรร กผง. ครั้งที่ 1</b>→ ยอดจัดสรรครั้งที่ 1 (ต.ค. 69 – พ.ค. 70)</div><div class="pd"><b>alrotracking</b>→ ผลเบิกจ่ายจริง (รอไฟล์ปี 2570)</div></div>'+
      '<p class="wy-ok'+(ok?'':' bad')+'">'+(ok?'✓ ตรวจแล้ว: งบ พ.ร.บ. จังหวัด + ส่วนกลาง จากรายการย่อยทุกบรรทัด = ยอดควบคุมในไฟล์ ('+fmt(TA)+' บาท)':'⚠ ยอดรวมรายการย่อย ('+fmt(A+CEN)+') ไม่ตรงยอดควบคุม ('+fmt(TA)+') — ตรวจที่หน้าความถูกต้องของข้อมูล')+'</p>';
     bw.hidden=false;}}catch(e){console.error("budgetWhy",e);}
   /* ---- ตรวจตัวเลขบนหน้าเว็บอัตโนมัติทุกครั้งที่โหลด (invariants) ---- */
@@ -1933,10 +1933,10 @@ renderOverview();renderDivision();renderProjects();renderChecks();
     var bad=P.filter(function(p){var x=byP[p.id]||{a:0};return sum(rowsOf(p.id),"total")!==x.a;});
     ck("งบ พ.ร.บ. รายโครงการ ตรงกับแผนจัดสรรของ กผง. ครบทุกโครงการ",!bad.length,bad.length?"ไม่ตรง: "+bad.map(function(p){return code(p.id)+" รายการย่อย "+fmt((byP[p.id]||{a:0}).a)+" / แผน "+fmt(sum(rowsOf(p.id),"total"));}).join(" · "):P.length+" โครงการ ตรงทั้งหมด");
     var fp=(D.fundProv||[]),fS=fp.reduce(function(a,b){return a+b;},0);
-    if(fp.length){ck("เงินกองทุนฯ รวมตามหนังสือ ว5816 = เงินกองทุนฯ ลงจังหวัดในแผน",fS===F,fmt(fS)+" · แผน "+fmt(F));
+    if(fp.length){ck("เงินกองทุนฯ รายจังหวัด (ชีตอ้างอิง) รวม = เงินกองทุนฯ ลงจังหวัดในแผน",fS===F,fmt(fS)+" · แผน "+fmt(F));
       var iV3=ix("prov"),bp={};L.forEach(function(r){if(r[iF]==="กองทุน"){var n=String(r[iV3]||"").trim();bp[n]=(bp[n]||0)+(+r[iA]||0);}});
       var dif=PV.map(function(n,i){return{n:n,a:fp[i]||0,b:bp[n]||0};}).filter(function(x){return x.a!==x.b;});
-      ck("เงินกองทุนฯ รายจังหวัด ว5816 ตรงกับแผน ทุกจังหวัด",!dif.length,dif.length?dif.map(function(x){return "จ."+x.n+" ว5816 "+fmt(x.a)+" / แผน "+fmt(x.b);}).join(" · ")+" — รอ กผง. ยืนยันฉบับที่ถูกต้อง":"ตรงทั้ง "+PV.length+" จังหวัด",true);}
+      ck("เงินกองทุนฯ รายจังหวัด (ชีตอ้างอิง) ตรงกับแผน ทุกจังหวัด",!dif.length,dif.length?dif.map(function(x){return "จ."+x.n+" ชีตอ้างอิง "+fmt(x.a)+" / แผน "+fmt(x.b);}).join(" · ")+" — ยึดแผนฉบับเต็มปีเป็นหลัก":"ตรงทั้ง "+PV.length+" จังหวัด",true);}
     var bq2=document.getElementById("budgetQuick");if(bq2&&!bq2.hidden){var cs=bq2.querySelectorAll(".bq-c i").length;ck("แผง “ทุก 100 บาท” รวมได้ 100 พอดี",cs===100,cs+" ช่อง");}
     var ph=(D.modelFarmers||[]).filter(function(m){return /^(ไม่มี|-|–)?$/.test(String(m[3]==null?"":m[3]).trim());}).length;
     ck("เกษตรกรตัวอย่าง: ไม่นับแถวว่าง/“ไม่มี” เป็นราย",ph===0,(D.modelFarmers||[]).length+" รายการรายปีที่นับ");
