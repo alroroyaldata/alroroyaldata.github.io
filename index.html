@@ -410,7 +410,7 @@ main{max-width:1480px;padding:28px 36px 64px;margin:0 auto}
 .sp2{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}.sp2 i{display:block;height:100%}
 .sw2{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
 .lg2{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-top:12px}.lg2 span{display:inline-flex;gap:7px;align-items:center}
-.btbl{width:100%;border-collapse:collapse;font-size:13.5px}.btbl th{font-size:12px;color:var(--muted);font-weight:600;text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+.btbl{width:100%;border-collapse:collapse;font-size:13.5px}.xtbl tr.xr{cursor:pointer}.xtbl tr.xr:hover td{background:var(--surface-2)}.xtbl .xa{display:inline-block;width:16px;color:var(--muted);transition:transform .15s}.xtbl tr.xr[aria-expanded=true] .xa{transform:rotate(90deg);color:var(--primary)}.xtbl tr.xr[aria-expanded=true] td{border-bottom-color:transparent;font-weight:600}.xtbl tr.xd td{background:var(--surface-2);padding:14px 16px 16px}.xdet{font-size:13px}.xsum{margin-bottom:12px}.xblk h4{margin:0 0 8px;font-size:12.5px;color:var(--muted);font-weight:600}.xblk{margin-bottom:12px}.xchips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.xchips span{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}.xchips em{font-style:normal;font-size:12px;color:var(--muted)}.xchips b{font-size:14px}.xchips small{font-size:11px;color:var(--muted)}.xop{font-style:normal;color:var(--muted);font-weight:700}.xcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px 24px}.xrow{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:5px 0;border-bottom:1px dashed var(--line);text-decoration:none;color:inherit}a.xrow{grid-template-columns:minmax(0,1.3fr) 1fr auto}a.xrow:hover span:first-child{color:var(--primary)}.xrow span:first-child{overflow:hidden;text-overflow:ellipsis}.xrow small{color:var(--muted)}.xbar{display:block;height:6px;border-radius:99px;background:var(--line);overflow:hidden}.xbar i{display:block;height:100%}.xmore{font-size:12px;color:var(--muted);margin:6px 0 0}.xchk{font-size:12px;color:var(--ok);margin:4px 0 0}.xchk.bad{color:#c0392b}.btbl th{font-size:12px;color:var(--muted);font-weight:600;text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
 .btbl td{padding:9px 10px;border-bottom:1px solid var(--line)}.btbl .r{text-align:right}.btbl tr.t td{font-weight:700;background:var(--surface-2)}
 .fb{display:inline-flex;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px}.fb.a{background:color-mix(in srgb,var(--primary) 13%,transparent);color:var(--primary)}.fb.f{background:color-mix(in srgb,var(--gold) 15%,transparent);color:var(--gold)}
 @media (max-width:1100px){.xk{grid-template-columns:1fr 1fr}.xk>div:nth-child(3){padding-left:0;border-left:0}.xk>div{padding-top:12px}.xgrid{grid-template-columns:1fr}}
@@ -1802,6 +1802,20 @@ renderOverview();renderDivision();renderProjects();renderChecks();
   // ---- budget flow ----
   var DV=D.itemsDiv||[],dv=function(t){var r=DV.filter(function(x){return String(x[ix("label")]).indexOf(t)>=0;})[0];return r?+r[ix("amount")]:0;};
   var TA=dv("จัดสรรเงินพรบ"),TF=dv("จัดสรรเงินกองทุน");
+  var iL=ix("label"),iV=ix("prov");
+  var xDetail=function(ck,fk,tot){try{
+    var R=L.filter(function(r){var f=r[iF];if(f==="ส่วนกลาง"||f==="ลงทุน")return false;return (f==="กองทุน"?"f":"a")===fk&&CAT3(r[iC])===ck;});
+    var g=function(key){var o={};R.forEach(function(r){var k=key(r),a=+r[iA]||0;if(!o[k])o[k]={k:k,v:0,n:0};o[k].v+=a;o[k].n++;});return Object.keys(o).map(function(k){return o[k];}).sort(function(a,b){return b.v-a.v;});};
+    var sub=g(function(r){return String(r[iC]||"อื่น ๆ");}),pj=g(function(r){return r[iP];}),it=g(function(r){return String(r[iL]||"").replace(/\s+/g," ").trim()||"(ไม่ระบุรายการ)";});
+    var pv={};R.forEach(function(r){if(r[iV])pv[r[iV]]=1;});var np=Object.keys(pv).length;
+    var mx=pj.length?pj[0].v:1,bar=function(v,m){return '<span class="xbar"><i style="width:'+(v/m*100).toFixed(1)+'%;background:'+(fk==="a"?"var(--primary)":"var(--gold)")+'"></i></span>';};
+    var h='<div class="xdet"><div class="xsum"><b class="num">'+fmt(tot)+' บาท</b> = ผลรวมรายการย่อย <b class="num">'+fmt(R.length)+'</b> บรรทัด จาก <b class="num">'+pj.length+'</b> โครงการ'+(np?' <b class="num">'+np+'</b> จังหวัด':'')+' ในแผนปฏิบัติงานฯ งปม. 70 (เฉพาะส่วนที่โอนให้ ส.ป.ก.จังหวัด)</div>';
+    if(sub.length>1||ck==="admin")h+='<div class="xblk"><h4>หมวดนี้ประกอบด้วย</h4><div class="xchips">'+sub.map(function(x){return '<span><em>'+esc(x.k)+'</em><b class="num">'+fmt(x.v)+'</b><small>'+x.n+' บรรทัด</small></span>';}).join('<i class="xop">+</i>')+'</div></div>';
+    h+='<div class="xcols"><div class="xblk"><h4>แยกรายโครงการ</h4>'+pj.map(function(x){return '<a class="xrow" href="#'+code(x.k).toLowerCase()+'"><span>'+code(x.k)+' · '+esc(pshort(x.k))+'</span>'+bar(x.v,mx)+'<b class="num">'+fmt(x.v)+'</b></a>';}).join("")+'</div>'+
+      '<div class="xblk"><h4>รายการที่ยอดสูงสุด</h4>'+it.slice(0,8).map(function(x){return '<div class="xrow"><span>'+esc(x.k)+(x.n>1?' <small>× '+x.n+'</small>':'')+'</span><b class="num">'+fmt(x.v)+'</b></div>';}).join("")+(it.length>8?'<p class="xmore">และอีก '+(it.length-8)+' รายการ รวม '+fmt(it.slice(8).reduce(function(a,x){return a+x.v;},0))+' บาท · ดูครบทุกบรรทัดในหน้าโครงการ</p>':'')+'</div></div>';
+    var chk=pj.reduce(function(a,x){return a+x.v;},0);
+    h+='<p class="xchk'+(chk===tot?'':' bad')+'">'+(chk===tot?'✓ ผลรวมรายโครงการ = ยอดในตาราง':'⚠ ผลรวมรายโครงการ '+fmt(chk)+' ไม่ตรงยอดในตาราง')+'</p></div>';
+    return h;}catch(e){return '<p class="xmore">แสดงรายละเอียดไม่ได้</p>';}};
   var bw=document.getElementById("budgetWhy");
   try{if(bw&&TA&&TF){
     var cA=TA-A,cF=TF-F,G=TA+TF+INV,pg=function(v){return fmt(v/G*100,1);};
@@ -1835,9 +1849,10 @@ renderOverview();renderDivision();renderProjects();renderChecks();
      '</div><div class="ar">➜</div><div class="col">'+
        ["train","input","admin"].filter(function(k){return cat[k];}).map(function(k){var c=cat[k];return box(CN[k]+" (จังหวัด)",c.a+c.f,pc(c.a+c.f,PROV)+"% ของเงินลงพื้นที่",spl(c.a,c.f));}).join("")+
      '</div></div>'+LG+
-     '<h2 style="margin-top:26px">งบตั้งจ่ายจังหวัด แยกหมวด × แหล่งเงิน</h2><div class="tbl-wrap"><table class="btbl"><thead><tr><th>หมวด</th><th>แหล่งเงิน</th><th class="r">บาท</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+
-     rows.map(function(x){var v=cat[x[0]][x[1]];return '<tr><td>'+CN[x[0]]+'</td><td>'+(x[1]==="a"?'<span class="fb a">พ.ร.บ.</span>':'<span class="fb f">กองทุนฯ</span>')+'</td><td class="r num">'+fmt(v)+'</td><td class="r num">'+pc(v,PROV)+'</td></tr>';}).join("")+
-     '<tr class="t"><td colspan="2">รวมตั้งจ่ายจังหวัด</td><td class="r num">'+fmt(PROV)+'</td><td class="r">100.0</td></tr></tbody></table></div>';}
+     '<h2 style="margin-top:26px">งบตั้งจ่ายจังหวัด แยกหมวด × แหล่งเงิน</h2><p class="sub">กดที่แถวเพื่อดูว่ายอดนั้นมาจากรายการใด โครงการใด และจังหวัดใด</p><div class="tbl-wrap"><table class="btbl xtbl"><thead><tr><th>หมวด</th><th>แหล่งเงิน</th><th class="r">บาท</th><th class="r">ร้อยละ</th></tr></thead><tbody>'+
+     rows.map(function(x){var v=cat[x[0]][x[1]];return '<tr class="xr" tabindex="0" role="button" aria-expanded="false"><td><span class="xa">›</span>'+CN[x[0]]+'</td><td>'+(x[1]==="a"?'<span class="fb a">พ.ร.บ.</span>':'<span class="fb f">กองทุนฯ</span>')+'</td><td class="r num">'+fmt(v)+'</td><td class="r num">'+pc(v,PROV)+'</td></tr><tr class="xd" hidden><td colspan="4">'+xDetail(x[0],x[1],v)+'</td></tr>';}).join("")+
+     '<tr class="t"><td colspan="2">รวมตั้งจ่ายจังหวัด</td><td class="r num">'+fmt(PROV)+'</td><td class="r">100.0</td></tr></tbody></table></div>';
+    bf.querySelectorAll(".xtbl tr.xr").forEach(function(tr){var t=function(){var d=tr.nextElementSibling,o=d.hidden;d.hidden=!o;tr.setAttribute("aria-expanded",o?"true":"false");};tr.addEventListener("click",t);tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();t();}});});}
 })();
 /* ปุ่มโหมดมืด/สว่าง */
 (function(){var b=document.getElementById("thm");if(!b)return;try{var t=localStorage.getItem("alro_theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}
