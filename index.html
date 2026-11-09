@@ -1929,7 +1929,7 @@ renderOverview();renderDivision();renderProjects();renderChecks();
     if(TF)ck("เงินกองทุนฯ: ส่วนที่ลงจังหวัดไม่เกินยอดควบคุม",F<=TF,"จังหวัด "+fmt(F)+" · ยอดควบคุม "+fmt(TF)+" · ส่วนกลาง "+fmt(TF-F));
     ck("หมวดรายจ่าย 3 หมวดรวมกัน = เงินลงพื้นที่",catS===PROV,fmt(catS)+" · เงินลงพื้นที่ "+fmt(PROV));
     ck("ยอดรายโครงการรวมกัน = เงินลงพื้นที่",byPS===PROV,fmt(byPS)+" · เงินลงพื้นที่ "+fmt(PROV));
-    var PL=sum(rows,"total");ck("งบ พ.ร.บ. จากรายการย่อย = แผนจัดสรรงบ พ.ร.บ. ของ กผง. (ทั้งกอง)",PL===A,fmt(A)+" · แผนจัดสรร "+fmt(PL));
+    var PL=P.reduce(function(t,p){return t+sum(rowsOf(p.id),"total");},0);ck("งบ พ.ร.บ. จากรายการย่อย = แผนจัดสรรงบ พ.ร.บ. ของ กผง. (ทั้งกอง)",PL===A,fmt(A)+" · แผนจัดสรร "+fmt(PL));
     var bad=P.filter(function(p){var x=byP[p.id]||{a:0};return sum(rowsOf(p.id),"total")!==x.a;});
     ck("งบ พ.ร.บ. รายโครงการ ตรงกับแผนจัดสรรของ กผง. ครบทุกโครงการ",!bad.length,bad.length?"ไม่ตรง: "+bad.map(function(p){return code(p.id)+" รายการย่อย "+fmt((byP[p.id]||{a:0}).a)+" / แผน "+fmt(sum(rowsOf(p.id),"total"));}).join(" · "):P.length+" โครงการ ตรงทั้งหมด");
     var fp=(D.fundProv||[]),fS=fp.reduce(function(a,b){return a+b;},0);
