@@ -43,6 +43,25 @@ input{font-family:var(--num);letter-spacing:.3em;font-size:20px}
 .kpi .l{font-size:13px;opacity:.8}
 .kpi .v{font:700 24px/1.25 var(--num);margin:4px 0 2px}
 .kpi .s{font-size:12.5px;opacity:.8}
+.ov{padding:20px 22px}
+.ov .hd{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 20px;margin-bottom:14px}
+.ov .hd .l{font-size:14px;color:var(--mute)}
+.ov .hd .big{font:700 34px/1.15 var(--num)}
+.ov .hd .big small{font:500 15px "Noto Sans Thai",sans-serif;color:var(--mute);margin-left:6px}
+.ov .hd .got{text-align:right}
+.ov .hd .got .big{color:var(--ok)}
+.stack{display:flex;height:22px;border-radius:999px;overflow:hidden;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.stack i{display:block;height:100%}
+.s-prb{background:#0d253d}.s-fund{background:#b7791f}.s-wait{background:repeating-linear-gradient(45deg,#d9d4c7 0 6px,#ebe7dc 6px 12px)}
+@media (prefers-color-scheme:dark){.s-prb{background:#7aa2d6}.s-wait{background:repeating-linear-gradient(45deg,#2a3550 0 6px,#1b2540 6px 12px)}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink-2);margin:10px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ovt td,.ovt th{padding:10px 8px}
+.ovt td .sub{display:block;font-size:12.5px}
+.ovt tr.tot td{font-weight:700;border-bottom:0}
+.scroll{overflow-x:auto}
+.mnote{display:none;font-size:12.5px;color:var(--mute);margin-top:8px}
 .explain{background:var(--gold-soft);border:1px solid transparent;border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:15px}
 .explain b{color:var(--gold)}
 .explain ol{margin:6px 0 0;padding-left:22px}
@@ -75,7 +94,7 @@ tfoot td{font-weight:700;border-bottom:0}
 .bar .btn{background:var(--card);color:var(--ink);border:1px solid var(--line);font-size:14px;padding:8px 14px}
 .loading{text-align:center;color:var(--mute);padding:40px}
 @media (max-width:720px){.kpis{grid-template-columns:1fr 1fr}.kv{grid-template-columns:1fr 1fr}.kpi .v{font-size:20px}.hwrap h1{font-size:16px}.top h2{font-size:22px}
-  .tbl-sum th:nth-child(4),.tbl-sum td:nth-child(4){display:none}}
+  .tbl-sum,.ovt{font-size:13px}.ovt td .sub{display:none}.mnote{display:block!important}.btn.ghost{white-space:nowrap}.ov .hd .big{font-size:26px}.ov .hd .got{text-align:left}}
 @media print{header .btn,.bar,.hint{display:none!important}body{background:#fff;color:#000;font-size:13px}.card,.kpi{break-inside:avoid;border-color:#ccc}.kpi.main{background:#fff;color:#000}.proj .pbody{display:block!important}details>*{display:block}main{padding:0}}
 </style>
 </head>
@@ -139,19 +158,25 @@ function render(d){
   var rest=d.full-d.r1, h="";
   h+='<div class="top"><h2>จังหวัด'+esc(d.prov)+'</h2><span>'+esc(d.region||"")+' · '+d.projects.filter(function(o){return o.full||o.r1;}).length+' โครงการ · ปีงบประมาณ '+esc(d.year)+'</span></div>';
   h+='<div class="bar"><button class="btn" onclick="window.print()">พิมพ์ / บันทึก PDF</button></div>';
-  h+='<div class="kpis">'+
-    kpi("main","เงินที่โอนครั้งที่ 1",d.r1,"ต.ค. 69 – พ.ค. 70 (งบ พ.ร.บ.)")+
-    kpi("","งบ พ.ร.บ. ทั้งปี",d.full,"ตามแผนจัดสรรเต็มปีของ กผง.")+
-    kpi("","รอจัดสรรครั้งถัดไป",rest,"มิ.ย. – ก.ย. 70")+
-    kpi("","เงินกองทุนฯ",d.fund,"โอนแยกตามหนังสือ ว5816")+'</div>';
+  var got=d.r1+d.fund, tot=d.full+d.fund, pct=tot?Math.floor(got/tot*1000)/10:0, w=function(v){return tot?(v/tot*100).toFixed(2)+'%':'0';};
+  h+='<div class="card ov"><div class="hd"><div><div class="l">เงินทั้งปีของจังหวัด (งบ พ.ร.บ. + เงินกองทุนฯ)</div><div class="big">'+f(tot)+'<small>บาท</small></div></div>'+
+    '<div class="got"><div class="l">ได้รับโอนแล้ว</div><div class="big">'+f(got)+'<small>บาท · '+pct.toLocaleString("th-TH")+'%</small></div></div></div>'+
+    '<div class="stack" role="img" aria-label="ได้รับโอนแล้ว '+pct+' เปอร์เซ็นต์"><i class="s-prb" style="width:'+w(d.r1)+'"></i><i class="s-fund" style="width:'+w(d.fund)+'"></i><i class="s-wait" style="width:'+w(rest)+'"></i></div>'+
+    '<div class="legend"><span><i class="s-prb"></i>งบ พ.ร.บ. ได้รับแล้ว '+f(d.r1)+'</span><span><i class="s-fund"></i>เงินกองทุนฯ ได้รับแล้ว '+f(d.fund)+'</span><span><i class="s-wait"></i>รอจัดสรร '+f(rest)+'</span></div>'+
+    '<div class="scroll"><table class="ovt"><thead><tr><th>แหล่งเงิน</th><th class="n">ทั้งปี</th><th class="n">ได้รับโอนแล้ว</th><th class="n">รอจัดสรร</th></tr></thead><tbody>'+
+    '<tr><td>งบ พ.ร.บ.<span class="sub">โอนครั้งที่ 1 (ต.ค. 69 – พ.ค. 70) · ครั้งถัดไป มิ.ย. – ก.ย. 70</span></td><td class="n">'+f(d.full)+'</td><td class="n">'+f(d.r1)+'</td><td class="n">'+f(rest)+'</td></tr>'+
+    '<tr><td>เงินกองทุนฯ<span class="sub">โอนครบทั้งปีแล้ว ตามหนังสือ กษ 1207/ว5816 ลว. 27 ต.ค. 69</span></td><td class="n">'+f(d.fund)+'</td><td class="n">'+f(d.fund)+'</td><td class="n">0</td></tr>'+
+    '<tr class="tot"><td>รวม</td><td class="n">'+f(tot)+'</td><td class="n">'+f(got)+'</td><td class="n">'+f(rest)+'</td></tr></tbody></table></div>'+
+    '<div class="mnote">งบ พ.ร.บ. โอนครั้งที่ 1 ต.ค. 69 – พ.ค. 70 ครั้งถัดไป มิ.ย. – ก.ย. 70 · เงินกองทุนฯ โอนครบทั้งปีตามหนังสือ กษ 1207/ว5816 ลว. 27 ต.ค. 69</div>'+'<div class="sub" style="margin-top:8px">"ได้รับโอนแล้ว" หมายถึงวงเงินที่โอนเข้าบัญชี ส.ป.ก.จังหวัดแล้ว ไม่ใช่ผลการเบิกจ่าย</div></div>';
   h+='<div class="explain"><b>เงินครั้งที่ 1 จำนวน '+f(d.r1)+' บาท ประกอบด้วย 2 ส่วน</b><ol>'+
     '<li><b>งบฝึกอบรม '+f(d.r1train)+' บาท</b> — ได้รับครบทั้งปีแล้วในครั้งนี้ ใช้ตามหลักสูตรในแต่ละโครงการด้านล่าง</li>'+
     '<li><b>ค่าบริหารโครงการ '+f(d.r1mgmt)+' บาท</b> — เป็นส่วนหนึ่งของค่าบริหารทั้งปี '+f(d.fullMgmt)+' บาท</li></ol>'+
     (rest>0?'<div class="sub" style="margin-top:6px">ส่วนที่ยังไม่โอน '+f(rest)+' บาท (ค่าบริหาร '+f(d.fullMgmt-d.r1mgmt)+(d.fullMat?' · วัสดุการเกษตร '+f(d.fullMat):'')+') จะจัดสรรในครั้งถัดไป</div>':'')+'</div>';
-  h+='<h3>สรุปเงินครั้งที่ 1 รายโครงการ</h3><div class="card" style="padding:6px 14px"><table class="tbl-sum"><thead><tr><th>โครงการ</th><th class="n">ค่าบริหาร</th><th class="n">ฝึกอบรม</th><th class="n">ทั้งปี</th><th class="n">ครั้งที่ 1</th></tr></thead><tbody>';
-  d.projects.forEach(function(o){ if(!o.full&&!o.r1) return;
-    h+='<tr><td>'+o.pid+'. '+esc(shortName(o.name))+'</td><td class="n">'+f(o.r1mgmt)+'</td><td class="n">'+f(o.r1train)+'</td><td class="n">'+f(o.full)+'</td><td class="n"><b>'+f(o.r1)+'</b></td></tr>';});
-  h+='</tbody><tfoot><tr><td>รวม</td><td class="n">'+f(d.r1mgmt)+'</td><td class="n">'+f(d.r1train)+'</td><td class="n">'+f(d.full)+'</td><td class="n">'+f(d.r1)+'</td></tr></tfoot></table></div>';
+  var fs=function(o){return o.fundItems.reduce(function(a,x){return a+(Number(x.amt)||0);},0);};
+  h+='<h3>สรุปรายโครงการ</h3><div class="card scroll" style="padding:6px 14px"><table class="tbl-sum"><thead><tr><th>โครงการ</th><th class="n">พ.ร.บ.<br>ครั้งที่ 1</th><th class="n">กองทุนฯ<br>ได้รับแล้ว</th><th class="n">รอจัดสรร</th><th class="n">รวมทั้งปี</th></tr></thead><tbody>';
+  d.projects.forEach(function(o){ var fu=fs(o); if(!o.full&&!o.r1&&!fu) return;
+    h+='<tr><td>'+o.pid+'. '+esc(shortName(o.name))+'</td><td class="n">'+f(o.r1)+'</td><td class="n">'+f(fu)+'</td><td class="n">'+f(o.full-o.r1)+'</td><td class="n"><b>'+f(o.full+fu)+'</b></td></tr>';});
+  h+='</tbody><tfoot><tr><td>รวม</td><td class="n">'+f(d.r1)+'</td><td class="n">'+f(d.fund)+'</td><td class="n">'+f(rest)+'</td><td class="n">'+f(tot)+'</td></tr></tfoot></table></div>';
   h+='<h3>รายละเอียดแต่ละโครงการ <span class="sub">(กดเพื่อเปิดดู)</span></h3>';
   d.projects.forEach(function(o,i){ h+=projCard(o,i===0); });
   h+='<div class="foot">ที่มา: '+esc(d.source)+' · แผนปฏิบัติงานและแผนการใช้จ่ายงบประมาณ ปี 2570 ฉบับเต็มปี · เงินกองทุนฯ ตามหนังสือ กษ 1207/ว5816 ลว. 27 ต.ค. 69<br>ตัวเลขชุดเดียวกับฐานข้อมูลของกอง ข้อมูล ณ '+esc(thDate(d.builtAt))+' · หากไม่ตรงกับเอกสารที่ได้รับ โปรดแจ้งกองประสานงานโครงการพระราชดำริและโครงการพิเศษ</div>';
