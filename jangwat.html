@@ -135,6 +135,7 @@ function load(p,c,fromForm){
 }
 function render(d){
   $("out").hidden=false;
+  d.projects.forEach(function(o){if(o.pid===4&&d.prov!=="เชียงใหม่")o.name="โครงการธนาคารอาหารชุมชน (เกษตรวิชญา) — กิจกรรมขยายผลธนาคารอาหารชุมชน";});
   var rest=d.full-d.r1, h="";
   h+='<div class="top"><h2>จังหวัด'+esc(d.prov)+'</h2><span>'+esc(d.region||"")+' · '+d.projects.filter(function(o){return o.full||o.r1;}).length+' โครงการ · ปีงบประมาณ '+esc(d.year)+'</span></div>';
   h+='<div class="bar"><button class="btn" onclick="window.print()">พิมพ์ / บันทึก PDF</button></div>';
