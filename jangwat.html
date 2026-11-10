@@ -29,7 +29,7 @@ main{max-width:980px;margin:0 auto;padding:18px 16px 60px}
 .login p{margin:0 0 16px;color:var(--ink-2);font-size:14px}
 label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
 select,input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:16px "Noto Sans Thai",sans-serif;background:var(--card);color:var(--ink)}
-input{font-family:var(--num);letter-spacing:.12em;text-transform:uppercase}
+input{font-family:var(--num);letter-spacing:.3em;font-size:20px}
 .login .btn{width:100%;margin-top:18px}
 .msg{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:14px;display:none}
 .msg.err{display:block;background:var(--bad-soft);color:var(--bad)}
@@ -93,7 +93,7 @@ tfoot td{font-weight:700;border-bottom:0}
     <label for="prov">จังหวัด</label>
     <select id="prov" required></select>
     <label for="code">รหัสเข้าใช้งาน</label>
-    <input id="code" required maxlength="9" placeholder="XXXX-XXXX" inputmode="text" autocapitalize="characters" spellcheck="false">
+    <input id="code" required maxlength="6" placeholder="ตัวเลข 6 หลัก" inputmode="numeric" pattern="[0-9]{6}" autocomplete="off">
     <button class="btn" type="submit" id="go">ดูข้อมูล</button>
     <div class="msg" id="msg"></div>
     <div class="hint">ใส่รหัสผิดครบ 5 ครั้ง ระบบจะระงับจังหวัดนั้น 1 ชั่วโมง · ไม่ทราบรหัสโปรดติดต่อกองประสานงานโครงการพระราชดำริฯ</div>
@@ -118,7 +118,7 @@ function initLogin(){
   var sel=$("prov"), h='<option value="">— เลือกจังหวัด —</option>';
   REG.forEach(function(r){h+='<optgroup label="'+r[0]+'">'+r[1].split(" ").map(function(p){return '<option>'+p+'</option>';}).join("")+'</optgroup>';});
   sel.innerHTML=h; var last=keep("pv_prov"); if(last) sel.value=last;
-  $("code").addEventListener("input",function(e){var v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8);e.target.value=v.length>4?v.slice(0,4)+"-"+v.slice(4):v;});
+  $("code").addEventListener("input",function(e){e.target.value=e.target.value.replace(/\D/g,"").slice(0,6);});
   $("login").addEventListener("submit",function(e){e.preventDefault();var p=sel.value,c=$("code").value.trim();if(!p||!c)return;keep("pv_prov",p);load(p,c,true);});
 }
 function showErr(t){var m=$("msg");if(m){m.className="msg err";m.textContent=t;}}
