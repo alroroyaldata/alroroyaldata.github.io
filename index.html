@@ -940,6 +940,20 @@ var AGG_ALL=agg(rows),AGG_P={};P.forEach(function(p){AGG_P[p.id]=agg(rowsOf(p.id
 function aggOf(id){return AGG_P[id]||agg(rowsOf(id));}
 var FUND_PROV=(D.fundProv||[]).reduce(function(a,b){return a+b;},0);
 var pct1=function(a,b){return b?fmt(a/b*100,1):"0.0";},mb2=function(n){return fmt(n/1e6,2);};
+/* ยอดจากรายการย่อยแผนปฏิบัติงานฯ (D.items): คำนวณครั้งเดียว ทั้งกอง + รายโครงการ (พ.ร.บ./กองทุน/ส่วนกลาง/ลงทุน/หมวด/รายเดือน/รายการใบ) */
+function itaZero(){return{A:0,F:0,CEN:0,INV:0,hasAF:false,cat:{},catAll:{train:0,input:0,admin:0},m:[0,0,0,0,0,0,0,0,0,0,0,0],leaves:[]};}
+var ITA=(function(){if(!D.items||!D.itemCols)return null;
+  var C=D.itemCols,ix=function(k){return C.indexOf(k);},iP=ix("pid"),iS=ix("seq"),iPa=ix("parent"),iA=ix("amount"),iF=ix("fund"),iC=ix("cat"),iM=ix("m");
+  var par={};D.items.forEach(function(r){if(r[iPa]!==""&&r[iPa]!=null)par[r[iP]+"|"+r[iPa]]=1;});
+  var CAT3=function(c){return c==="ฝึกอบรม"?"train":c==="วัสดุการเกษตร"?"input":"admin";};
+  var all=itaZero(),by={};
+  D.items.filter(function(r){return !par[r[iP]+"|"+r[iS]];}).forEach(function(r){var p=by[r[iP]]=by[r[iP]]||itaZero();p.leaves.push(r);
+    [all,p].forEach(function(t){var a=+r[iA]||0,f=r[iF];
+      if(f==="ส่วนกลาง"){t.CEN+=a;return;}if(f==="ลงทุน"){t.INV+=a;return;}
+      var k=f==="กองทุน"?"f":"a";if(k==="a")t.A+=a;else t.F+=a;t.hasAF=true;
+      var c=CAT3(r[iC]);t.catAll[c]+=a;t.cat[c]=t.cat[c]||{a:0,f:0};t.cat[c][k]+=a;
+      (r[iM]||[]).forEach(function(v,i){t.m[i]+=+v||0;});});});
+  return{all:all,by:by};})();
 function sum(list,k){return list.reduce(function(a,r){return a+r[k];},0);}
 function pname(p,prov){return p.id===17?p.name+" จ."+PV[prov]:p.name;}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
@@ -1502,13 +1516,8 @@ function enhanceProject(id){
   var v=document.getElementById("v-project"),st=v.querySelector(".stack");if(!st)return;
   var p=proj(id),pid=id===17?4:id,l=rowsOf(id);
   /* ---- ตัวเลขจากรายการย่อยแผนปฏิบัติงานฯ ---- */
-  var A=0,F=0,CEN=0,INV=0,cat={train:0,input:0,admin:0},mm=[0,0,0,0,0,0,0,0,0,0,0,0],LF=[],iL=-1,iV=-1;
-  if(D.items&&D.itemCols){var C=D.itemCols,ix=function(k){return C.indexOf(k);},iP=ix("pid"),iS=ix("seq"),iPa=ix("parent"),iA=ix("amount"),iF=ix("fund"),iC=ix("cat"),iM=ix("m");
-    var I=D.items.filter(function(r){return r[iP]===pid;}),par={};I.forEach(function(r){if(r[iPa]!==""&&r[iPa]!=null)par[r[iPa]]=1;});
-    iL=ix("label");iV=ix("prov");(LF=I.filter(function(r){return !par[r[iS]];})).forEach(function(r){var a=+r[iA]||0,f=r[iF];
-      if(f==="ส่วนกลาง"){CEN+=a;return;}if(f==="ลงทุน"){INV+=a;return;}
-      if(f==="กองทุน")F+=a;else A+=a;var c=r[iC]==="ฝึกอบรม"?"train":r[iC]==="วัสดุการเกษตร"?"input":"admin";cat[c]+=a;
-      (r[iM]||[]).forEach(function(x,i){mm[i]+=+x||0;});});}
+  var T0=ITA?(ITA.by[pid]||itaZero()):itaZero(),A=T0.A,F=T0.F,CEN=T0.CEN,INV=T0.INV,cat={train:T0.catAll.train,input:T0.catAll.input,admin:T0.catAll.admin},mm=T0.m.slice(),LF=T0.leaves,iL=-1,iV=-1;
+  if(D.items&&D.itemCols){var C=D.itemCols,ix=function(k){return C.indexOf(k);},iP=ix("pid"),iS=ix("seq"),iPa=ix("parent"),iA=ix("amount"),iF=ix("fund"),iC=ix("cat"),iM=ix("m");iL=ix("label");iV=ix("prov");}
   var PROV=A+F,pc=pct1,mb=mb2;
   /* ---- เกษตรกร ---- */
   var FA=(D.farmers||[]).filter(function(r){return r[3]===pid;}),ua={},ut={},pvA={},amA={};
@@ -1907,13 +1916,8 @@ renderOverview();renderDivision();renderProjects();renderChecks();
   var L=I.filter(function(r){return !par[r[iP]+"|"+r[iS]];});
   var CAT3=function(c){return c==="ฝึกอบรม"?"train":c==="วัสดุการเกษตร"?"input":"admin";};
   var CN={train:"ค่าฝึกอบรม",input:"ปัจจัยการผลิต / วัสดุการเกษตร",admin:"ค่าบริหารโครงการ"};
-  var A=0,F=0,CEN=0,INV=0,cat={},byP={},mP=[0,0,0,0,0,0,0,0,0,0,0,0];
-  L.forEach(function(r){var a=+r[iA]||0,f=r[iF];
-    if(f==="ส่วนกลาง"){CEN+=a;return;} if(f==="ลงทุน"){INV+=a;return;}
-    var k=f==="กองทุน"?"f":"a";if(k==="a")A+=a;else F+=a;
-    var c=CAT3(r[iC]);cat[c]=cat[c]||{a:0,f:0};cat[c][k]+=a;
-    var p=byP[r[iP]]=byP[r[iP]]||{a:0,f:0};p[k]+=a;
-    (r[iM]||[]).forEach(function(v,i){mP[i]+=+v||0;});});
+  var A=ITA.all.A,F=ITA.all.F,CEN=ITA.all.CEN,INV=ITA.all.INV,cat=ITA.all.cat,byP={},mP=ITA.all.m.slice();
+  Object.keys(ITA.by).forEach(function(k){var t=ITA.by[k];if(t.hasAF)byP[k]={a:t.A,f:t.F};});
   var PROV=A+F,pc=pct1,mb=mb2;
   var sw=function(c){return '<span class="sw2" style="background:'+c+'"></span>';};
   var spl=function(a,f){var t=a+f||1;return '<div class="sp2"><i style="width:'+(a/t*100)+'%;background:var(--primary)" title="งบ พ.ร.บ. '+fmt(a)+'"></i>'+(f?'<i style="width:'+(f/t*100)+'%;background:var(--gold)" title="เงินกองทุนฯ '+fmt(f)+'"></i>':'')+'</div>';};
