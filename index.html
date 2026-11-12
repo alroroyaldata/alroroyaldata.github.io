@@ -1771,7 +1771,6 @@ function domChecks(){
   var CKD=[],ck=function(l,ok,d){CKD.push({l:l,ok:!!ok,d:d});};
   var num=function(t){var m=/-?[\d,]+(\.\d+)?/.exec(String(t||""));return m?+m[0].replace(/,/g,""):NaN;};
   var kpiByLabel=function(root,lab){var ks=root.querySelectorAll(".kpi");for(var i=0;i<ks.length;i++){var l=ks[i].querySelector(".l");if(l&&l.textContent.trim()===lab)return ks[i];}return null;};
-  var pct1=function(a,b){return pct1(a,b);};
   try{
     var rowsT=[].slice.call(document.querySelectorAll("#ptable tr")).map(function(tr){var td=tr.querySelectorAll("td");return{id:td[0].textContent.trim(),t:num(td[3].textContent),r:num(td[4].textContent)};});
     var ft=document.querySelectorAll("#pfoot td"),fT=num(ft[3]&&ft[3].textContent),fR=num(ft[4]&&ft[4].textContent);
@@ -1783,6 +1782,8 @@ function domChecks(){
     ck("หน้าเว็บ: ตารางโครงการแสดงครบ "+P.length+" แถว และรหัสตรงทะเบียน",rowsT.length===P.length&&P.every(function(p,i){return rowsT[i]&&rowsT[i].id===code(p.id);}),"แสดง "+rowsT.length+" แถว / ทะเบียน "+P.length+" โครงการ");
     if(cR){var st=cR.querySelector(".s").textContent,m1=/ร้อยละ\s*([\d,.]+)/.exec(st),wf=cR.querySelector(".why b:last-child"),m2=wf?/([\d,.]+)%/.exec(wf.textContent):null,exp=pct1(vR,vT);
       ck("หน้าเว็บ: ร้อยละจัดสรรครั้งที่ 1 (การ์ดภาพรวม) เป็นข้อความเดียวกันทุกตัวอักษร",!!m1&&!!m2&&m1[1]===m2[1]&&m1[1]===exp,"ข้อความหลัก "+(m1?m1[1]:"-")+" · สูตรที่มา "+(m2?m2[1]:"-")+" · คำนวณจากตัวเลขที่แสดง "+exp);}
+    var pt=provTotals(),pS=pt.reduce(function(a,x){return a+x.t;},0),pR=pt.reduce(function(a,x){return a+x.list.reduce(function(b,r){return b+r.r1;},0);},0);
+    ck("หน้าเว็บ: ผลรวมรายจังหวัด (provTotals) ทุกจังหวัด = ยอดรวมโครงการ ไม่รวมส่วนกลาง (งบเต็มปีและจัดสรรครั้งที่ 1)",pS===sT&&pS===AGG_ALL.total&&pR===sR&&pR===AGG_ALL.r1,"รายจังหวัด "+fmt(pS)+" · ตารางโครงการ "+fmt(sT)+" · ครั้งที่ 1: รายจังหวัด "+fmt(pR)+" · ตารางโครงการ "+fmt(sR));
     var v=document.getElementById("v-project"),bad=[],allPct=[];
     P.forEach(function(p){var id=p.id;renderProject(id);
       var tw=[].slice.call(v.querySelectorAll(".tbl-wrap")).filter(function(w){var h=w.querySelector("h2");return h&&h.textContent.indexOf("งบ พ.ร.บ. รายจังหวัด")>=0;})[0],
