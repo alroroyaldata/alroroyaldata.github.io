@@ -1769,14 +1769,16 @@ function domChecks(){
       ck("หน้าเว็บ: ร้อยละจัดสรรครั้งที่ 1 (การ์ดภาพรวม) เป็นข้อความเดียวกันทุกตัวอักษร",!!m1&&!!m2&&m1[1]===m2[1]&&m1[1]===exp,"ข้อความหลัก "+(m1?m1[1]:"-")+" · สูตรที่มา "+(m2?m2[1]:"-")+" · คำนวณจากตัวเลขที่แสดง "+exp);}
     var v=document.getElementById("v-project"),bad=[],allPct=[];
     P.forEach(function(p){var id=p.id;renderProject(id);
-      var fr=v.querySelectorAll("tfoot tr:last-child td"),n=fr.length,r0=rowsT.filter(function(r){return r.id===code(id);})[0];
+      var tw=[].slice.call(v.querySelectorAll(".tbl-wrap")).filter(function(w){var h=w.querySelector("h2");return h&&h.textContent.indexOf("งบ พ.ร.บ. รายจังหวัด")>=0;})[0],
+        fr=tw?tw.querySelectorAll("tfoot tr:last-child td"):[],n=fr.length,r0=rowsT.filter(function(r){return r.id===code(id);})[0];
       var tT=n>=3?num(fr[n-3].textContent):NaN,tR=n>=3?num(fr[n-2].textContent):NaN;
-      if(!(r0&&isFinite(tT)&&tT===r0.t&&tR===r0.r))bad.push(code(id));
+      if(!tw)bad.push(code(id)+" (ไม่พบตารางรายจังหวัด)");else if(!r0)bad.push(code(id)+" (ไม่พบในทะเบียน)");
+      else{var w=[];if(!(tT===r0.t))w.push("รวมเต็มปี");if(!(tR===r0.r))w.push("ครั้งที่ 1");if(w.length)bad.push(code(id)+" ("+w.join("+")+")");}
       (v.textContent.match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).forEach(function(s){allPct.push(s);});});
     v.innerHTML="";
     ck("หน้าเว็บ: หน้าโครงการ P01–P"+String(P.length).padStart(2,"0")+" — ตารางรายจังหวัด (รวมเต็มปี · จัดสรรครั้งที่ 1) = ตารางทะเบียนโครงการ",!bad.length,bad.length?"ไม่ตรง: "+bad.join(", "):"ตรวจ "+P.length+" โครงการ × 2 ค่า");
     var ovP=((document.getElementById("v-overview").textContent+" "+(kc?kc.textContent:"")).match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).concat(allPct),off=ovP.filter(function(s){return !/ร้อยละ\s*[\d,]+\.\d$/.test(s);});
-    ck("หน้าเว็บ: ร้อยละที่เขียนว่า “ร้อยละ …” ทุกจุด (ภาพรวม + 16 หน้าโครงการ) แสดงทศนิยม 1 ตำแหน่ง",!off.length,off.length?"ผิดรูป "+off.length+" จุด เช่น “"+off[0]+"”":"ตรวจ "+ovP.length+" จุด");
+    ck("หน้าเว็บ: ร้อยละที่เขียนว่า “ร้อยละ …” ทุกจุด (ภาพรวม + 16 หน้าโครงการ) แสดงทศนิยม 1 ตำแหน่ง",!off.length,off.length?"ผิดรูป "+off.length+" จุด · ข้อความที่พบ: "+off.filter(function(x,i){return off.indexOf(x)===i;}).slice(0,8).map(function(x){return "“"+x+"”";}).join(" "):"ตรวจ "+ovP.length+" จุด");
     var ef=document.getElementById("execFarm"),xv=ef?ef.querySelectorAll(".xk .v"):[];
     if(xv.length===2){var fa=num(xv[0].textContent),ft2=num(xv[1].textContent),sum2=fmt(fa+ft2),hit=0;
       if(fa&&ft2)[].slice.call(document.querySelectorAll("#v-overview .v,#v-overview .num,#v-overview b,#v-farmers .v,#v-farmers .num,#v-farmers b")).forEach(function(e){if(e.children.length===0&&e.textContent.trim()===sum2)hit++;});
