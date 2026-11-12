@@ -1748,6 +1748,47 @@ function renderJpt(){
   document.getElementById("jqCsv").addEventListener("click",function(){jcsv(JQ);});
 }
 
+/* ===== ตรวจตัวเลขจากข้อความที่แสดงจริงบนหน้า (DOM) — อ่านอย่างเดียว ไม่แก้สูตรเดิม · ทำงานเมื่อเปิดหน้า "ความถูกต้อง" ครั้งแรก ===== */
+var domChecked=false;
+function domChecks(){
+  if(domChecked)return;domChecked=true;
+  var CKD=[],ck=function(l,ok,d){CKD.push({l:l,ok:!!ok,d:d});};
+  var num=function(t){var m=/-?[\d,]+(\.\d+)?/.exec(String(t||""));return m?+m[0].replace(/,/g,""):NaN;};
+  var kpiByLabel=function(root,lab){var ks=root.querySelectorAll(".kpi");for(var i=0;i<ks.length;i++){var l=ks[i].querySelector(".l");if(l&&l.textContent.trim()===lab)return ks[i];}return null;};
+  var pct1=function(a,b){return fmt(b?a/b*100:0,1);};
+  try{
+    var rowsT=[].slice.call(document.querySelectorAll("#ptable tr")).map(function(tr){var td=tr.querySelectorAll("td");return{id:td[0].textContent.trim(),t:num(td[3].textContent),r:num(td[4].textContent)};});
+    var ft=document.querySelectorAll("#pfoot td"),fT=num(ft[3]&&ft[3].textContent),fR=num(ft[4]&&ft[4].textContent);
+    var sT=rowsT.reduce(function(a,r){return a+r.t;},0),sR=rowsT.reduce(function(a,r){return a+r.r;},0);
+    var kc=document.getElementById("kpis"),cT=kc?kpiByLabel(kc,mdL("prbProv")):null,cR=kc?kpiByLabel(kc,mdL("r1")):null;
+    var vT=cT?num(cT.querySelector(".v").textContent):NaN,vR=cR?num(cR.querySelector(".v").textContent):NaN;
+    ck("หน้าเว็บ: การ์ดภาพรวม งบ พ.ร.บ. เต็มปี = ผลรวมตารางโครงการ = แถวรวมท้ายตาราง",vT===sT&&sT===fT&&isFinite(vT),"การ์ด "+fmt(vT)+" · ผลรวมแถว "+fmt(sT)+" · แถวรวม "+fmt(fT));
+    ck("หน้าเว็บ: การ์ดภาพรวม จัดสรรครั้งที่ 1 = ผลรวมตารางโครงการ = แถวรวมท้ายตาราง",vR===sR&&sR===fR&&isFinite(vR),"การ์ด "+fmt(vR)+" · ผลรวมแถว "+fmt(sR)+" · แถวรวม "+fmt(fR));
+    ck("หน้าเว็บ: ตารางโครงการแสดงครบ "+P.length+" แถว และรหัสตรงทะเบียน",rowsT.length===P.length&&P.every(function(p,i){return rowsT[i]&&rowsT[i].id===code(p.id);}),"แสดง "+rowsT.length+" แถว / ทะเบียน "+P.length+" โครงการ");
+    if(cR){var st=cR.querySelector(".s").textContent,m1=/ร้อยละ\s*([\d,.]+)/.exec(st),wf=cR.querySelector(".why b:last-child"),m2=wf?/([\d,.]+)%/.exec(wf.textContent):null,exp=pct1(vR,vT);
+      ck("หน้าเว็บ: ร้อยละจัดสรรครั้งที่ 1 (การ์ดภาพรวม) เป็นข้อความเดียวกันทุกตัวอักษร",!!m1&&!!m2&&m1[1]===m2[1]&&m1[1]===exp,"ข้อความหลัก "+(m1?m1[1]:"-")+" · สูตรที่มา "+(m2?m2[1]:"-")+" · คำนวณจากตัวเลขที่แสดง "+exp);}
+    var v=document.getElementById("v-project"),bad=[],allPct=[];
+    P.forEach(function(p){var id=p.id;renderProject(id);
+      var fr=v.querySelectorAll("tfoot tr:last-child td"),n=fr.length,r0=rowsT.filter(function(r){return r.id===code(id);})[0];
+      var tT=n>=3?num(fr[n-3].textContent):NaN,tR=n>=3?num(fr[n-2].textContent):NaN;
+      if(!(r0&&isFinite(tT)&&tT===r0.t&&tR===r0.r))bad.push(code(id));
+      (v.textContent.match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).forEach(function(s){allPct.push(s);});});
+    v.innerHTML="";
+    ck("หน้าเว็บ: หน้าโครงการ P01–P"+String(P.length).padStart(2,"0")+" — ตารางรายจังหวัด (รวมเต็มปี · จัดสรรครั้งที่ 1) = ตารางทะเบียนโครงการ",!bad.length,bad.length?"ไม่ตรง: "+bad.join(", "):"ตรวจ "+P.length+" โครงการ × 2 ค่า");
+    var ovP=((document.getElementById("v-overview").textContent+" "+(kc?kc.textContent:"")).match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).concat(allPct),off=ovP.filter(function(s){return !/ร้อยละ\s*[\d,]+\.\d$/.test(s);});
+    ck("หน้าเว็บ: ร้อยละที่เขียนว่า “ร้อยละ …” ทุกจุด (ภาพรวม + 16 หน้าโครงการ) แสดงทศนิยม 1 ตำแหน่ง",!off.length,off.length?"ผิดรูป "+off.length+" จุด เช่น “"+off[0]+"”":"ตรวจ "+ovP.length+" จุด");
+    var ef=document.getElementById("execFarm"),xv=ef?ef.querySelectorAll(".xk .v"):[];
+    if(xv.length===2){var fa=num(xv[0].textContent),ft2=num(xv[1].textContent),sum2=fmt(fa+ft2),hit=0;
+      if(fa&&ft2)[].slice.call(document.querySelectorAll("#v-overview .v,#v-overview .num,#v-overview b,#v-farmers .v,#v-farmers .num,#v-farmers b")).forEach(function(e){if(e.children.length===0&&e.textContent.trim()===sum2)hit++;});
+      ck("หน้าเว็บ: เกษตรกรในพื้นที่ (จปฐ.) กับเกษตรกรที่เข้าฝึกอบรม แสดงแยกกัน ไม่มียอดรวมสองฐาน",hit===0&&/ไม่นำมารวมกัน/.test(ef.textContent),hit?"พบตัวเลขเท่ายอดรวมสองฐาน "+hit+" จุด":"ไม่พบยอดรวมสองฐาน · มีข้อความกำกับ “ไม่นำมารวมกัน”"+(/ไม่นำมารวมกัน/.test(ef.textContent)?"":" — ไม่พบ"));
+    }else ck("หน้าเว็บ: เกษตรกรในพื้นที่ (จปฐ.) กับเกษตรกรที่เข้าฝึกอบรม แสดงแยกกัน ไม่มียอดรวมสองฐาน",true,"ข้ามการตรวจ: ยังไม่มีแผงเกษตรกร 2 ฐานในหน้าภาพรวม");
+  }catch(e){console.error("domChecks",e);ck("หน้าเว็บ: ชุดตรวจจากตัวเลขที่แสดงจริงทำงานจนจบ",false,String(e&&e.message||e));}
+  var pass=CKD.filter(function(c){return c.ok;}).length,cw=document.getElementById("checksWeb");
+  if(cw){cw.hidden=false;var box=document.getElementById("checksDom");if(!box){box=document.createElement("div");box.id="checksDom";cw.appendChild(box);}
+    box.innerHTML='<h2 style="margin-top:18px">ตรวจจากตัวเลขที่แสดงจริงบนหน้า (เทียบทุกจุดที่แสดงค่าเดียวกัน)</h2><p class="sub">อ่านข้อความบนหน้าเว็บแล้วเทียบกันเอง · ผ่าน '+pass+'/'+CKD.length+' ข้อ</p>'+
+    CKD.map(function(c){return '<div class="check"><div class="dot '+(c.ok?"ok":"bad")+'">'+(c.ok?"✓":"!")+'</div><div><p>'+esc(c.l)+'</p><p class="m num">'+esc(c.d)+'</p></div><span class="tag '+(c.ok?"t-ok":"t-bad")+'">'+(c.ok?"ผ่าน":"ไม่ผ่าน")+'</span></div>';}).join("");}
+  window.__alroDomChecks=CKD;
+}
 function route(h){
   h=(h||"overview").replace(/^#/,"");if(h==="p17"){h="p04";try{history.replaceState(null,"","#p04");}catch(e){}}var m=/^p(\d{2})$/.exec(h),view;
   if(m&&proj(+m[1])){view="project";renderProject(+m[1]);}
@@ -1755,6 +1796,7 @@ function route(h){
   var vv=view==="model"?"farmers":view;var fh=document.querySelector("#v-farmers .page-h h1");if(fh)fh.textContent=view==="model"?"เกษตรกรตัวอย่าง":"ฐานรายชื่อเกษตรกร";["overview","budget","provinces","monthly","farmers","projects","project","checks","jpt"].forEach(function(x){document.getElementById("v-"+x).classList.toggle("on",x===vv);});
   if(view==="provinces")setTimeout(renderOverviewMap,0);
   if(view==="jpt")renderJpt();
+  if(view==="checks")setTimeout(domChecks,0);
   if(view==="project")setTimeout(function(){renderProjectMap(+m[1]);},0);
   var navKey=view==="project"?"projects":view;
   document.querySelectorAll(".snav a,.mtabs a").forEach(function(a){if(a.getAttribute("href")==="#"+navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
