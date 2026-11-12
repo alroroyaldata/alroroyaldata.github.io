@@ -1777,8 +1777,8 @@ function domChecks(){
       (v.textContent.match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).forEach(function(s){allPct.push(s);});});
     v.innerHTML="";
     ck("หน้าเว็บ: หน้าโครงการ P01–P"+String(P.length).padStart(2,"0")+" — ตารางรายจังหวัด (รวมเต็มปี · จัดสรรครั้งที่ 1) = ตารางทะเบียนโครงการ",!bad.length,bad.length?"ไม่ตรง: "+bad.join(", "):"ตรวจ "+P.length+" โครงการ × 2 ค่า");
-    var ovP=((document.getElementById("v-overview").textContent+" "+(kc?kc.textContent:"")).match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).concat(allPct),off=ovP.filter(function(s){return !/ร้อยละ\s*[\d,]+\.\d$/.test(s);});
-    ck("หน้าเว็บ: ร้อยละที่เขียนว่า “ร้อยละ …” ทุกจุด (ภาพรวม + 16 หน้าโครงการ) แสดงทศนิยม 1 ตำแหน่ง",!off.length,off.length?"ผิดรูป "+off.length+" จุด · ข้อความที่พบ: "+off.filter(function(x,i){return off.indexOf(x)===i;}).slice(0,8).map(function(x){return "“"+x+"”";}).join(" "):"ตรวจ "+ovP.length+" จุด");
+    var ovP=((document.getElementById("v-overview").textContent+" "+(kc?kc.textContent:"")).match(/ร้อยละ\s*[\d,]+(\.\d+)?/g)||[]).concat(allPct),off=ovP.filter(function(s){return /\./.test(s)&&!/ร้อยละ\s*[\d,]+\.\d$/.test(s);});
+    ck("หน้าเว็บ: ร้อยละที่เขียนว่า “ร้อยละ …” ทุกจุด (ภาพรวม + 16 หน้าโครงการ) ที่คำนวณได้แสดงทศนิยม 1 ตำแหน่ง (ค่าเกณฑ์จำนวนเต็มจากเอกสาร เช่น ร้อยละ 70 ไม่นับ)",!off.length,off.length?"ผิดรูป "+off.length+" จุด · ข้อความที่พบ: "+off.filter(function(x,i){return off.indexOf(x)===i;}).slice(0,8).map(function(x){return "“"+x+"”";}).join(" "):"ตรวจ "+ovP.length+" จุด");
     var ef=document.getElementById("execFarm"),xv=ef?ef.querySelectorAll(".xk .v"):[];
     if(xv.length===2){var fa=num(xv[0].textContent),ft2=num(xv[1].textContent),sum2=fmt(fa+ft2),hit=0;
       if(fa&&ft2)[].slice.call(document.querySelectorAll("#v-overview .v,#v-overview .num,#v-overview b,#v-farmers .v,#v-farmers .num,#v-farmers b")).forEach(function(e){if(e.children.length===0&&e.textContent.trim()===sum2)hit++;});
