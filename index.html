@@ -1550,7 +1550,7 @@ function enhanceProject(id){
    '</div>';
   var farm='<div class="pgrid4">'+card(null,"เกษตรกรทั้งหมดในพื้นที่โครงการ",nA?fmt(nA):'–','ราย · ฐาน จปฐ. / ผู้ได้รับจัดที่ดิน ปี 2568')+card(null,"เกษตรกรที่เข้าฝึกอบรม",nT?fmt(nT):'–','ราย · ติดตามผลสัมฤทธิ์ ปี 2566–2569 (คนละฐาน)')+card(null,"เกษตรกรตัวอย่าง",MF.length?fmt(MF.length):'–','ราย · สะสมทุกปี')+card(null,"จังหวัดที่มีรายชื่อ",fmt(Object.keys(pvA).length),'จังหวัด (ฐานในพื้นที่โครงการ)')+'</div>'+"@@MF@@"+
     (topA.length?'<div class="panel"><h2>อำเภอที่มีเกษตรกรในพื้นที่โครงการมากที่สุด</h2><p class="sub">ฐาน จปฐ. · นับไม่ซ้ำ</p><div class="prank">'+topA.map(function(x,i){return '<div><span>'+(i+1)+'. อ.'+esc(x[0])+'</span><div class="sp2" style="height:8px;background:var(--surface-2)"><i style="width:'+(x[1]/mA*100)+'%;background:var(--primary)"></i></div><b class="num">'+fmt(x[1])+'</b></div>';}).join("")+'</div></div>':'')+
-    '<div class="panel" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><h2 style="margin:0">รายชื่อรายบุคคล</h2><p class="sub" style="margin:4px 0 0">ค้นหา กรองตามฐาน และปีงบประมาณ ในหน้าฐานรายชื่อเกษตรกร</p></div><a class="pm-btn pri" href="#farmers" data-fpid="'+pid+'">เปิดรายชื่อของโครงการนี้ →</a></div>';
+    '<div class="panel" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><h2 style="margin:0">รายชื่อรายบุคคล</h2><p class="sub" style="margin:4px 0 0">ค้นหา กรองตามฐาน และปีงบประมาณ ในหน้าฐานรายชื่อเกษตรกร</p></div><a class="pm-btn pri" href="#farmers" data-fpid="'+pid+'">เปิดรายชื่อของโครงการนี้ →</a></div>'+jptIncomeHtml(pid);
   /* ---- เกษตรกรตัวอย่าง: รายชื่อ + แผนที่ + Google Maps ---- */
   var mfHtml="";try{if(MF.length){
     var nz=function(x){return String(x||"").replace(/^(นาย|นางสาว|นาง|น\.ส\.|ด\.ช\.|ด\.ญ\.)\s*/,"").replace(/\s+/g,"");};
@@ -1691,6 +1691,21 @@ function jval(r,o){
 }
 function jz(r){var v=r[12+D.jpt.dims.length];return typeof v==="number"?v:0;}
 function jagri(o){return o.m==="inc"&&o.inc===3&&D.jpt.qa;}
+/* รายได้เกษตรกรในพื้นที่โครงการ (ฐาน จปฐ. ปี 2568) ในหน้าโครงการ — ใช้ข้อมูลและตัวช่วยชุดเดียวกับหน้า "ถามข้อมูล จปฐ." · แสดงแยกจากเกษตรกรที่เข้าฝึกอบรม ไม่รวมกัน · มีคำเตือนรายได้ภาคเกษตร = 0 กำกับเสมอ */
+function jptIncomeHtml(pid){
+  if(!jptReady())return "";
+  var rs=D.jpt.rows.filter(function(r){return r[0]===pid;});if(!rs.length)return "";
+  var o={m:"inc",inc:3},inN=rs.reduce(function(t,r){return t+r[8];},0);if(!inN)return "";
+  var z=rs.reduce(function(t,r){return t+jz(r);},0),tot=rs.reduce(function(t,r){return t+jval(r,o);},0),pe=rs.reduce(function(t,r){return t+r[6];},0);
+  return '<div class="panel pinc" id="pincome"><h2>รายได้เกษตรกรในพื้นที่โครงการ (จปฐ.)</h2>'+
+    '<p class="sub">ฐาน จปฐ. ปี 2568 · เกษตรกรในพื้นที่โครงการ — คนละฐานกับ “เกษตรกรที่เข้าฝึกอบรม” ไม่นำมารวมกัน '+mdTag("farmArea")+'</p>'+
+    '<div class="pgrid4"><div class="pq" style="cursor:default"><span class="k">เกษตรกรในพื้นที่โครงการ (จปฐ.)</span><span class="v num">'+fmt(pe)+'</span><span class="s">คน · นับไม่ซ้ำ</span></div>'+
+    '<div class="pq" style="cursor:default"><span class="k">ครัวเรือนที่มีข้อมูลรายได้</span><span class="v num">'+fmt(inN)+'</span><span class="s">ครัวเรือน</span></div>'+
+    '<div class="pq" style="cursor:default"><span class="k">รายได้ภาคการเกษตรเฉลี่ย</span><span class="v num">'+fmt(tot/inN)+'</span><span class="s">บาท/ครัวเรือน/ปี</span></div>'+
+    '<div class="pq" style="cursor:default"><span class="k">กรอกรายได้ภาคเกษตรเป็น 0 หรือเว้นว่าง</span><span class="v num">ร้อยละ '+pct1(z,inN)+'</span><span class="s">จำนวน '+fmt(z)+' จาก '+fmt(inN)+' ครัวเรือน</span></div></div>'+
+    '<p class="jq-note jq-alert"><b>ข้อควรระวังก่อนนำตัวเลขไปใช้:</b> ข้อมูลต้นทางมีครัวเรือนที่กรอกรายได้ภาคการเกษตรเป็น 0 หรือเว้นว่าง ทั้งที่เป็นเกษตรกรในพื้นที่ ส.ป.ก. (โครงการนี้ร้อยละ '+pct1(z,inN)+(D.jpt.qa&&D.jpt.qa.incN?' · ทั้งกองร้อยละ '+pct1(D.jpt.qa.agriZero,D.jpt.qa.incN):'')+') ค่าเฉลี่ยจึงน่าจะต่ำกว่าความจริง ควรใช้เปรียบเทียบระหว่างพื้นที่เท่านั้น และควรตรวจการกรอกข้อมูลต้นทางก่อนอ้างอิง</p>'+
+    '<p class="sub" style="margin-top:8px">ดูแยกตามอำเภอ/ตำบลและตัวชี้วัดอื่นได้ที่หน้า <a href="#jpt">ถามข้อมูล จปฐ.</a></p></div>';
+}
 function jrows(o){return D.jpt.rows.filter(function(r){return(!o.pid||r[0]===o.pid)&&(!o.pv||r[1]===o.pv);});}
 function jkey(r,by){return by==="pid"?String(r[0]):by==="pv"?r[1]:by==="am"?r[1]+"|"+r[2]:r[1]+"|"+r[2]+"|"+r[3];}
 function jlabel(k,by){if(by==="pid"){var p=proj(+k);return code(+k)+" "+(p?(p.short||p.name):"");}var a=k.split("|");return by==="pv"?"จ."+a[0]:by==="am"?"อ."+(a[1]||"ไม่ระบุ")+" จ."+a[0]:"ต."+(a[2]||"ไม่ระบุ")+" อ."+a[1]+" จ."+a[0];}
